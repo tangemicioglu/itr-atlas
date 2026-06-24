@@ -1,0 +1,29 @@
+@import "./tokens.css";
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+a { color: var(--ink); }
+
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+.site-header,
+.site-footer {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+.site-header { display: flex; align-items: baseline; justify-content: space-between; }
+.site-header a { text-decoration: none; }
+.site-header .brand { font-weight: 800; letter-spacing: -0.3px; }
+.site-header nav a { margin-left: 18px; font-size: 14px; color: var(--muted); }
+.site-footer { color: var(--muted); font-size: 13px; border-top: 1px solid var(--hairline); margin-top: 48px; }
+
+.mono { font-family: var(--font-mono); }

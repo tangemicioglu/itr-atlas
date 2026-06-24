@@ -1,0 +1,30 @@
+---
+import "../styles/global.css";
+interface Props { title: string; description?: string; }
+const { title, description = "Information transfer rate across human–machine interfaces." } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/" class="brand">ITR Gallery</a>
+      <nav>
+        <a href="/">Gallery</a>
+        <a href="/methodology">Methodology</a>
+        <a href="/submit">Submit</a>
+      </nav>
+    </header>
+    <main class="container">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      Every figure is sourced and re-derived. See <a href="/methodology">Methodology</a>.
+    </footer>
+  </body>
+</html>
