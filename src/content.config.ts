@@ -19,7 +19,11 @@ const computeSchema = z.discriminatedUnion('method', [
   }),
   z.object({
     method: z.literal('confusion-mi'),
-    matrix: z.array(z.array(z.number())),
+    matrix: z
+      .array(z.array(z.number()))
+      .refine((m) => m.length > 0 && m.every((row) => row.length === m[0].length), {
+        message: 'Confusion matrix must be non-empty and rectangular.',
+      }),
     secondsPerSelection: z.number(),
   }),
 ]);
@@ -73,7 +77,10 @@ const interfaces = defineCollection({
     ),
     calculations: z.array(calculationSchema).min(1),
     referenceCalculationId: z.string(),
-  }),
+  }).refine(
+    (entry) => entry.calculations.some((c) => c.id === entry.referenceCalculationId),
+    { message: 'referenceCalculationId must match the id of one of the calculations.' },
+  ),
 });
 
 export const collections = { interfaces };
