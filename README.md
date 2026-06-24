@@ -7,11 +7,11 @@ Most ITR comparisons quietly misapply the math — Wolpaw's assumptions rarely h
 interfaces. This project makes the rigor visible: **every number is sourced and re-derived, step by
 step**, and each entry shows exactly which method was used and why.
 
-> 📐 Full design & data model: **[DESIGN.md](./DESIGN.md)**
+> 📐 Full spec & data model: **[SPEC.md](./SPEC.md)** — visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
 
 ## Status
 
-🏗️ **Pre-implementation.** The design is approved and frozen in `DESIGN.md`. Code has not started.
+🏗️ **Pre-implementation.** The spec is approved and frozen in `SPEC.md`. Code has not started.
 
 ## What makes an entry honest
 
@@ -42,4 +42,4 @@ _Setup instructions will be added once scaffolding lands._
 
 ## License
 
-TBD.
+[MIT](./LICENSE).

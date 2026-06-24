@@ -1,175 +1,197 @@
-# ITR Interface Gallery — Design
-
-> Status: **approved design**, pre-implementation. Last updated 2026-06-24.
-
-A curated, shareable gallery comparing **information transfer rate (ITR, bits/min)** across all
-human→machine input modalities — brain–computer interfaces, eye-tracking, speech, typing, Morse,
-and more.
-
-The hook is the gallery. The point is **rigor**: every number is sourced and re-derived, and the
-site foregrounds the fact that ITR is routinely misapplied. Wolpaw's assumptions (uniform target
-prior, symmetric errors, no error-correction cost) rarely hold in real interfaces — see
-Yuan et al. 2013, *"A study of the existing problems of estimating the information transfer rate in
-online brain–computer interfaces"* ([PMID 23448963](https://pubmed.ncbi.nlm.nih.gov/23448963/)).
-Inspired by [this comparison](https://x.com/SumnerLN/status/2069225927486435548).
-
+---
+name: ITR Gallery — Lab Paper
+version: alpha
+description: >-
+  Warm "lab paper" visual system for the ITR Interface Gallery. Monochrome
+  accent so color carries meaning (modality, invasiveness, provenance) rather
+  than brand; ITR numbers stay ink-black; no gradients.
+colors:
+  bg: "#F6F3EC"
+  card: "#FFFFFF"
+  ink: "#1A1A17"
+  muted: "#6B675E"
+  hairline: "#E3DDD0"
+  accent: "#2B2B28"
+  invasive: "#8A2E2E"
+  photo: "#ECE7DB"
+  link: "#24407A"
+  tagBg: "#ECE7DB"
+  tagInk: "#5C574B"
+  invasiveBg: "#F2E0DC"
+  provAuthBg: "#E6EDE4"
+  provAuthInk: "#3D6B35"
+  provRecompBg: "#F3ECD8"
+  provRecompInk: "#9A7A20"
+typography:
+  sans:
+    fontFamily: '"Segoe UI", system-ui, -apple-system, sans-serif'
+  mono:
+    fontFamily: 'ui-monospace, "Cascadia Code", Consolas, monospace'
+  display:
+    fontFamily: "{typography.sans.fontFamily}"
+    fontSize: "26px"
+    fontWeight: 800
+    lineHeight: "1.2"
+    letterSpacing: "-0.4px"
+  heading:
+    fontFamily: "{typography.sans.fontFamily}"
+    fontSize: "18px"
+    fontWeight: 700
+  body:
+    fontFamily: "{typography.sans.fontFamily}"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: "1.5"
+  label:
+    fontFamily: "{typography.sans.fontFamily}"
+    fontSize: "11px"
+    fontWeight: 600
+    letterSpacing: "0.6px"
+  itr:
+    fontFamily: "{typography.sans.fontFamily}"
+    fontSize: "26px"
+    fontWeight: 800
+  math:
+    fontFamily: "{typography.mono.fontFamily}"
+    fontSize: "13px"
+    lineHeight: "1.8"
+rounded:
+  sm: "6px"
+  md: "8px"
+  lg: "12px"
+  pill: "20px"
+spacing:
+  xs: "5px"
+  sm: "8px"
+  md: "12px"
+  lg: "16px"
+  xl: "24px"
+components:
+  card:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    borderColor: "{colors.hairline}"
+    rounded: "{rounded.lg}"
+    padding: "13px 15px 15px"
+  tag:
+    backgroundColor: "{colors.tagBg}"
+    textColor: "{colors.tagInk}"
+    rounded: "{rounded.md}"
+    padding: "5px 11px"
+    typography: "{typography.label}"
+  tagInvasive:
+    backgroundColor: "{colors.invasiveBg}"
+    textColor: "{colors.invasive}"
+    rounded: "{rounded.md}"
+    padding: "5px 11px"
+    typography: "{typography.label}"
+  provenanceAuthor:
+    backgroundColor: "{colors.provAuthBg}"
+    textColor: "{colors.provAuthInk}"
+    rounded: "{rounded.sm}"
+    padding: "3px 8px"
+  provenanceRecomputed:
+    backgroundColor: "{colors.provRecompBg}"
+    textColor: "{colors.provRecompInk}"
+    rounded: "{rounded.sm}"
+    padding: "3px 8px"
+  calculationBlock:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    borderColor: "{colors.hairline}"
+    rounded: "{rounded.lg}"
+    padding: "16px 18px 8px"
+  referenceCalculationBlock:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.ink}"
+    borderColor: "{colors.accent}"
+    rounded: "{rounded.lg}"
+    padding: "16px 18px 8px"
+  filterChipActive:
+    backgroundColor: "{colors.accent}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.pill}"
+    padding: "6px 12px"
+  filterChip:
+    backgroundColor: "{colors.card}"
+    textColor: "{colors.tagInk}"
+    borderColor: "{colors.hairline}"
+    rounded: "{rounded.pill}"
+    padding: "6px 12px"
 ---
 
-## 1. Goals & non-goals
+# ITR Gallery — Lab Paper
 
-**Goals**
-- Compare interfaces on a single, defensible ITR number per entry.
-- Make every figure auditable: sourced inputs + a fully worked, step-by-step derivation.
-- Treat "this ITR is misleading" as a first-class, visible property — not a footnote.
-- Be shareable and pleasant to browse.
+The visual system for the [ITR Interface Gallery](./SPEC.md). It should read like a credible,
+print-like scientific reference: warm paper, ink text, math you can trust. Color is reserved for
+*meaning* — modality, invasiveness, and provenance — never decoration.
 
-**Non-goals (v1)**
-- Live/interactive ITR calculator with editable inputs.
-- Multi-entry "compare" mode.
-- User accounts, backend, database, moderation queue.
-- Automated paper ingestion.
+## Overview
 
----
+A curated comparison gallery of information transfer rates across human–machine interfaces. The
+aesthetic is "lab paper": a warm off-white page, ink-black text, hairline rules, and a single
+graphite accent. The personality is restrained and editorial — the data and the worked derivations
+are the visual interest, so the chrome stays quiet. No gradients, no brand hue, no drop shadows
+except a faint lift on interactive cards.
 
-## 2. Scope (v1)
+## Colors
 
-- **Static site** built with **Astro**, deployed to a static host (Vercel / Netlify / GitHub Pages).
-- **Curated entries** stored as schema-validated content collection files in the repo.
-- **Submissions** via a **Google Form** → responses land in a Sheet → maintainer curates good ones
-  into entry files by hand. No backend.
-- **Browsing**: search + modality filter + sort (ITR high→low default). No compare mode.
+- **`bg` `#F6F3EC`** — warm paper page background.
+- **`card` `#FFFFFF`** — card and panel surfaces, lifted just off the page.
+- **`ink` `#1A1A17`** — primary text and, importantly, every ITR number. Numbers never take an
+  accent color; their weight carries them.
+- **`muted` `#6B675E`** — secondary text, labels, captions.
+- **`hairline` `#E3DDD0`** — borders and dividers; the structure is drawn with thin rules, not fills.
+- **`accent` `#2B2B28`** (graphite) — active controls (selected filter chip), the reference-method
+  badge, and the border of the reference calculation block. Near-black so it reads as emphasis, not color.
+- **`invasive` `#8A2E2E`** (muted red) — reserved exclusively for the invasiveness tag.
+- **Provenance pair** — `provAuth*` (green) for author-reported figures, `provRecomp*` (amber) for
+  recomputed ones. This is the one place green/amber semantics appear.
+- **`link` `#24407A`** — hyperlinks (DOIs, citations).
+- **`photo` `#ECE7DB`** — placeholder fill behind device images that are missing.
 
----
+## Typography
 
-## 3. Core model
+- **Sans** (`"Segoe UI", system-ui, …`) for all UI and prose.
+- **Mono** (`ui-monospace, …`) for formulas, substitutions, and derivation math — the monospace
+  signals "this is computed, check it."
+- **`display`** — page titles, 26px/800, slightly tightened tracking.
+- **`heading`** — section headings, 18px/700.
+- **`itr`** — the headline ITR number, 26px/800, ink-black.
+- **`label`** — uppercase 11px with letter-spacing for step titles and table headers.
 
-### 3.1 The "reference calculation" principle
+## Layout
 
-Calculation methods are **heterogeneous by modality** — there is no universal formula:
+- Centered content column, max width ~1040px, 24px side gutters.
+- Gallery grid: 3 columns desktop, 2 at ≤800px, 1 at ≤540px; 16px gap.
+- Entry detail: a single readable column; the device photo (220×150) sits left of the title.
+- Derivations render as a numbered vertical list with a hairline connector on the left.
 
-| Modality family        | Typical method                              |
-|------------------------|---------------------------------------------|
-| Discrete grid / speller| Wolpaw bitrate; confusion-matrix mutual info (Nykopp) |
-| Speech / text          | Word/character entropy & perplexity         |
-| Continuous cursor      | Fitts'-law throughput (bits/s)              |
+## Shapes
 
-Each entry designates **one reference calculation** — the number used for cross-comparison in the
-gallery. Other calculations may be shown as **supplementary** (explicitly *not used for ranking*).
+- **`rounded.sm` 6px** — small chips (provenance pill).
+- **`rounded.md` 8px** — tags, inputs, math blocks, inputs.
+- **`rounded.lg` 12px** — cards and calculation blocks.
+- **`rounded.pill` 20px** — filter chips.
+- Borders are 1px `hairline`; the reference calculation block uses a 1px `accent` border to mark it.
 
-**Choosing the reference, in priority order:**
-1. Use the **original paper's own** calculation/number where it exists and is sound.
-2. If the paper omits ITR, **we compute one** with a modality-appropriate method.
-3. If the paper's method is **flawed**, **we recompute** and replace it — and show **both** the
-   original derivation and ours, so the discrepancy is auditable rather than asserted.
+## Components
 
-### 3.2 Provenance taxonomy
+- **`card`** — gallery stat card (style B): device photo strip, name, modality tags, large ink ITR,
+  a right-aligned mini stat, and a provenance pill. Lifts 3px with a faint shadow on hover.
+- **`tag` / `tagInvasive`** — modality and invasiveness pills. Invasiveness is the only red element.
+- **`provenanceAuthor` / `provenanceRecomputed`** — the honesty signal; visible on cards and in the
+  detail view.
+- **`calculationBlock` / `referenceCalculationBlock`** — a worked derivation; the reference variant
+  is bordered in graphite and carries the "Reference method" badge.
+- **`filterChip` / `filterChipActive`** — gallery modality filters; the active chip is solid graphite.
 
-Every calculation carries one provenance badge:
+## Do's and Don'ts
 
-| Badge                          | Meaning                                                       |
-|--------------------------------|--------------------------------------------------------------|
-| `Author-reported · verified`   | We re-derived the paper's own method and matched its number. |
-| `Author-reported · unverified` | Paper gives a number but lacks detail to re-derive it.       |
-| `Recomputed — paper omitted`   | No ITR in the paper; we computed one.                        |
-| `Recomputed — original flawed` | Paper's method was broken; ours replaces it (reason linked). |
-
-### 3.3 Entry shape (conceptual schema)
-
-```
-Entry {
-  id, name, image, year
-  modalityTags[]            // e.g. ["EEG", "SSVEP"]
-  sensingModality           // grouping for filters
-  invasiveness              // "non-invasive" | "invasive" | ...
-  source { authors, venue, year, doi, url }
-
-  inputs[] {                // every constant used, with provenance
-    symbol, value, unit,
-    sourceNote              // "Mean online accuracy, Table 1"
-  }
-
-  calculations[] {
-    method                  // "Wolpaw bitrate"
-    kind                    // short descriptor: "Theoretical upper bound"
-    provenance              // one of the taxonomy values above
-    steps[]                 // ordered, worked derivation (see §6)
-    resultBitsPerMin
-    notUsedForRanking?      // true => supplementary
-    flawReason?             // when "Recomputed — original flawed"
-  }
-
-  referenceCalculationId    // which calculation is the comparison number
-  notes                     // caveats, free text
-}
-```
-
----
-
-## 4. Pages
-
-1. **Gallery (home)** — title + one-line thesis + result count; controls (search, modality filter
-   chips, sort); responsive 3-up grid of stat cards. Each card: device photo, name, modality tags,
-   large ink-black ITR, a mini secondary stat (key inputs + method), and a **provenance pill**.
-2. **Entry detail** — self-contained panel: header (photo, tags, invasiveness); **reference ITR**
-   with full step-by-step derivation; a "method varies by modality" note; any additional full
-   derivations (e.g. paper's vs ours); supplementary calculations; citations.
-3. **Methodology / About** — explains ITR and the Wolpaw formula, its assumptions, the Yuan et al.
-   critique, and how reference methods and provenance are assigned.
-4. **Submit** — embeds/links the Google Form.
-
----
-
-## 5. Visual system
-
-- **Theme**: warm "lab paper". Monochrome accent — color comes from type weight, not brand hue;
-  ITR numbers stay ink-black.
-- **Card style**: stat block ("trading card") — dense, shareable.
-
-| Token            | Value     | Use                          |
-|------------------|-----------|------------------------------|
-| `--bg`           | `#F6F3EC` | page (warm paper)            |
-| `--card`         | `#FFFFFF` | card / panel surface         |
-| `--ink`          | `#1A1A17` | primary text, ITR numbers    |
-| `--muted`        | `#6B675E` | secondary text               |
-| `--hairline`     | `#E3DDD0` | borders, dividers            |
-| `--accent`       | `#2B2B28` | graphite — active controls   |
-| `--invasive`     | `#8A2E2E` | invasiveness tag (muted red) |
-| photo placeholder| `#ECE7DB` | device image fallback        |
-
-- **Type**: clean system sans for UI; **monospace** for formulas and math.
-- No gradients.
-
----
-
-## 6. Rendering derivations (key implementation decision)
-
-Derivations must be correct and verifiable, but methods are heterogeneous, so we will **not** build
-a symbolic math engine. Approach for v1:
-
-- A shared **compute helper** (TypeScript) implements the *standard* formulas — **Wolpaw bitrate**
-  and **confusion-matrix mutual information** — taking stored `inputs` and emitting both the numeric
-  result and an ordered list of derivation **steps**. This guarantees the math matches the inputs
-  and the numbers can't drift from the prose.
-- An **escape hatch**: for non-standard methods (speech entropy, Fitts'), a curator may author
-  bespoke derivation `steps` directly, with the final number checked at curation time.
-
-A derivation **step** is structured data (`{ title, math, note?, table? }`) so it renders through a
-single component in the chosen theme — see the validated mockups.
-
----
-
-## 7. Tech
-
-- **Astro** + content collections with **Zod** schema validation for entries.
-- Entries as Markdown/JSON (front-matter for structured fields, body for `notes`).
-- Build-time computation for standard ITRs (§6).
-- Math rendered as styled monospace HTML (KaTeX optional later for nicer typesetting).
-- Static output; free hosting.
-
----
-
-## 8. Open items (resolve during implementation)
-
-- Final choice of math rendering (plain monospace vs KaTeX).
-- Exact filter taxonomy for sensing modalities as the entry set grows.
-- Whether the provenance pill stays on cards long-term (kept for v1).
+- **Do** keep ITR numbers ink-black — their size and weight are the emphasis.
+- **Do** reserve color for meaning: red = invasiveness, green/amber = provenance, graphite = active.
+- **Do** draw structure with hairlines and whitespace, not fills or shadows.
+- **Don't** use gradients, brand colors, or decorative accent color anywhere.
+- **Don't** color a calculation's result by how "good" it is — the number is neutral; provenance and
+  assumptions carry the judgment.
+- **Don't** add shadows beyond the subtle hover lift on cards.
