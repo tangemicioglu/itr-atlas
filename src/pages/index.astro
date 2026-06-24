@@ -30,8 +30,7 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 ---
 <BaseLayout title="ITR Interface Gallery">
   <section class="top">
-    <h1>Information Transfer Rate — Interface Gallery</h1>
-    <p class="sub">Human→machine communication bandwidth, every number sourced and re-derived.</p>
+    <h1>Interface Gallery</h1>
   </section>
 
   <div class="controls">
@@ -55,8 +54,7 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 </BaseLayout>
 
 <style>
-  .top h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 24px 0 4px; }
-  .sub { color: var(--muted); margin: 0 0 18px; }
+  .top h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 24px 0 18px; }
   .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
   .search { flex: 1; min-width: 180px; border: 1px solid var(--hairline); background: var(--card);
     border-radius: 8px; padding: 9px 12px; font-size: 13px; }
