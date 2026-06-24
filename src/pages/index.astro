@@ -1,6 +1,121 @@
 ---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import InterfaceCard from "../components/InterfaceCard.astro";
+import { resolveCalculation } from "../lib/itr/resolve";
+
+const entries = await getCollection("interfaces");
+
+const cards = entries.map((entry) => {
+  const data = entry.data;
+  const refCalc = data.calculations.find((c) => c.id === data.referenceCalculationId) ?? data.calculations[0];
+  const { resultBitsPerMin } = resolveCalculation(refCalc);
+  const firstInput = data.inputs[0];
+  const miniStat = firstInput ? `${firstInput.symbol}=${firstInput.value}` : "";
+  return {
+    id: entry.id,
+    name: data.name,
+    image: data.image,
+    modalityTags: data.modalityTags,
+    invasiveness: data.invasiveness,
+    sensingModality: data.sensingModality,
+    referenceBitsPerMin: resultBitsPerMin,
+    referenceMethod: refCalc.method.split(" ")[0],
+    miniStat,
+    provenance: refCalc.provenance,
+  };
+}).sort((a, b) => b.referenceBitsPerMin - a.referenceBitsPerMin);
+
+const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 ---
-<html lang="en">
-  <head><meta charset="utf-8" /><title>ITR Gallery</title></head>
-  <body><h1>ITR Gallery — scaffold OK</h1></body>
-</html>
+<BaseLayout title="ITR Interface Gallery">
+  <section class="top">
+    <h1>Information Transfer Rate — Interface Gallery</h1>
+    <p class="sub">Human→machine communication bandwidth, every number sourced and re-derived.</p>
+  </section>
+
+  <div class="controls">
+    <input id="search" class="search" placeholder="Search interfaces…" />
+    <div class="chips" id="chips">
+      <button class="chip on" data-filter="all">All</button>
+      {modalities.map((m) => <button class="chip" data-filter={m.toLowerCase()}>{m}</button>)}
+      <button class="chip" data-filter="invasive">Invasive</button>
+    </div>
+    <select id="sort" class="sort">
+      <option value="itr-desc">Sort: ITR (high → low)</option>
+      <option value="itr-asc">Sort: ITR (low → high)</option>
+      <option value="name">Sort: A–Z</option>
+    </select>
+  </div>
+
+  <div id="grid" class="grid">
+    {cards.map((c) => <InterfaceCard {...c} />)}
+  </div>
+  <p id="empty" class="empty" hidden>No interfaces match those filters.</p>
+</BaseLayout>
+
+<style>
+  .top h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 24px 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
+  .search { flex: 1; min-width: 180px; border: 1px solid var(--hairline); background: var(--card);
+    border-radius: 8px; padding: 9px 12px; font-size: 13px; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { font-size: 12px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--hairline);
+    background: var(--card); color: var(--tag-ink); cursor: pointer; }
+  .chip.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .sort { border: 1px solid var(--hairline); background: var(--card); border-radius: 8px;
+    padding: 8px 11px; font-size: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 800px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .grid { grid-template-columns: 1fr; } }
+  .empty { color: var(--muted); padding: 24px 0; }
+</style>
+
+<script>
+  const search = document.getElementById("search") as HTMLInputElement;
+  const sort = document.getElementById("sort") as HTMLSelectElement;
+  const chips = document.getElementById("chips") as HTMLElement;
+  const grid = document.getElementById("grid") as HTMLElement;
+  const empty = document.getElementById("empty") as HTMLElement;
+  let activeFilter = "all";
+
+  function cards(): HTMLElement[] {
+    return Array.from(grid.querySelectorAll<HTMLElement>(".card"));
+  }
+
+  function apply() {
+    const q = search.value.trim().toLowerCase();
+    let visible = 0;
+    for (const card of cards()) {
+      const name = card.dataset.name ?? "";
+      const modality = card.dataset.modality ?? "";
+      const matchesSearch = !q || name.includes(q) || modality.includes(q);
+      const matchesFilter = activeFilter === "all" || modality.includes(activeFilter);
+      const show = matchesSearch && matchesFilter;
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
+    }
+    empty.hidden = visible > 0;
+
+    const sorted = cards().sort((a, b) => {
+      const ai = Number(a.dataset.itr), bi = Number(b.dataset.itr);
+      if (sort.value === "itr-asc") return ai - bi;
+      if (sort.value === "name") return (a.dataset.name ?? "").localeCompare(b.dataset.name ?? "");
+      return bi - ai;
+    });
+    sorted.forEach((c) => grid.appendChild(c));
+  }
+
+  chips.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest(".chip") as HTMLElement | null;
+    if (!btn) return;
+    chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("on"));
+    btn.classList.add("on");
+    activeFilter = btn.dataset.filter ?? "all";
+    apply();
+  });
+  search.addEventListener("input", apply);
+  sort.addEventListener("change", apply);
+  apply();
+</script>
