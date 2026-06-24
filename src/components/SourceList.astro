@@ -1,0 +1,22 @@
+---
+interface Source { authors: string; venue: string; year: number; doi?: string; url?: string; }
+interface Props { source: Source; }
+const { source } = Astro.props;
+---
+<dl class="source">
+  <div><dt>Authors</dt><dd>{source.authors}</dd></div>
+  <div><dt>Publication</dt><dd>{source.venue}, {source.year}</dd></div>
+  {source.doi && (
+    <div><dt>DOI</dt><dd><a href={source.url ?? `https://doi.org/${source.doi}`}>{source.doi}</a></dd></div>
+  )}
+</dl>
+<style>
+  .source { margin: 0; background: var(--card); border: 1px solid var(--hairline);
+    border-radius: var(--radius); padding: 4px 20px; }
+  .source > div { display: flex; padding: 11px 0; border-bottom: 1px solid var(--hairline); }
+  .source > div:last-child { border-bottom: none; }
+  dt { width: 150px; flex: none; color: var(--muted); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.6px; margin: 0; }
+  dd { margin: 0; }
+  a { color: #24407a; }
+</style>

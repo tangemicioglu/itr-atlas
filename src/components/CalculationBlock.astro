@@ -1,0 +1,46 @@
+---
+import ProvenancePill from "./ProvenancePill.astro";
+import DerivationSteps from "./DerivationSteps.astro";
+import { formatBitsPerMin } from "../lib/itr/math";
+import type { DerivationStep } from "../lib/itr/types";
+
+interface Props {
+  method: string;
+  kind: string;
+  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted" | "recomputed-flawed";
+  resultBitsPerMin: number;
+  steps: DerivationStep[];
+  isReference?: boolean;
+  flawReason?: string;
+}
+const { method, kind, provenance, resultBitsPerMin, steps, isReference = false, flawReason } = Astro.props;
+---
+<section class={`calc ${isReference ? "reference" : ""}`}>
+  <header>
+    <div class="left">
+      <div class="badges">
+        {isReference && <span class="ref-badge">Reference method</span>}
+        <ProvenancePill provenance={provenance} />
+      </div>
+      <div class="name">{method}</div>
+      <div class="kind">{kind}</div>
+    </div>
+    <div class="value">{formatBitsPerMin(resultBitsPerMin)}<small> bits/min</small></div>
+  </header>
+  {flawReason && <p class="flaw">Why we replaced the paper's number: {flawReason}</p>}
+  <DerivationSteps steps={steps} />
+</section>
+<style>
+  .calc { background: var(--card); border: 1px solid var(--hairline); border-radius: var(--radius);
+    padding: 16px 18px 8px; margin-bottom: 14px; }
+  .calc.reference { border-color: var(--accent); }
+  header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .badges { display: flex; gap: 8px; margin-bottom: 7px; }
+  .ref-badge { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+    background: var(--accent); color: #fff; padding: 3px 8px; border-radius: 6px; }
+  .name { font-weight: 700; font-size: 15px; }
+  .kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); margin-top: 3px; }
+  .value { font-size: 24px; font-weight: 800; white-space: nowrap; }
+  .value small { font-size: 12px; font-weight: 500; color: var(--muted); }
+  .flaw { font-size: 13px; color: var(--invasive); margin: 8px 0 0; }
+</style>

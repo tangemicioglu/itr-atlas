@@ -1,0 +1,37 @@
+---
+import type { DerivationStep } from "../lib/itr/types";
+interface Props { steps: DerivationStep[]; }
+const { steps } = Astro.props;
+---
+<ol class="steps">
+  {steps.map((step) => (
+    <li class="step">
+      <h4>{step.title}</h4>
+      {step.table && (
+        <table>
+          <thead><tr>{step.table.columns.map((c) => <th>{c}</th>)}</tr></thead>
+          <tbody>{step.table.rows.map((r) => <tr>{r.map((cell) => <td>{cell}</td>)}</tr>)}</tbody>
+        </table>
+      )}
+      {step.math && <pre class="mono math">{step.math}</pre>}
+      {step.note && <p class="note">{step.note}</p>}
+    </li>
+  ))}
+</ol>
+<style>
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .step { position: relative; padding: 14px 0 14px 34px; border-left: 2px solid var(--hairline); margin-left: 10px; }
+  .step:last-child { border-left-color: transparent; }
+  .step::before { counter-increment: step; content: counter(step);
+    position: absolute; left: -12px; top: 12px; width: 22px; height: 22px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--hairline); color: var(--ink);
+    font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  h4 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .math { background: var(--card); border: 1px solid var(--hairline); border-radius: 8px;
+    padding: 10px 14px; font-size: 13px; line-height: 1.8; overflow-x: auto; white-space: pre; }
+  .note { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 6px; }
+  th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.6px;
+    color: var(--muted); padding: 0 8px 7px 0; border-bottom: 1px solid var(--hairline); }
+  td { padding: 9px 8px 9px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+</style>

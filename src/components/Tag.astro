@@ -1,0 +1,10 @@
+---
+interface Props { label: string; variant?: "modality" | "invasive" | "neutral"; }
+const { label, variant = "neutral" } = Astro.props;
+---
+<span class={`tag tag-${variant}`}>{label}</span>
+<style>
+  .tag { display: inline-block; font-size: 12px; padding: 5px 11px; border-radius: 7px;
+    background: var(--tag-bg); color: var(--tag-ink); }
+  .tag-invasive { background: var(--invasive-bg); color: var(--invasive); }
+</style>

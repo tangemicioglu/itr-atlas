@@ -1,0 +1,23 @@
+---
+type Provenance =
+  | "author-reported-verified"
+  | "author-reported-unverified"
+  | "recomputed-omitted"
+  | "recomputed-flawed";
+interface Props { provenance: Provenance; }
+const { provenance } = Astro.props;
+const LABELS: Record<Provenance, string> = {
+  "author-reported-verified": "Author-reported · verified",
+  "author-reported-unverified": "Author-reported · unverified",
+  "recomputed-omitted": "Recomputed — paper omitted",
+  "recomputed-flawed": "Recomputed — original flawed",
+};
+const recomputed = provenance.startsWith("recomputed");
+---
+<span class={`pill ${recomputed ? "recomp" : "auth"}`}>{LABELS[provenance]}</span>
+<style>
+  .pill { display: inline-block; font-size: 10.5px; letter-spacing: 0.3px;
+    padding: 3px 8px; border-radius: 6px; }
+  .auth { background: var(--prov-auth-bg); color: var(--prov-auth-ink); }
+  .recomp { background: var(--prov-recomp-bg); color: var(--prov-recomp-ink); }
+</style>
