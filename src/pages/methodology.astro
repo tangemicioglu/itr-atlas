@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Methodology — ITR Gallery">
+  <article class="prose">
+    <h1>Methodology</h1>
+
+    <h2>What ITR measures</h2>
+    <p>Information transfer rate (ITR) estimates how many bits per minute a user can communicate
+       through an interface. For discrete selection it is usually computed with the
+       <strong>Wolpaw formula</strong> for bits per selection:</p>
+    <pre class="mono">B = log2(N) + P*log2(P) + (1-P)*log2((1-P)/(N-1))</pre>
+    <p>multiplied by selections per minute. Here <em>N</em> is the number of targets and
+       <em>P</em> is accuracy.</p>
+
+    <h2>Why a single number is often misleading</h2>
+    <p>The Wolpaw formula assumes every target is equally likely, that errors are spread evenly
+       across the other targets, and that no time is spent correcting mistakes. Real interfaces
+       routinely violate all three — see
+       <a href="https://pubmed.ncbi.nlm.nih.gov/23448963/">Yuan et al. 2013</a>. Where possible we
+       also show a confusion-matrix mutual-information estimate, which drops the symmetric-error
+       assumption.</p>
+
+    <h2>How we pick the reference number</h2>
+    <ol>
+      <li>Use the original paper's own calculation when it exists and is sound.</li>
+      <li>If the paper omits ITR, we compute one with a modality-appropriate method.</li>
+      <li>If the paper's method is flawed, we recompute and show <strong>both</strong> derivations.</li>
+    </ol>
+
+    <h2>Provenance labels</h2>
+    <ul>
+      <li><strong>Author-reported · verified</strong> — we re-derived the paper's method and matched it.</li>
+      <li><strong>Author-reported · unverified</strong> — a number is given but can't be re-derived from the paper.</li>
+      <li><strong>Recomputed — paper omitted</strong> — no ITR in the paper; we computed one.</li>
+      <li><strong>Recomputed — original flawed</strong> — the paper's method was broken; ours replaces it.</li>
+    </ul>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose { max-width: 70ch; }
+  .prose h1 { font-size: 28px; margin: 24px 0 8px; }
+  .prose h2 { font-size: 18px; margin: 28px 0 8px; }
+  .prose pre { background: var(--card); border: 1px solid var(--hairline); border-radius: 8px;
+    padding: 10px 14px; overflow-x: auto; font-size: 13px; }
+  .prose a { color: #24407a; }
+</style>
