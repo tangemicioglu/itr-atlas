@@ -38,7 +38,17 @@ modality-specific inputs).
 
 ## Local development
 
-_Setup instructions will be added once scaffolding lands._
+```bash
+npm install      # install dependencies
+npm run dev      # start dev server at http://localhost:4321
+npm test         # run unit tests (ITR compute helpers)
+npm run check    # type-check + validate content schema
+npm run build    # produce the static site in dist/
+```
+
+Add an interface by creating a Markdown file in `src/content/interfaces/`. Front-matter is
+validated against the schema in `src/content.config.ts`; standard calculations use a `compute`
+block, non-standard ones supply authored `steps`.
 
 ## License
 
