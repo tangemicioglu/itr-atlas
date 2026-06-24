@@ -1,0 +1,57 @@
+---
+import Tag from "./Tag.astro";
+import ProvenancePill from "./ProvenancePill.astro";
+import { formatBitsPerMin } from "../lib/itr/math";
+
+interface Props {
+  id: string;
+  name: string;
+  image?: string;
+  modalityTags: string[];
+  invasiveness: "non-invasive" | "partially-invasive" | "invasive";
+  referenceBitsPerMin: number;
+  referenceMethod: string;
+  miniStat: string;
+  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted" | "recomputed-flawed";
+}
+const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance } = Astro.props;
+const invasive = invasiveness !== "non-invasive";
+---
+<a class="card"
+   href={`/interfaces/${id}`}
+   data-name={name.toLowerCase()}
+   data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
+   data-itr={referenceBitsPerMin}>
+  <div class="photo">{image ? <img src={image} alt={name} /> : <span>device photo</span>}</div>
+  <div class="body">
+    <div class="name">{name}</div>
+    <div class="tags">
+      {modalityTags.map((t) => <Tag label={t} variant="modality" />)}
+      {invasive && <Tag label={invasiveness} variant="invasive" />}
+    </div>
+    <div class="statrow">
+      <div class="itr">{formatBitsPerMin(referenceBitsPerMin)}<small> bits/min</small></div>
+      <div class="mini">{miniStat}<br /><b>{referenceMethod}</b></div>
+    </div>
+    <ProvenancePill provenance={provenance} />
+  </div>
+</a>
+<style>
+  .card { display: block; background: var(--card); border: 1px solid var(--hairline);
+    border-radius: var(--radius); overflow: hidden; text-decoration: none; color: var(--ink);
+    transition: transform 0.12s, box-shadow 0.12s; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(40, 35, 25, 0.1); }
+  .photo { height: 96px; background: var(--photo); color: var(--muted);
+    display: flex; align-items: center; justify-content: center; font-size: 10px; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .body { padding: 13px 15px 15px; }
+  .name { font-size: 15px; font-weight: 700; line-height: 1.25; }
+  .tags { display: flex; gap: 5px; margin: 8px 0 12px; flex-wrap: wrap; }
+  .statrow { display: flex; align-items: baseline; justify-content: space-between;
+    border-top: 1px solid var(--hairline); padding-top: 11px; }
+  .itr { font-size: 26px; font-weight: 800; line-height: 1; }
+  .itr small { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .mini { text-align: right; font-size: 11px; color: var(--muted); }
+  .mini b { color: var(--ink); }
+  .body :global(.pill) { margin-top: 9px; }
+</style>
