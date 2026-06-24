@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Tag from "../../components/Tag.astro";
+import SourceList from "../../components/SourceList.astro";
+import CalculationBlock from "../../components/CalculationBlock.astro";
+import { resolveCalculation } from "../../lib/itr/resolve";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("interfaces");
+  return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const data = entry.data;
+const { Content } = await render(entry);
+
+const resolved = data.calculations.map((c) => ({ calc: c, result: resolveCalculation(c) }));
+const reference = resolved.find((r) => r.calc.id === data.referenceCalculationId) ?? resolved[0];
+const additional = resolved.filter((r) => r !== reference && !r.calc.notUsedForRanking);
+const supplementary = resolved.filter((r) => r.calc.notUsedForRanking);
+const invasive = data.invasiveness !== "non-invasive";
+---
+<BaseLayout title={`${data.name} — ITR Gallery`}>
+  <a class="back" href="/">← All interfaces</a>
+
+  <header class="head">
+    <div class="photo">{data.image ? <img src={data.image} alt={data.name} /> : <span>device photo</span>}</div>
+    <div>
+      <h1>{data.name}</h1>
+      <div class="tags">
+        {data.modalityTags.map((t) => <Tag label={t} variant="modality" />)}
+        {invasive && <Tag label={data.invasiveness} variant="invasive" />}
+        {data.year && <Tag label={String(data.year)} variant="neutral" />}
+      </div>
+    </div>
+  </header>
+
+  <h2>Reference ITR</h2>
+  <p class="seclbl">One designated method per entry — the number used for cross-comparison.</p>
+  <CalculationBlock
+    method={reference.calc.method}
+    kind={reference.calc.kind}
+    provenance={reference.calc.provenance}
+    resultBitsPerMin={reference.result.resultBitsPerMin}
+    steps={reference.result.steps}
+    flawReason={reference.calc.flawReason}
+    isReference={true}
+  />
+
+  <p class="modnote">
+    <b>Method varies by modality.</b> A grid speller uses Wolpaw / confusion-matrix mutual
+    information; speech uses word-level entropy; a continuous cursor uses Fitts'-law throughput.
+    Only the resulting bits/min is comparable across entries.
+  </p>
+
+  {additional.length > 0 && (
+    <>
+      <h2>Additional derivations</h2>
+      {additional.map((r) => (
+        <CalculationBlock
+          method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
+          resultBitsPerMin={r.result.resultBitsPerMin} steps={r.result.steps}
+          flawReason={r.calc.flawReason} />
+      ))}
+    </>
+  )}
+
+  {supplementary.length > 0 && (
+    <>
+      <h2>Supplementary calculations</h2>
+      <p class="seclbl">Shown for transparency — not used for ranking.</p>
+      {supplementary.map((r) => (
+        <CalculationBlock
+          method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
+          resultBitsPerMin={r.result.resultBitsPerMin} steps={r.result.steps}
+          flawReason={r.calc.flawReason} />
+      ))}
+    </>
+  )}
+
+  <h2>Source</h2>
+  <SourceList source={data.source} />
+
+  <div class="notes"><Content /></div>
+</BaseLayout>
+
+<style>
+  .back { display: inline-block; margin: 18px 0; font-size: 13px; color: var(--muted); text-decoration: none; }
+  .head { display: flex; gap: 24px; align-items: flex-start; margin-bottom: 26px; }
+  .photo { width: 220px; height: 150px; flex: none; border-radius: 14px; background: var(--photo);
+    color: var(--muted); display: flex; align-items: center; justify-content: center; font-size: 12px; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; }
+  h1 { margin: 0 0 14px; font-size: 26px; letter-spacing: -0.2px; }
+  h2 { font-size: 18px; margin: 30px 0 4px; }
+  .tags { display: flex; gap: 9px; flex-wrap: wrap; }
+  .seclbl { font-size: 13px; color: var(--muted); margin: 0 0 16px; }
+  .modnote { font-size: 12.5px; color: var(--muted); background: var(--card);
+    border: 1px dashed var(--hairline); border-radius: 9px; padding: 11px 14px; margin-top: 14px; }
+  .notes { margin-top: 24px; color: var(--ink); max-width: 70ch; }
+</style>
