@@ -21,6 +21,11 @@ inputs:
     value: "13"
     unit: "s"
     sourceNote: "Time per selection at the cited accuracy"
+actionSpace:
+  kind: fixed-set
+  size: 36
+  prior: uniform
+  notes: "6×6 character matrix, assumed equiprobable. The supplementary confusion-matrix figure relaxes the symmetric-error assumption but still treats the prior as uniform."
 calculations:
   - id: wolpaw
     method: "Wolpaw bitrate over N = 36 targets"

@@ -46,13 +46,28 @@ Inspired by [this comparison](https://x.com/SumnerLN/status/2069225927486435548)
 
 ### 3.1 The "reference calculation" principle
 
-Calculation methods are **heterogeneous by modality** — there is no universal formula:
+Calculation methods are **heterogeneous** — there is no universal formula. The heterogeneity is
+**not** primarily about the sensing modality; it is about the **action space** and the **source
+statistics** of the task, which are design choices independent of the hardware:
 
-| Modality family        | Typical method                              |
-|------------------------|---------------------------------------------|
-| Discrete grid / speller| Wolpaw bitrate; confusion-matrix mutual info (Nykopp) |
-| Speech / text          | Word/character entropy & perplexity         |
-| Continuous cursor      | Fitts'-law throughput (bits/s)              |
+- **Action space** — the set of distinguishable actions available at each selection. It may be a
+  fixed set of targets, a set that changes per step (pruned by a dictionary, grammar, or language
+  model), or a continuous control space.
+- **Source statistics / prior** — how probability mass is spread over that space. Wolpaw assumes a
+  uniform prior over a fixed N; real tasks rarely satisfy this (letter frequencies are Zipfian, a
+  bigram grammar conditions the next action on the last, a predictive layout reshapes likelihoods).
+
+A text interface is the clearest illustration: free-word (open vocabulary), fixed dictionary, and
+bigram-grammar variants of the *same* modality have different action spaces and priors, so they
+have different information per selection — and the resulting bits/min are not equivalent. The chosen
+method (Wolpaw, confusion-matrix mutual information, entropy/perplexity, Fitts'-law throughput)
+follows from the action space and source model, not from the modality label.
+
+**Comparability caveat.** Because the "bit" is defined by the action space, headline bits/min are
+only directly comparable across entries that count raw selections over a **uniform, fixed** target
+set. When an entry's action space is context-dependent, continuous, or has a non-uniform/learned
+prior, its number bakes in extra structure and must be read against its action space (see §3.4), not
+ranked naively. The site surfaces this per entry.
 
 Each entry designates **one reference calculation** — the number used for cross-comparison in the
 gallery. Other calculations may be shown as **supplementary** (explicitly *not used for ranking*).
@@ -89,6 +104,13 @@ Entry {
     sourceNote              // "Mean online accuracy, Table 1"
   }
 
+  actionSpace {             // what defines a "bit" here (see §3.4)
+    kind                    // "fixed-set" | "context-dependent" | "continuous"
+    size                    // effective N, or "continuous"
+    prior                   // "uniform" | "non-uniform" | "context-conditioned"
+    notes?                  // modality-specific detail: grammar, language model, Fitts' ID, …
+  }
+
   calculations[] {
     method                  // "Wolpaw bitrate"
     kind                    // short descriptor: "Theoretical upper bound"
@@ -103,6 +125,24 @@ Entry {
   notes                     // caveats, free text
 }
 ```
+
+### 3.4 Action space
+
+`actionSpace` is a first-class, **modality-agnostic** descriptor of what defines a bit for an entry.
+The three structured axes map directly to whether Wolpaw's assumptions hold; modality-specific
+detail (dictionary vs grammar, language model, Fitts' index of difficulty) lives in `notes`.
+
+| Axis    | Values                                                | Meaning |
+|---------|-------------------------------------------------------|---------|
+| `kind`  | `fixed-set`, `context-dependent`, `continuous`        | Structure of the available actions. |
+| `size`  | a number, or `continuous`                             | Effective count of distinguishable actions. |
+| `prior` | `uniform`, `non-uniform`, `context-conditioned`       | How probability mass is distributed over them. |
+
+Examples: an SSVEP grid is `fixed-set / 40 / uniform`; skilled QWERTY (scored by English character
+entropy) is `fixed-set / ~30 / context-conditioned`; a 2D cursor is `continuous / continuous / —`; a
+grammar-constrained speller is `context-dependent / varies / context-conditioned`. An entry counts
+as directly comparable only when `kind = fixed-set` **and** `prior = uniform`; otherwise the detail
+page shows a comparability caveat.
 
 ---
 

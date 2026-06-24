@@ -26,6 +26,11 @@ inputs:
     value: "0.5"
     unit: "s"
     sourceNote: "Gaze-shift / cue interval (Methods §2.3)"
+actionSpace:
+  kind: fixed-set
+  size: 40
+  prior: uniform
+  notes: "40 flicker-coded characters, assumed equiprobable. Real text is far from uniform, so the per-selection bits are an upper bound on what a user actually transmits."
 calculations:
   - id: wolpaw
     method: "Wolpaw bitrate over N = 40 targets"

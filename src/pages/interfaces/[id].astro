@@ -20,6 +20,22 @@ const reference = resolved.find((r) => r.calc.id === data.referenceCalculationId
 const additional = resolved.filter((r) => r !== reference && !r.calc.notUsedForRanking);
 const supplementary = resolved.filter((r) => r.calc.notUsedForRanking);
 const invasive = data.invasiveness !== "non-invasive";
+
+const as = data.actionSpace;
+const KIND_LABEL: Record<typeof as.kind, string> = {
+  "fixed-set": "Fixed set of targets",
+  "context-dependent": "Context-dependent (the live set changes per step)",
+  continuous: "Continuous control space",
+};
+const PRIOR_LABEL: Record<typeof as.prior, string> = {
+  uniform: "Uniform — all actions assumed equally likely",
+  "non-uniform": "Non-uniform — some actions more likely than others",
+  "context-conditioned": "Context-conditioned — likelihoods depend on prior actions",
+};
+// A headline number is only directly comparable when it counts raw selections
+// over a uniform, fixed target set. Anything else bakes in extra structure.
+const comparable = as.kind === "fixed-set" && as.prior === "uniform";
+const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
 <BaseLayout title={`${data.name} — ITR Gallery`}>
   <a class="back" href="/">← All interfaces</a>
@@ -49,10 +65,31 @@ const invasive = data.invasiveness !== "non-invasive";
   />
 
   <p class="modnote">
-    <b>Method varies by modality.</b> A grid speller uses Wolpaw / confusion-matrix mutual
-    information; speech uses word-level entropy; a continuous cursor uses Fitts'-law throughput.
-    Only the resulting bits/min is comparable across entries.
+    <b>What counts as a bit depends on the action space.</b> The number of distinguishable
+    actions and how likely each one is are design choices of the task, not the sensing hardware.
+    The same modality can present a fixed set of targets, a set pruned per step by a grammar or
+    language model, or a continuous control space — each changes how many actions are live and how
+    the probability mass is spread, and therefore the information per selection. Read the action
+    space below before comparing headline numbers across entries.
   </p>
+
+  <h2>Action space</h2>
+  <p class="seclbl">What the user can produce at each step, and how those options are distributed.</p>
+  <dl class="aspace">
+    <div><dt>Structure</dt><dd>{KIND_LABEL[as.kind]}</dd></div>
+    <div><dt>Size</dt><dd>{sizeLabel}</dd></div>
+    <div><dt>Prior</dt><dd>{PRIOR_LABEL[as.prior]}</dd></div>
+    {as.notes && <div><dt>Notes</dt><dd>{as.notes}</dd></div>}
+  </dl>
+  {!comparable && (
+    <p class="caveat">
+      <span class="caveat-label">Comparability</span>
+      This entry's action space is not a uniform set of fixed targets, so its bits/min already
+      reflects extra structure (a non-uniform prior, a context model, or a continuous space). It is
+      not directly comparable to entries that count raw selections under a uniform prior — compare
+      the derivations, not just the headline numbers.
+    </p>
+  )}
 
   {additional.length > 0 && (
     <>
@@ -97,5 +134,16 @@ const invasive = data.invasiveness !== "non-invasive";
   .seclbl { font-size: 13px; color: var(--muted); margin: 0 0 16px; }
   .modnote { font-size: 12.5px; color: var(--muted); background: var(--card);
     border: 1px dashed var(--hairline); border-radius: 9px; padding: 11px 14px; margin-top: 14px; }
+  .aspace { margin: 0; background: var(--card); border: 1px solid var(--hairline);
+    border-radius: var(--radius); padding: 4px 20px; }
+  .aspace > div { display: flex; padding: 11px 0; border-bottom: 1px solid var(--hairline); }
+  .aspace > div:last-child { border-bottom: none; }
+  .aspace dt { width: 110px; flex: none; color: var(--muted); font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.6px; margin: 0; }
+  .aspace dd { margin: 0; font-size: 14px; }
+  .caveat { font-size: 12.5px; color: var(--ink); background: var(--invasive-bg);
+    border: 1px solid var(--invasive); border-radius: 9px; padding: 11px 14px; margin-top: 12px; max-width: 70ch; }
+  .caveat-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--invasive); margin-right: 8px; }
   .notes { margin-top: 24px; color: var(--ink); max-width: 70ch; }
 </style>

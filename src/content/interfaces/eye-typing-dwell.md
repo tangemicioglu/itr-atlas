@@ -20,6 +20,11 @@ inputs:
     value: "1.2"
     unit: "s"
     sourceNote: "Dwell + saccade per key"
+actionSpace:
+  kind: fixed-set
+  size: 29
+  prior: uniform
+  notes: "On-screen keyboard keys, assumed equiprobable. A predictive layout that reorders keys by likelihood would make the prior non-uniform and change the bits per selection."
 calculations:
   - id: wolpaw
     method: "Wolpaw bitrate over N = 29 keys"

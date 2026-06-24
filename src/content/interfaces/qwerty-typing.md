@@ -18,6 +18,11 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "Entropy of English text (Shannon estimate)"
+actionSpace:
+  kind: fixed-set
+  size: 30
+  prior: context-conditioned
+  notes: "~30 keys, but the ITR uses English character entropy (~1 bit/char) — a context-conditioned source — rather than the ~5 bits a uniform keystroke would carry. This already bakes in a language model, so it is not directly comparable to the uniform-prior speller figures."
 calculations:
   - id: entropy
     method: "Character-entropy throughput"

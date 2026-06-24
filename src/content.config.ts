@@ -35,6 +35,17 @@ const provenance = z.enum([
   'recomputed-flawed',
 ]);
 
+// The set of distinguishable actions available at each selection and how they
+// are distributed. Modality-agnostic: structured axes (kind/size/prior) capture
+// whether Wolpaw's uniform-prior assumption holds; modality-specific detail
+// (dictionary vs grammar, Fitts' index of difficulty, etc.) goes in `notes`.
+const actionSpaceSchema = z.object({
+  kind: z.enum(['fixed-set', 'context-dependent', 'continuous']),
+  size: z.union([z.number(), z.literal('continuous')]),
+  prior: z.enum(['uniform', 'non-uniform', 'context-conditioned']),
+  notes: z.string().optional(),
+});
+
 const calculationSchema = z
   .object({
     id: z.string(),
@@ -75,6 +86,7 @@ const interfaces = defineCollection({
         sourceNote: z.string(),
       }),
     ),
+    actionSpace: actionSpaceSchema,
     calculations: z.array(calculationSchema).min(1),
     referenceCalculationId: z.string(),
   }).refine(
