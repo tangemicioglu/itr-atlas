@@ -5,15 +5,19 @@ modalityTags: ["Touch", "Chord keyboard"]
 sensingModality: Touch
 invasiveness: non-invasive
 source:
-  authors: "Tap Systems Inc. (vendor figures)"
-  venue: "Vendor documentation"
-  year: 2019
-  url: "https://www.tapwithus.com/quick-start-guide/tap-strap/"
+  authors: "Tu, Jeyachandra, Nagesh, Prabhu & Starner"
+  venue: "ISWC '21 Adjunct"
+  year: 2021
+  doi: "10.1145/3460421.3480428"
+  url: "https://doi.org/10.1145/3460421.3480428"
 inputs:
   - symbol: "rate"
-    value: "30"
+    value: "22.11"
     unit: "wpm"
-    sourceNote: "Vendor claim: ~30 wpm after ~5 hours of practice, ~35 wpm after 20 days of training, with a theoretical ceiling of 120 wpm. No controlled, peer-reviewed speed study — treat as a vendor/anecdote estimate. The system date comes from Tap's own press kit, which lists shipping since February 2018."
+    sourceNote: "Average final typing rate measured by Tu et al. 2021 in a controlled Tap Strap text-entry study using standard MacKenzie-Soukoreff phrases."
+  - symbol: "P"
+    value: "0.9102"
+    sourceNote: "Final letter accuracy reported by Tu et al. 2021: 91.02%."
   - symbol: "H"
     value: "1.0"
     unit: "bits/char"
@@ -22,7 +26,7 @@ actionSpace:
   kind: fixed-set
   size: 30
   prior: context-conditioned
-  notes: "A finger-worn band that detects taps of each finger against any surface; characters are tap combinations (chords), like a Twiddler without a physical keypad. Same ~30-symbol English alphabet, counted at Shannon entropy. The rate itself is the weak link here, not the action space."
+  notes: "A finger-worn band that detects taps of each finger against any surface; characters are tap combinations (chords), like a Twiddler without a physical keypad. Same ~30-symbol English alphabet, counted at Shannon entropy. The reference now uses the measured Tu et al. text-entry rate rather than Tap's vendor training claim."
 references:
   - label: "System date: Tap press kit listing shipping since February 2018"
     url: "https://www.tapwithus.com/press-kit/"
@@ -31,17 +35,19 @@ references:
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
-    kind: "Net of English redundancy (vendor-reported rate)"
-    provenance: author-reported-unverified
-    resultBitsPerMin: 150
-    flawReason: "Rate is a vendor/anecdote figure (no controlled study), so the ITR is indicative only."
+    kind: "Net of English redundancy and measured letter accuracy"
+    provenance: recomputed-omitted
+    resultBitsPerMin: 101
     steps:
       - title: "Characters per minute"
-        math: "30 wpm × 5 chars/word = 150 chars/min"
-        note: "No independent error-rate figure is published for this vendor device, and the ~30 wpm is itself a vendor/anecdote rate, so error here is unquantified — another reason this entry is flagged as indicative."
+        math: "22.11 wpm × 5 chars/word = 110.55 char/min"
+        note: "Tu et al. report the final average Tap Strap typing rate after practice."
+      - title: "Discount by measured letter accuracy"
+        math: "110.55 × 0.9102 ≈ 100.6 correct char/min"
+        note: "Tu et al. report final letter accuracy of 91.02%; applying it separately gives a stricter realized-output estimate."
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 150 × 1.0 ≈ 150 bits/min"
+        math: "ITR = 100.6 × 1.0 ≈ 101 bits/min"
 referenceCalculationId: entropy
 ---

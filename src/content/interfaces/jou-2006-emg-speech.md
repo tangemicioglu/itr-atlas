@@ -28,7 +28,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Ceiling only — rate is assumed, not measured"
+    kind: "Assumed-rate estimate — not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 351
@@ -42,7 +42,7 @@ calculations:
         math: "ITR = 70.1 × 5.0 ≈ 351 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 100 words"
-    kind: "Per-word throughput, uniform-prior ceiling (assumed rate)"
+    kind: "Uniform-prior comparison metric (assumed rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

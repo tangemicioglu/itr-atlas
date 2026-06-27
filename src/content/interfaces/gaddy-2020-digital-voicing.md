@@ -25,11 +25,11 @@ actionSpace:
   kind: fixed-set
   size: 67
   prior: context-conditioned
-  notes: "EMG-to-speech SYNTHESIS, scored by transcribing the generated audio. The reference uses the closed-vocabulary condition (67 words, 3.6% WER). The realistic open-vocabulary condition (9,828-word vocabulary) reaches only 68% WER — far harder — which is why open-vocabulary silent speech is nowhere near these bits. ITR is poorly defined for open-vocabulary synthesis; the closed figure is the defensible one."
+  notes: "EMG-to-speech synthesis, scored by transcribing the generated audio. The reference uses the closed-vocabulary condition (67 words, 3.6% WER). The paper's open-vocabulary condition (9,828-word vocabulary) has much higher WER (68%), so the closed-vocabulary figure should not be read as open-vocabulary silent-speech throughput. ITR is not directly reported for the synthesis task; the closed-vocabulary calculation is the comparable atlas estimate."
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Ceiling only — rate is assumed, not measured (closed vocabulary)"
+    kind: "Assumed-rate estimate — not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 482
@@ -43,7 +43,7 @@ calculations:
         math: "ITR = 96.4 × 5.0 ≈ 482 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 67 words (closed-vocabulary condition)"
-    kind: "Per-word throughput, uniform-prior ceiling (assumed rate)"
+    kind: "Uniform-prior comparison metric (assumed rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

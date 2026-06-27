@@ -25,7 +25,7 @@ actionSpace:
   kind: context-dependent
   size: 125000
   prior: context-conditioned
-  notes: "Intracortical decoding of attempted speech through an n-gram/neural language model over a 125k-word vocabulary. The vast majority of the 125k words are never live at a given step; the language model reweights candidates by context, so the uniform-prior Wolpaw figure massively overstates the information per word actually transmitted by the cortex."
+  notes: "Intracortical decoding of attempted speech through an n-gram/neural language model over a 125k-word vocabulary. The language model reweights candidates by context, so the uniform-prior Wolpaw figure is not directly comparable to the atlas English-output convention."
 references:
   - label: "Open-access full text (PMC)"
     url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10468393/"

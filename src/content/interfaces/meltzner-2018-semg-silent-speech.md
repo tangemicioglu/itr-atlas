@@ -25,11 +25,11 @@ actionSpace:
   kind: fixed-set
   size: 2200
   prior: context-conditioned
-  notes: "Conformable facial/neck sEMG sensors decoding continuous phrases over a large 2,200-word vocabulary with a language model. Large vocabulary + low WER make the per-word information high, but the language model and assumed rate mean the headline bits/min is an optimistic ceiling, not a demonstrated communication speed."
+  notes: "Conformable facial/neck sEMG sensors decoding continuous phrases over a large 2,200-word vocabulary with a language model. Large vocabulary + low WER make the per-word comparison metric high, but the rate is assumed rather than measured online, so the headline bits/min should not be read as a demonstrated communication speed."
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Ceiling only — rate is assumed, not measured"
+    kind: "Assumed-rate estimate — not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 456
@@ -39,12 +39,12 @@ calculations:
         note: "Rate is the ASSUMED ~100 wpm articulation rate, not measured."
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
-        note: "Independent of vocabulary size — so the big 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw ceiling."
+        note: "Independent of vocabulary size — so the 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw comparison metric."
       - title: "Information transfer rate"
         math: "ITR = 91.1 × 5.0 ≈ 456 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 2,200 words"
-    kind: "Per-word throughput, uniform-prior ceiling (assumed rate)"
+    kind: "Uniform-prior comparison metric (assumed rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

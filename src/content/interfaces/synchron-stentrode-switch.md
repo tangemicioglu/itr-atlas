@@ -29,7 +29,7 @@ actionSpace:
   kind: context-dependent
   size: 28
   prior: context-conditioned
-  notes: "CREDIT-ASSIGNMENT CAVEAT: the endovascular electrode provides only a binary click; spatial pointing is supplied by an eye-tracker, and a scanning/keyboard interface gates the targets. So this per-character figure credits the whole assistive stack, not the BCI channel alone — the intrinsic information from the blood-vessel electrode is far lower (closer to a single switch, ~0.3 bits/s in the plot that inspired this atlas). Because the task produced English text under a context-conditioned prior, the reference number uses the same character-entropy method as the other text-entry entries (~1 bit/char); the Wolpaw-over-28-targets figure, which assumes a uniform 1-of-28 choice, is kept only as a ceiling."
+  notes: "Credit-assignment caveat: the endovascular electrode supplies a switch signal; spatial pointing is supplied by an eye-tracker, and a scanning/keyboard interface gates the targets. This per-character figure therefore measures the complete assistive stack rather than the endovascular signal alone. Because the task produced English text under a context-conditioned prior, the reference number uses the same character-entropy method as the other text-entry entries (~1 bit/char); the Wolpaw-over-28-targets figure, which assumes a uniform 1-of-28 choice, is kept only as a secondary selection metric."
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
@@ -46,7 +46,7 @@ calculations:
         math: "ITR = 13.81 × 1.0 ≈ 14 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 28 keyboard targets"
-    kind: "Uniform-prior selection ceiling (over-credits English text)"
+    kind: "Uniform-prior selection metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

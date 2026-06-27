@@ -33,7 +33,7 @@ actionSpace:
   kind: fixed-set
   size: 40
   prior: context-conditioned
-  notes: "Same 40-target SSVEP paradigm as Chen et al. 2015; the decoder classifies which flicker frequency the user gazes at (a classifier, not Fitts pointing). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 325 bit/min Wolpaw figure counts log2(N) per selection and is kept as a classifier ceiling. The faster decoder (0.8 s/selection vs ~1 s in Chen 2015) is why the realized rate edges above Chen's."
+  notes: "Same 40-target SSVEP paradigm as Chen et al. 2015; the decoder classifies which flicker frequency the user gazes at (a classifier, not Fitts pointing). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 325 bit/min Wolpaw figure counts log2(N) per selection and is kept as a secondary classifier metric. The faster decoder (0.8 s/selection vs ~1 s in Chen 2015) is why the atlas text-throughput estimate edges above Chen's."
 references:
   - label: "Nakanishi et al. 2018 — open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5783827/"
@@ -53,13 +53,13 @@ calculations:
         math: "ITR = 67 × 1.0 ≈ 67 bits/min"
   - id: reported
     method: "Wolpaw bitrate over N = 40 targets (authors' reported ITR)"
-    kind: "Classifier ceiling — uniform 1-of-40 choice, over-credits English text"
+    kind: "Uniform 1-of-40 classifier metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
     resultBitsPerMin: 325
     steps:
       - title: "Authors' online ITR"
         math: "325.33 bit/min cue-guided (198.67 bit/min free-spelling) ≈ log2(40)-scale bits per selection × ~75 sel/min"
-        note: "Holds the speller to log2(N) per selection versus the 1 bit/char we apply to English text — a ceiling, not the realized rate. It was the record EEG-BCI ITR at publication."
+        note: "Uses log2(N) per selection, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries. It was the record EEG-BCI ITR at publication."
 referenceCalculationId: comm
 ---

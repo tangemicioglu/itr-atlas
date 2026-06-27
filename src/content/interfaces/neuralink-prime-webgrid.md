@@ -25,7 +25,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A 2D cursor controlled by an N1 intracortical array, measured on Webgrid (a cued target-acquisition task). The headline 'BPS' is NOT a Fitts throughput: Webgrid credits log2(t²−1) ≈ 9.81 bits for every selection on the 30×30 board — the full-grid choice entropy — whereas the actual movement only resolves the Fitts index of difficulty, log2(A/W+1) ≈ 4.1 bits, because the target is cued, not chosen. So the as-reported BPS over-credits a continuous pointing channel ~2.4× relative to how the mouse, trackball and stylus are measured. The reference number here is therefore a Fitts throughput on Neuralink's own grid; the company BPS is kept as a secondary figure — and since Webgrid's BPS = log2(t²−1)·f is exactly the Wolpaw bitrate at the net-correct rate (accuracy folded into f, hence P=1), it is labeled as such, consistent with the Wolpaw ceilings on the speller entries."
+  notes: "A 2D cursor controlled by an N1 intracortical array, measured on Webgrid (a cued target-acquisition task). The headline BPS is a Webgrid task metric, not an ISO-style Fitts throughput: it assigns log2(t²−1) ≈ 9.81 bits for each correct selection on the 30×30 board, while the atlas pointing convention uses the movement difficulty, log2(A/W+1) ≈ 4.1 bits, because the target is cued before the movement. The reference number here is therefore a Fitts-style throughput on Neuralink's own grid; the Webgrid BPS is kept as a secondary, as-reported figure. Since Webgrid's BPS = log2(t²−1)·f at the net-correct rate, it is labeled as a Wolpaw-style grid score for comparison with the other secondary task metrics."
 calculations:
   - id: fitts
     method: "Fitts' law throughput on Neuralink's own Webgrid grid"
@@ -45,7 +45,7 @@ calculations:
         note: "Validation: the able-bodied ~10 BPS on this same 30×30 board reduces by the identical method to ~4.1 bits/s Fitts — matching MacKenzie's independently-measured mouse throughput (4.5 bits/s). The correction is self-consistent, and it places the BCI cursor just below an able-bodied mouse, not above it."
   - id: reported
     method: "Wolpaw bitrate over the 899-cell grid (Neuralink's Webgrid BPS)"
-    kind: "Full-grid choice-entropy ceiling — N is arbitrary grid density, over-credits a pointing channel"
+    kind: "Webgrid full-grid score — secondary task metric, not atlas-ranked pointing throughput"
     provenance: author-reported-unverified
     notUsedForRanking: true
     compute:

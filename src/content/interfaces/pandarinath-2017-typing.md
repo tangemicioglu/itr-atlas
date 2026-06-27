@@ -23,7 +23,7 @@ actionSpace:
   kind: fixed-set
   size: 28
   prior: context-conditioned
-  notes: "A cursor-driven onscreen keyboard (OPTI-II / QWERTY): the intracortical cursor selects keys one at a time to spell English text. The action set is the ~28 keys, but real English is non-uniform, so the realized information is the character-entropy of the text (~1 bit/char), not log2(keys). The underlying continuous-cursor channel — and the separate 6×6 grid benchmark that measures its peak bitrate — is the companion entry (ReFIT Cursor BCI, pointing). This entry is what the participant actually communicated; that one is the channel ceiling."
+  notes: "A cursor-driven onscreen keyboard (OPTI-II / QWERTY): the intracortical cursor selects keys one at a time to spell English text. The action set is the ~28 keys, but real English is non-uniform, so the realized information is the character-entropy of the text (~1 bit/char), not log2(keys). The underlying continuous-cursor channel — and the separate 6×6 grid benchmark that measures its peak bitrate — is the companion entry (ReFIT Cursor BCI, pointing). This entry is what the participant actually communicated; that one is the channel benchmark."
 references:
   - label: "Open-access full text (eLife)"
     url: "https://elifesciences.org/articles/18554"

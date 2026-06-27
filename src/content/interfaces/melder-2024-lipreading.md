@@ -26,7 +26,7 @@ actionSpace:
   kind: context-dependent
   size: continuous
   prior: context-conditioned
-  notes: "A camera-based silent speech interface: a phone's front camera reads lip movements and a streamlined real-time lip-reading model (built on LipType) transcribes silently mouthed phrases to text with continuous on-screen feedback. It is folded under the silent-speech color because it decodes articulation into language, but the sensing is optical (video), not muscle — hence the Video tag. The realized rate is low because lip-reading is error-prone and the recognizer adds latency: 5.59 wpm at ~20% WER, against ~30 wpm for voice ASR in the authors' own head-to-head. This is a measured rate, which is exactly why it sits far below the assumption-driven EMG silent-speech ceilings (Gaddy, Jou, Meltzner) despite being a newer system."
+  notes: "A camera-based silent speech interface: a phone's front camera reads lip movements and a streamlined real-time lip-reading model transcribes silently mouthed phrases to text with continuous on-screen feedback. It is folded under the silent-speech color because it decodes articulation into language, but the sensing is optical (video), not muscle — hence the Video tag. The measured operating point is 5.59 wpm at ~20% WER, against ~30 wpm for voice ASR in the authors' own head-to-head. Because this is a measured end-to-end rate, it is not directly comparable to assumed-rate EMG silent-speech estimates."
 calculations:
   - id: comm
     method: "Word-entropy throughput (measured end-to-end rate)"

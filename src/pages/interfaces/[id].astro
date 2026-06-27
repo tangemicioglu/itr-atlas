@@ -44,7 +44,9 @@ const rankedOnRawSelection =
   reference.calc.compute?.method === "confusion-mi";
 const comparabilityClass = reference.calc.notUsedForRanking
   ? "ceiling"
-  : as.kind === "continuous"
+  : as.kind === "continuous" && rankedOnRawSelection
+    ? "pointing-selection"
+    : as.kind === "continuous"
     ? "pointing"
     : rankedOnRawSelection
       ? "selection"
@@ -54,6 +56,8 @@ const COMPARABILITY: Record<string, string> = {
     "The figure above is a ceiling, not a measured throughput — a raw-channel capacity or an assumed-rate estimate — so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
   pointing:
     "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries — mouse, trackball, stylus, gaze and the cursor BCIs. Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/min, but one measures movement difficulty and the other text information, so compare within the family first.",
+  "pointing-selection":
+    "Ranked on a Wolpaw-style target-acquisition estimate over cued endpoints. This is a continuous cursor task, so compare it carefully with the Fitts-ranked pointing entries: the number reflects the published target set and completion rate, not a full Fitts effective-width throughput.",
   selection:
     "Ranked on the raw selection rate — log₂(N) over the real action set, discounted by accuracy. This is the right measure here because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
   language:

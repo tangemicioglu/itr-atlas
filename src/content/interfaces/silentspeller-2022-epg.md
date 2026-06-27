@@ -45,7 +45,7 @@ calculations:
         math: "ITR = 32.2 × 5.0 ≈ 161 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 1,164 words"
-    kind: "Per-word throughput, uniform-prior ceiling (measured rate)"
+    kind: "Uniform-prior comparison metric (measured rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

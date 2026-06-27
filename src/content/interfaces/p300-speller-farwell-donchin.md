@@ -25,7 +25,7 @@ actionSpace:
   kind: fixed-set
   size: 36
   prior: context-conditioned
-  notes: "6×6 character matrix; the decoder classifies which letter drew the P300 response (covert attention — no pointing, no cursor). The realized output is English text, so the reference uses the same character-entropy method (~1 bit/char) as the other text-entry entries; the Wolpaw-over-36 figure assumes a uniform 1-of-36 choice and is kept only as a classifier ceiling. Modern P300 spellers are far faster, but this is the 1988 original."
+  notes: "6×6 character matrix; the decoder classifies which letter drew the P300 response (covert attention — no pointing, no cursor). The realized output is English text, so the reference uses the same character-entropy method (~1 bit/char) as the other text-entry entries; the Wolpaw-over-36 figure assumes a uniform 1-of-36 choice and is kept as a secondary classifier metric. Modern P300 spellers are far faster, but this is the 1988 original."
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
@@ -42,7 +42,7 @@ calculations:
         math: "ITR = 2.5 × 1.0 ≈ 2 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 36 targets"
-    kind: "Classifier ceiling — uniform 1-of-36 choice, over-credits English text"
+    kind: "Uniform 1-of-36 classifier metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:

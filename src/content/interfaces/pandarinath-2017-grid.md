@@ -22,7 +22,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A 2D point-and-click cursor; throughput is measured by how fast and accurately it acquires randomly placed grid targets. This is a continuous control channel, not a discrete speller. The authors' headline uses the field-standard achieved-bitrate metric (log2(N) per cued selection), which credits the full 36-cell choice entropy even though the target is cued, not chosen — the same over-credit as Neuralink's Webgrid BPS. The reference number here is therefore a Fitts throughput on the same grid (apples-to-apples with the mouse, trackball and stylus); the log2(N) achieved-bitrate is kept as a secondary, as-reported figure. This entry is the pointing CHANNEL; the same system's real-world copy-typing application is a separate entry (ReFIT Cursor BCI, text entry), which is what the participants actually communicated."
+  notes: "A 2D point-and-click cursor; throughput is measured by how fast and accurately it acquires randomly placed grid targets. This is a continuous control channel, not a discrete speller. The authors' headline uses the field-standard achieved-bitrate metric (log2(N) per cued selection), while the atlas pointing convention uses a Fitts-style movement difficulty on the same grid. The reference number here is therefore a Fitts throughput for comparability with mouse, trackball and stylus entries; the log2(N) achieved-bitrate is kept as a secondary, as-reported figure. This entry is the pointing channel; the same system's real-world copy-typing application is a separate entry (ReFIT Cursor BCI, text entry), which is what the participants actually communicated."
 references:
   - label: "Open-access full text (eLife)"
     url: "https://elifesciences.org/articles/18554"
@@ -45,14 +45,14 @@ calculations:
         note: "The same correction applied to Neuralink's Webgrid; it puts both intracortical cursor BCIs on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s), so the chart compares like for like."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
-    kind: "Full-grid choice-entropy bitrate (over-credits a pointing channel)"
+    kind: "Achieved-bitrate task metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
     resultBitsPerMin: 222
     steps:
       - title: "Information per target acquisition"
         math: "6×6 grid → N = 36 targets;  log2(N − 1) = log2(35) ≈ 5.13 bits per correct selection"
-        note: "Field-standard BCI achieved-bitrate (Nuyujukian et al. 2015). It credits the full-grid choice entropy per cued selection, so it is not comparable to the Fitts throughputs used for the pointing devices — kept here as the author-reported figure."
+        note: "Field-standard BCI achieved-bitrate (Nuyujukian et al. 2015). It uses the grid choice entropy per cued selection, so it is kept here as the author-reported task metric rather than the atlas-ranked Fitts throughput."
       - title: "Net correct selections over time"
         math: "(correct − incorrect) selections ÷ total time;  each error offsets one correct selection"
         note: "Participant T5 (best of three), 29 blocks over 4 days, randomly cued targets. ≈ 0.72 net correct selections/s."

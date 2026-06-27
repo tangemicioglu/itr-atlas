@@ -25,7 +25,7 @@ actionSpace:
   kind: context-dependent
   size: 125000
   prior: context-conditioned
-  notes: "Same large-vocabulary, language-model-mediated structure as other free-speech BCIs: 125k words nominally, but context prunes and reweights candidates each step. The standout result is accuracy (≈97.5% sustained), not raw rate. The uniform-prior assumption again overstates per-word information."
+  notes: "Same large-vocabulary, language-model-mediated structure as other free-speech BCIs: 125k words nominally, but context prunes and reweights candidates each step. The standout result is accuracy (≈97.5% sustained), not raw rate. The uniform-prior Wolpaw calculation is kept as a secondary comparison because it is not directly comparable to the atlas English-output convention."
 references:
   - label: "Open-access full text (PMC)"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11328962/"

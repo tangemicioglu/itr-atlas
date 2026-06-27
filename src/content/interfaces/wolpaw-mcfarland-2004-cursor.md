@@ -29,7 +29,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A continuous 2D cursor driven by sensorimotor-rhythm modulation (left/right-hand and rest motor imagery) — the canonical non-invasive cursor BCI, and the paper that showed scalp EEG can approach invasive cursor control. Because the channel is continuous cursor motion, it ranks on Fitts throughput like the mouse, tongue drive and the intracortical cursor BCIs, NOT on log2(8): the eight targets are cued endpoints, not a chosen alphabet. The paper does not publish pixel geometry, so the Fitts index of difficulty here is an explicit estimate (target ≈ 4.9% of the workspace, amplitude ≈ center-to-periphery); read the result as order-of-magnitude (~1–2 bits/s), which is consistent with the authors' own claim of parity with invasive cursor BCIs of the era."
+  notes: "A continuous 2D cursor driven by sensorimotor-rhythm modulation (left/right-hand and rest motor imagery) — the canonical non-invasive cursor BCI, and the paper that showed scalp EEG can approach invasive cursor control. The paper reports an eight-target center-out task, so the reference follows the Wolpaw-style target-acquisition estimate over those cued endpoints. The Fitts estimate is kept as a geometry-based check, but the paper does not publish pixel geometry or endpoint scatter, so that calculation rests on inferred target size and amplitude."
 references:
   - label: "Wolpaw & McFarland 2004 — open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC535103/"
@@ -54,11 +54,10 @@ calculations:
     method: "Wolpaw / achieved-bitrate over the 8 cued targets"
     kind: "Discrete-selection figure — UNDER-counts the continuous cursor (only 8 targets)"
     provenance: recomputed-omitted
-    notUsedForRanking: true
     compute:
       method: wolpaw
       targets: 8
       accuracy: 0.82
       secondsPerSelection: 2.75
-referenceCalculationId: fitts
+referenceCalculationId: wolpaw
 ---

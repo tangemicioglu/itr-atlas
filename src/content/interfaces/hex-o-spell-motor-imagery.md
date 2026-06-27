@@ -44,17 +44,17 @@ calculations:
       - title: "Information transfer rate"
         math: "ITR = 7.6 × 1.0 ≈ 8 bits/min  (typical sessions ~2.3–7.6, i.e. ~2–8 bits/min)"
   - id: wolpaw
-    method: "Uniform-prior ceiling over the ~30-letter alphabet"
-    kind: "Selection ceiling — assumes a uniform 1-of-30 choice, over-credits English text"
+    method: "Uniform-prior comparison over the ~30-letter alphabet"
+    kind: "Uniform 1-of-30 selection metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 37
     steps:
       - title: "Bits per letter at perfect accuracy"
         math: "log2(30) ≈ 4.91 bits/letter (each letter reached by a two-step hexagon selection)"
-        note: "The uniform-prior upper bound; the paper gives the net letter rate but not a per-command accuracy, so this is shown at perfect accuracy as a ceiling rather than a Wolpaw recomputation."
+        note: "The paper gives the net letter rate but not a per-command accuracy, so this is shown at perfect accuracy as a uniform-prior comparison rather than a Wolpaw recomputation."
       - title: "Information transfer rate"
         math: "ITR = 4.91 × 7.6 letters/min ≈ 37 bits/min"
-        note: "Holds the speller to log2(N) per letter versus the 1 bit/char we apply to English text — a ceiling, not the realized rate."
+        note: "Uses log2(N) per letter, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries."
 referenceCalculationId: comm
 ---

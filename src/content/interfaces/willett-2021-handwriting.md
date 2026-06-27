@@ -43,7 +43,7 @@ calculations:
         math: "(1 − CER) × rate = 0.941 × 90 = 84.7 net char/min"
       - title: "Shannon per-character entropy of English"
         math: "H ≈ 1.0 bit/char"
-        note: "English letters are redundant, so the raw 31-symbol count overstates the information; 1 bit/char is the honest unit, consistent with the typing entries."
+        note: "English letters are redundant, so the atlas-ranked figure uses 1 bit/char for consistency with the typing entries rather than the raw 31-symbol alphabet size."
       - title: "Information transfer rate"
         math: "ITR = 84.7 × 1.0 ≈ 85 bits/min"
   - id: raw-word-entropy
@@ -65,7 +65,7 @@ calculations:
         math: "ITR = 13.5 × 5.0 ≈ 67 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 31 characters"
-    kind: "Per-character throughput, uniform-prior ceiling (raw decoder)"
+    kind: "Uniform-prior character metric (raw decoder)"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:
