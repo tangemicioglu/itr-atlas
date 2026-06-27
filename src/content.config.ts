@@ -87,6 +87,9 @@ const interfaces = defineCollection({
       }),
     ),
     actionSpace: actionSpaceSchema,
+    references: z
+      .array(z.object({ label: z.string(), url: z.string().url() }))
+      .optional(),
     calculations: z.array(calculationSchema).min(1),
     referenceCalculationId: z.string(),
   }).refine(

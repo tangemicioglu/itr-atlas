@@ -1,6 +1,6 @@
-# Information Transfer Rate — Interface Gallery
+# Information Transfer Rate — Atlas
 
-A curated, shareable gallery comparing **information transfer rate (ITR, bits/min)** across all
+A curated, shareable atlas comparing **information transfer rate (ITR, bits/min)** across all
 human→machine input modalities: brain–computer interfaces, eye-tracking, speech, typing, and more.
 
 Most ITR comparisons quietly misapply the math — Wolpaw's assumptions rarely hold in real
@@ -11,7 +11,10 @@ step**, and each entry shows exactly which method was used and why.
 
 ## Status
 
-🏗️ **Pre-implementation.** The spec is approved and frozen in `SPEC.md`. Code has not started.
+✅ **Built.** 19 entries across BCI (intracortical, ECoG, endovascular), spellers (SSVEP, P300,
+eye, QWERTY), and silent speech (sEMG, electropalatography, ultrasound). Numbers are sourced and
+re-derived per entry. Four early seed entries (SSVEP, P300, eye-typing, QWERTY) still use
+placeholder figures pending re-derivation from their papers.
 
 ## What makes an entry honest
 

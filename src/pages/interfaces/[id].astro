@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Tag from "../../components/Tag.astro";
 import SourceList from "../../components/SourceList.astro";
@@ -13,12 +13,13 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const data = entry.data;
-const { Content } = await render(entry);
 
 const resolved = data.calculations.map((c) => ({ calc: c, result: resolveCalculation(c) }));
 const reference = resolved.find((r) => r.calc.id === data.referenceCalculationId) ?? resolved[0];
+// When the designated calc is itself a ceiling, the entry has no ranked rate.
+const rankable = !reference.calc.notUsedForRanking;
 const additional = resolved.filter((r) => r !== reference && !r.calc.notUsedForRanking);
-const supplementary = resolved.filter((r) => r.calc.notUsedForRanking);
+const supplementary = resolved.filter((r) => r !== reference && r.calc.notUsedForRanking);
 const invasive = data.invasiveness !== "non-invasive";
 
 const as = data.actionSpace;
@@ -32,16 +33,39 @@ const PRIOR_LABEL: Record<typeof as.prior, string> = {
   "non-uniform": "Non-uniform — some actions more likely than others",
   "context-conditioned": "Context-conditioned — likelihoods depend on prior actions",
 };
-// A headline number is only directly comparable when it counts raw selections
-// over a uniform, fixed target set. Anything else bakes in extra structure.
-const comparable = as.kind === "fixed-set" && as.prior === "uniform";
+// Comparability is governed by the realized-output rule, not Wolpaw's uniform-prior
+// assumption (which the methodology now deliberately violates by baking in the
+// language prior). Entries are commensurable when they share an estimator and a
+// predictor: continuous control ranks on Fitts; closed non-language command sets on
+// log2(N)/Wolpaw; everything else on the shared ~1 bit/char language predictor;
+// ceiling-only entries are not ranked at all.
+const rankedOnRawSelection =
+  reference.calc.compute?.method === "wolpaw" ||
+  reference.calc.compute?.method === "confusion-mi";
+const comparabilityClass = reference.calc.notUsedForRanking
+  ? "ceiling"
+  : as.kind === "continuous"
+    ? "pointing"
+    : rankedOnRawSelection
+      ? "selection"
+      : "language";
+const COMPARABILITY: Record<string, string> = {
+  ceiling:
+    "The figure above is a ceiling, not a measured throughput — a raw-channel capacity or an assumed-rate estimate — so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
+  pointing:
+    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries — mouse, trackball, stylus, gaze and the cursor BCIs. Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/min, but one measures movement difficulty and the other text information, so compare within the family first.",
+  selection:
+    "Ranked on the raw selection rate — log₂(N) over the real action set, discounted by accuracy. This is the right measure here because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
+  language:
+    "Ranked on the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor is what makes it directly comparable to every other text entry — keyboards, spellers, silent speech and speech BCIs — regardless of each entry's prior or vocabulary size. Any raw-channel figure shown below (Wolpaw or log₂(N)) is a ceiling, not this rank.",
+};
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
-<BaseLayout title={`${data.name} — ITR Gallery`}>
+<BaseLayout title={`${data.name} — ITR Atlas`}>
   <a class="back" href="/">← All interfaces</a>
 
   <header class="head">
-    <div class="photo">{data.image ? <img src={data.image} alt={data.name} /> : <span>device photo</span>}</div>
+    {data.image && <div class="photo"><img src={data.image} alt={data.name} /></div>}
     <div>
       <h1>{data.name}</h1>
       <div class="tags">
@@ -52,8 +76,21 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     </div>
   </header>
 
-  <h2>Reference ITR</h2>
-  <p class="seclbl">One designated method per entry — the number used for cross-comparison.</p>
+  <h2>Inputs</h2>
+  <p class="seclbl">The measured or assumed values behind the calculations, each with its source.</p>
+  <dl class="inputs">
+    {data.inputs.map((i) => (
+      <div>
+        <dt><span class="sym">{i.symbol}</span> = {i.value}{i.unit ? ` ${i.unit}` : ""}</dt>
+        <dd>{i.sourceNote}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <h2>{rankable ? "Reference ITR" : "Headline ceiling (not ranked)"}</h2>
+  <p class="seclbl">{rankable
+    ? "One designated method per entry — the number used for cross-comparison."
+    : "This entry has no measured communication rate, so it is not ranked. The figure below is a ceiling computed from an assumed rate, kept for documentation only."}</p>
   <CalculationBlock
     method={reference.calc.method}
     kind={reference.calc.kind}
@@ -61,7 +98,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     resultBitsPerMin={reference.result.resultBitsPerMin}
     steps={reference.result.steps}
     flawReason={reference.calc.flawReason}
-    isReference={true}
+    isReference={rankable}
   />
 
   <p class="modnote">
@@ -81,15 +118,10 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     <div><dt>Prior</dt><dd>{PRIOR_LABEL[as.prior]}</dd></div>
     {as.notes && <div><dt>Notes</dt><dd>{as.notes}</dd></div>}
   </dl>
-  {!comparable && (
-    <p class="caveat">
-      <span class="caveat-label">Comparability</span>
-      This entry's action space is not a uniform set of fixed targets, so its bits/min already
-      reflects extra structure (a non-uniform prior, a context model, or a continuous space). It is
-      not directly comparable to entries that count raw selections under a uniform prior — compare
-      the derivations, not just the headline numbers.
-    </p>
-  )}
+  <p class="compare">
+    <span class="compare-label">Comparability</span>
+    {COMPARABILITY[comparabilityClass]}
+  </p>
 
   {additional.length > 0 && (
     <>
@@ -117,9 +149,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   )}
 
   <h2>Source</h2>
-  <SourceList source={data.source} />
-
-  <div class="notes"><Content /></div>
+  <SourceList source={data.source} references={data.references} />
 </BaseLayout>
 
 <style>
@@ -141,9 +171,14 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   .aspace dt { width: 110px; flex: none; color: var(--muted); font-size: 12px;
     text-transform: uppercase; letter-spacing: 0.6px; margin: 0; }
   .aspace dd { margin: 0; font-size: 14px; }
-  .caveat { font-size: 12.5px; color: var(--ink); background: var(--invasive-bg);
-    border: 1px solid var(--invasive); border-radius: 9px; padding: 11px 14px; margin-top: 12px; max-width: 70ch; }
-  .caveat-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.7px; color: var(--invasive); margin-right: 8px; }
-  .notes { margin-top: 24px; color: var(--ink); max-width: 70ch; }
+  .inputs { margin: 0 0 6px; }
+  .inputs > div { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+  .inputs > div:last-child { border-bottom: none; }
+  .inputs dt { font-size: 14px; margin: 0 0 4px; font-family: var(--font-mono, monospace); color: var(--ink); }
+  .inputs dt .sym { color: var(--accent); font-weight: 700; }
+  .inputs dd { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 80ch; }
+  .compare { font-size: 12.5px; color: var(--muted); background: var(--card);
+    border: 1px dashed var(--hairline); border-radius: 9px; padding: 11px 14px; margin-top: 12px; }
+  .compare-label { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--ink); margin-right: 8px; }
 </style>

@@ -1,5 +1,5 @@
 ---
-name: P300 Matrix Speller
+name: P300 Matrix Speller (Farwell & Donchin, 1988)
 year: 1988
 modalityTags: ["EEG", "P300"]
 sensingModality: EEG
@@ -13,40 +13,42 @@ source:
 inputs:
   - symbol: "N"
     value: "36"
-    sourceNote: "6×6 character matrix"
+    sourceNote: "6×6 character matrix (row/column flashing)"
   - symbol: "P"
-    value: "0.88"
-    sourceNote: "Representative online accuracy"
+    value: "0.95"
+    sourceNote: "≈95% selection accuracy, the figure cited for the original speller"
   - symbol: "t_sel"
-    value: "13"
+    value: "23"
     unit: "s"
-    sourceNote: "Time per selection at the cited accuracy"
+    sourceNote: "≈2.6 selections/min — the original relied on extensive ERP signal averaging, so each selection was slow"
 actionSpace:
   kind: fixed-set
   size: 36
-  prior: uniform
-  notes: "6×6 character matrix, assumed equiprobable. The supplementary confusion-matrix figure relaxes the symmetric-error assumption but still treats the prior as uniform."
+  prior: context-conditioned
+  notes: "6×6 character matrix; the decoder classifies which letter drew the P300 response (covert attention — no pointing, no cursor). The realized output is English text, so the reference uses the same character-entropy method (~1 bit/char) as the other text-entry entries; the Wolpaw-over-36 figure assumes a uniform 1-of-36 choice and is kept only as a classifier ceiling. Modern P300 spellers are far faster, but this is the 1988 original."
 calculations:
+  - id: comm
+    method: "Character-entropy throughput (realized text entry)"
+    kind: "Net of English redundancy"
+    provenance: recomputed-omitted
+    resultBitsPerMin: 2
+    steps:
+      - title: "Correct characters per minute"
+        math: "≈ 2.6 selections/min × 0.95 accuracy ≈ 2.5 correct char/min"
+        note: "Each selection emits one character of English; ~23 s/selection due to extensive ERP signal averaging. This is the rate of correct text actually produced."
+      - title: "Bits per character"
+        math: "H(English) ≈ 1.0 bit/char (Shannon) — the same predictor used for QWERTY, eye-typing and the other BCI text entries"
+      - title: "Information transfer rate"
+        math: "ITR = 2.5 × 1.0 ≈ 2 bits/min"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 36 targets"
-    kind: "Theoretical upper bound"
-    provenance: recomputed-omitted
-    compute:
-      method: wolpaw
-      targets: 36
-      accuracy: 0.88
-      secondsPerSelection: 13
-  - id: confusion
-    method: "Confusion-matrix mutual information"
-    kind: "Nykopp method"
+    kind: "Classifier ceiling — uniform 1-of-36 choice, over-credits English text"
     provenance: recomputed-omitted
     notUsedForRanking: true
     compute:
-      method: confusion-mi
-      matrix: [[44, 6], [7, 43]]
-      secondsPerSelection: 13
-referenceCalculationId: wolpaw
+      method: wolpaw
+      targets: 36
+      accuracy: 0.95
+      secondsPerSelection: 23
+referenceCalculationId: comm
 ---
-
-The original P300 speller. Slow but robust; the supplementary confusion-matrix figure is a
-two-class illustration, not the full 36×36 matrix.

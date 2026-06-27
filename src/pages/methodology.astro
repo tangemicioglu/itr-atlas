@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Methodology — ITR Gallery">
+<BaseLayout title="Methodology — ITR Atlas">
   <article class="prose">
     <h1>Methodology</h1>
 
@@ -14,12 +14,105 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        <em>P</em> is accuracy.</p>
 
     <h2>Why a single number is often misleading</h2>
-    <p>The Wolpaw formula assumes every target is equally likely, that errors are spread evenly
-       across the other targets, and that no time is spent correcting mistakes. Real interfaces
-       routinely violate all three — see
-       <a href="https://pubmed.ncbi.nlm.nih.gov/23448963/">Yuan et al. 2013</a>. Where possible we
-       also show a confusion-matrix mutual-information estimate, which drops the symmetric-error
-       assumption.</p>
+    <p>The Wolpaw ITR is not a neutral measurement — it is the channel capacity of an
+       <em>idealized</em> channel: one where every target is equally likely (a uniform prior), errors
+       are spread evenly over the other targets (symmetric and memoryless), selection time is fixed,
+       and no time is spent correcting mistakes. The formula above is <em>exactly</em> the capacity of
+       that idealized channel. It is therefore a valid <strong>upper bound</strong> — but real
+       interfaces violate every one of those assumptions, so it systematically over-states the rate
+       actually achieved, and the gap grows with both accuracy and the number of symbols
+       (<a href="https://doi.org/10.1371/journal.pone.0078432">Speier, Arnold &amp; Pouratian 2013</a>;
+       <a href="https://pubmed.ncbi.nlm.nih.gov/23448963/">Yuan et al. 2013</a>).</p>
+    <p>More honest estimators relax the assumptions one at a time: a confusion-matrix mutual
+       information drops the symmetric-error assumption
+       (<a href="https://www.yumpu.com/en/document/view/33702582/statistical-modelling-issues-for-the-adaptive-brain-interface">Nykopp 2001</a>;
+       <a href="https://archive-ouverte.unige.ch/unige:47811">Kronegg et al. 2005</a>); a language
+       model drops the uniform-prior assumption (Speier and colleagues, above); and a continuous control channel
+       needs a throughput model, not a discrete-selection count, in the first place. The rest of this
+       page is, in effect, a tour of which assumption each entry breaks and what we use instead of the
+       idealized number.</p>
+
+    <h2>The predictor is part of the measurement</h2>
+    <p>Information is uncertainty removed, so a bits figure is never a property of the channel
+       alone — it depends on the <em>predictor</em> you assume on the receiving end. Redundancy that
+       a good language model reconstructs for free never had to cross the channel, so a stronger
+       predictor yields a lower, truer information rate. This means the predictor has to be held
+       <strong>constant across every entry</strong>, or the comparison breaks. We use a conservative
+       full-context bound of about <strong>1 bit per character</strong> for English text throughout.
+       Shannon's prediction experiments first bracketed printed English between 0.6 and 1.3 bits/char
+       (<a href="https://ieeexplore.ieee.org/document/6773263">Shannon 1951</a>); modern estimates
+       land just above our working value — about <strong>1.12 bits/char</strong> by extrapolating
+       neural language models to unlimited data
+       (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7512401/">Takahira et al. 2016</a>) and
+       about <strong>1.22 bits/char</strong> in a large-scale replication of Shannon's guessing game
+       (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7514546/">Ren et al. 2020</a>) — so 1
+       bit/char is a deliberate, slightly conservative floor. The per-word figure is not a separate
+       measurement: text-entry rates define one word as five characters
+       (<a href="https://doi.org/10.1145/642611.642632">Soukoreff &amp; MacKenzie 2003</a>), the same
+       convention behind every words-per-minute figure in this atlas, so the bound is equivalently
+       <strong>5 bits per word</strong>.</p>
+    <p>Speech is the clearest illustration of why this matters. A widely cited cross-language study
+       reports an average information rate of <strong>~39 bits/second</strong> for spoken language
+       (<a href="https://www.science.org/doi/10.1126/sciadv.aaw2594">Coupé et al. 2019</a>). That
+       study set out to compare encoding efficiency <em>across</em> 17 languages, and for that
+       purpose it uses a syllable-level entropy estimated from local context — an estimator chosen to
+       be computable and comparable across languages with very different corpus resources. It does
+       its job well. But a local-context estimate counts redundancy that a full-context predictor
+       would resolve, so it measures a different quantity than the channel-net information this atlas
+       tracks. Adopting that ~39 bps here would hold speech to a more lenient predictor than the
+       full-context Shannon bound we apply to QWERTY, Morse, and the BCI spellers — so the mismatch
+       would be ours, not the study's.</p>
+    <p>Hold the predictor fixed and the gap disappears. When conversational English is measured with
+       a large language model as the predictor — the same full-context standard we apply to text — it
+       lands at <strong>~13 bits/second</strong>
+       (<a href="https://arxiv.org/abs/2403.08890">Bergey &amp; DeDeo 2024</a>), matching our text
+       entries (≈150 wpm × 5 bits/word). Same words, same predictor, same rate: spoken word and
+       written text carry essentially identical net information, because the information lives in the
+       language, not the channel carrying it. The 3× spread is an estimator difference, not a
+       modality one — which is why we keep one predictor across every entry.</p>
+
+    <h2>What we rank on: realized output, not raw channel bits</h2>
+    <p>Every entry is ranked on the information the interface <em>actually delivers to its
+       application</em>, measured under one predictor held constant across the whole atlas. Two
+       estimators cover every entry:</p>
+    <ul>
+      <li><strong>The output is language</strong> → character-entropy throughput
+         (characters/min × ~1 bit/char), the same full-context Shannon predictor used for QWERTY
+         everywhere. This covers the keyboards, Morse, eye-typing, and the BCI spellers — P300, SSVEP,
+         c-VEP — because all of them emit English text.</li>
+      <li><strong>The channel is continuous cursor motion</strong> → Fitts throughput,
+         <strong>log₂(A/W + 1)</strong> per movement divided by movement time, computed from the
+         interface's own geometry. This covers the mouse, trackball, stylus, tongue drive, gaze
+         pointing, and the cursor BCIs. Accuracy is folded in the way Fitts always handles it — via
+         the <em>effective</em> width W<sub>e</sub> = 4.133·SD of the movement endpoints (ISO 9241-9),
+         which discounts the information per movement to the precision actually achieved, so there is
+         no separate error term and you cannot game it by moving fast and missing. Where a source
+         publishes no endpoint scatter (e.g. the sensorimotor-rhythm cursor), we say so and fall back
+         to a plain completion-rate discount.</li>
+    </ul>
+    <p>Every raw-channel count — Wolpaw, log₂(N), achieved-bitrate, Webgrid BPS, c-VEP's discrimination
+       rate — is the capacity of an idealized channel, so it is kept only as a secondary
+       <strong>ceiling</strong>, never the ranked number. The reason log₂(N) cannot be the rank is that
+       it scores the decoder's alphabet size, and that size is a knob. Neuralink's Webgrid carves a
+       continuous cursor into 900 cells (~9.8 bits/selection) — make the grid denser and the number
+       rises while the control is unchanged. EEG2Code makes the point unanswerable: it discriminates
+       <strong>500,000</strong> random codes at ~100% from 2 s of EEG, log₂(500,000) ≈ 19 bits per
+       selection, 701 bits/min — and the authors themselves flag a "ceiling effect" where those bits
+       cannot be converted into control
+       (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). A speller
+       that emits English but is credited log₂(40) per letter is being held to a more lenient predictor
+       than QWERTY at 1 bit/char — the same apples-to-oranges mismatch we rejected for speech.</p>
+    <p>This also dissolves a question that used to drive the framework: whether a given selection is
+       "really" pointing. The decoder's mechanism — a cursor traversing space (Fitts), a frequency or
+       code classifier (SSVEP, c-VEP), or covert attention with no movement at all (P300) — only
+       determines <em>which ceiling label</em> an entry carries. It never touches the rank, so we do
+       not have to adjudicate, for instance, whether covert attention obeys Fitts' law. As a sanity
+       check on the Fitts side, the able-bodied ~10 BPS reported on Webgrid reduces by this method to
+       ~4.1 bits/s, matching the independently-measured throughput of a physical mouse (~4.5 bits/s).</p>
+    <p>One carve-out keeps the rule honest. When the output is <em>not</em> language — a
+       command-and-control BCI choosing among N non-linguistic actions, say — log₂(N) over the real
+       action prior <em>is</em> the realized measure, because there is no language predictor to apply.
+       None of the current entries are that case; every speller here types English.</p>
 
     <h2>How we pick the reference number</h2>
     <ol>
@@ -30,8 +123,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <h2>Provenance labels</h2>
     <ul>
-      <li><strong>Author-reported · verified</strong> — we re-derived the paper's method and matched it.</li>
-      <li><strong>Author-reported · unverified</strong> — a number is given but can't be re-derived from the paper.</li>
+      <li><strong>Author-reported · reproduced</strong> — we recomputed the number from the paper's stated inputs and matched it.</li>
+      <li><strong>Author-reported · not reproduced</strong> — the paper gives a number but doesn't expose enough to recompute it.</li>
       <li><strong>Recomputed — paper omitted</strong> — no ITR in the paper; we computed one.</li>
       <li><strong>Recomputed — original flawed</strong> — the paper's method was broken; ours replaces it.</li>
     </ul>

@@ -1,0 +1,231 @@
+---
+import {
+  SYSTEMS, TECHNIQUES, systemLabel, systemColor, techniqueLabel, markSvg,
+} from "../lib/itr/taxonomy";
+
+interface Point {
+  id: string; name: string; year: number; itr: number;
+  system: string; technique: string;
+}
+const { points } = Astro.props as { points: Point[] };
+
+// Color encodes the input system, symbol encodes the input technique — two
+// independent axes, each with its own legend filter row.
+const presentSystems = SYSTEMS.filter((s) => points.some((p) => p.system === s.key));
+const presentTechniques = TECHNIQUES.filter((t) => points.some((p) => p.technique === t.key));
+
+const W = 920, H = 380, ml = 54, mr = 16, mt = 18, mb = 42;
+const plotW = W - ml - mr, plotH = H - mt - mb;
+
+// X-domain is fitted to the data and recomputed client-side as categories are toggled.
+// These helpers are mirrored in the <script> below so the server fallback matches the client.
+function padDomain(min: number, max: number): [number, number] {
+  const span = Math.max(1, max - min);
+  const pad = Math.max(2, Math.round(span * 0.06));
+  return [min - pad, max + pad];
+}
+function niceTicks(min: number, max: number): number[] {
+  const span = Math.max(1, max - min);
+  const step = [1, 2, 5, 10, 20, 25, 50, 100].find((s) => span / s <= 6) ?? 100;
+  const ticks: number[] = [];
+  for (let v = Math.ceil(min / step) * step; v <= max; v += step) ticks.push(v);
+  return ticks;
+}
+const years = points.map((p) => p.year);
+const [xMin, xMax] = padDomain(Math.min(...years), Math.max(...years));
+const yMinL = Math.log10(1), yMaxL = Math.log10(1200);
+const xpx = (yr: number) => ml + ((yr - xMin) / (xMax - xMin)) * plotW;
+const ypx = (itr: number) =>
+  mt + (1 - (Math.log10(Math.min(1200, Math.max(1, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
+
+const xticks = niceTicks(xMin, xMax);
+const yticks = [1, 10, 100, 1000];
+const plotted = points
+  .map((p) => ({ ...p, cx: xpx(p.year), cy: ypx(p.itr) }))
+  .sort((a, b) => b.itr - a.itr); // draw big values first so small ones sit on top
+---
+<figure id="itrchart" class="chart">
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Information transfer rate by year; color is the input system, symbol is the input technique" preserveAspectRatio="xMidYMid meet" data-ml={ml} data-plotw={plotW} data-mt={mt} data-ploth={plotH}>
+    <!-- y gridlines + labels -->
+    {yticks.map((v) => (
+      <g>
+        <line x1={ml} x2={W - mr} y1={ypx(v)} y2={ypx(v)} class="grid" />
+        <text x={ml - 8} y={ypx(v)} class="ylab" text-anchor="end" dominant-baseline="middle">{v}</text>
+      </g>
+    ))}
+    <!-- x gridlines + labels (rebuilt client-side when the visible categories change) -->
+    <g class="xaxis">
+      {xticks.map((v) => (
+        <g>
+          <line x1={xpx(v)} x2={xpx(v)} y1={mt} y2={mt + plotH} class="grid" />
+          <text x={xpx(v)} y={mt + plotH + 18} class="xlab" text-anchor="middle">{v}</text>
+        </g>
+      ))}
+    </g>
+    <!-- axis frame -->
+    <line x1={ml} x2={ml} y1={mt} y2={mt + plotH} class="axis" />
+    <line x1={ml} x2={W - mr} y1={mt + plotH} y2={mt + plotH} class="axis" />
+    <text class="axis-title" x={16} y={mt + plotH / 2} text-anchor="middle" transform={`rotate(-90 16 ${mt + plotH / 2})`}>ITR (bits/min, log)</text>
+    <!-- points (color = system, symbol = technique) -->
+    {plotted.map((p) => (
+      <g
+        class="pt"
+        transform={`translate(${p.cx},${p.cy})`}
+        data-id={p.id}
+        data-name={p.name}
+        data-year={String(p.year)}
+        data-itr={String(Math.round(p.itr))}
+        data-cy={String(p.cy)}
+        data-system={p.system}
+        data-technique={p.technique}
+        data-systemlabel={systemLabel(p.system)}
+        data-techlabel={techniqueLabel(p.technique)}
+      >
+        <Fragment set:html={markSvg(p.technique, systemColor(p.system))} />
+        <title>{p.name} ({p.year}): {Math.round(p.itr)} bits/min</title>
+      </g>
+    ))}
+  </svg>
+  <div class="tip" hidden></div>
+  <div class="legend">
+    <div class="leg-group">
+      <span class="leg-title">System</span>
+      {presentSystems.map((s) => (
+        <button class="leg" data-axis="system" data-key={s.key} type="button">
+          <span class="sw" style={`background:${s.color}`}></span>{s.label}
+        </button>
+      ))}
+    </div>
+    <div class="leg-group">
+      <span class="leg-title">Technique</span>
+      {presentTechniques.map((t) => (
+        <button class="leg" data-axis="technique" data-key={t.key} type="button">
+          <svg class="glyph" viewBox="-8 -8 16 16" width="13" height="13" set:html={markSvg(t.key, "var(--ink)")} />{t.label}
+        </button>
+      ))}
+    </div>
+  </div>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Hover for details, click to open. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+</figure>
+
+<style>
+  .chart { margin: 0 0 24px; position: relative; }
+  .chart > svg { width: 100%; height: auto; display: block; background: var(--card);
+    border: 1px solid var(--hairline); border-radius: var(--radius); }
+  .grid { stroke: var(--hairline); stroke-width: 1; }
+  .axis { stroke: var(--muted); stroke-width: 1; }
+  .ylab, .xlab { fill: var(--muted); font-size: 11px; font-family: var(--font-mono, monospace); }
+  .axis-title { fill: var(--muted); font-size: 11px; letter-spacing: 0.4px; }
+  .pt { cursor: pointer; transition: transform 0.35s ease; }
+  .mark { stroke: var(--card); stroke-width: 1.5; transform-box: fill-box; transform-origin: center;
+    transition: transform 0.1s; }
+  .pt:hover .mark { stroke: var(--ink); transform: scale(1.4); }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 12px));
+    background: var(--ink); color: #fff; padding: 7px 10px; border-radius: 7px; font-size: 12px;
+    line-height: 1.35; white-space: nowrap; z-index: 5; box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+  .tip-cat { color: #cfcabd; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 12px 2px 6px; }
+  .leg-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+  .leg-title { font-size: 11px; letter-spacing: 0.4px; text-transform: uppercase; color: var(--muted); }
+  .leg { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink);
+    background: none; border: none; padding: 2px 0; cursor: pointer; }
+  .leg.off { opacity: 0.35; text-decoration: line-through; }
+  .sw { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+  .glyph { display: inline-block; vertical-align: middle; }
+  .glyph .mark { stroke: var(--hairline); stroke-width: 1; }
+  figcaption { font-size: 11.5px; color: var(--muted); margin: 4px 2px 0; }
+</style>
+
+<script>
+  const root = document.getElementById("itrchart");
+  if (root) {
+    const tip = root.querySelector<HTMLElement>(".tip")!;
+    const svg = root.querySelector<SVGSVGElement>("svg")!;
+    const xaxis = svg.querySelector<SVGGElement>(".xaxis")!;
+    const pts = Array.from(root.querySelectorAll<SVGGElement>(".pt"));
+    // Two independent filter axes; a point is hidden if either its system or its
+    // technique is toggled off.
+    const hidden = { system: new Set<string>(), technique: new Set<string>() };
+    const isHidden = (el: SVGGElement) =>
+      hidden.system.has(el.dataset.system!) || hidden.technique.has(el.dataset.technique!);
+
+    const ml = +svg.dataset.ml!, plotW = +svg.dataset.plotw!;
+    const mt = +svg.dataset.mt!, plotH = +svg.dataset.ploth!;
+    const NS = "http://www.w3.org/2000/svg";
+
+    // Mirrors the frontmatter helpers so the client re-fit matches the server fallback.
+    function padDomain(min: number, max: number): [number, number] {
+      const span = Math.max(1, max - min);
+      const pad = Math.max(2, Math.round(span * 0.06));
+      return [min - pad, max + pad];
+    }
+    function niceTicks(min: number, max: number): number[] {
+      const span = Math.max(1, max - min);
+      const step = [1, 2, 5, 10, 20, 25, 50, 100].find((s) => span / s <= 6) ?? 100;
+      const ticks: number[] = [];
+      for (let v = Math.ceil(min / step) * step; v <= max; v += step) ticks.push(v);
+      return ticks;
+    }
+
+    // Re-fit the x-axis to whichever categories are currently visible.
+    function relayout() {
+      const vis = pts.filter((el) => !isHidden(el));
+      if (!vis.length) return;
+      const ys = vis.map((el) => +el.dataset.year!);
+      const [xMin, xMax] = padDomain(Math.min(...ys), Math.max(...ys));
+      const xpx = (yr: number) => ml + ((yr - xMin) / (xMax - xMin)) * plotW;
+      // reposition every point (hidden ones too, so they're correct when re-shown)
+      for (const el of pts)
+        el.setAttribute("transform", `translate(${xpx(+el.dataset.year!)},${el.dataset.cy})`);
+      // rebuild the x gridlines + tick labels
+      xaxis.replaceChildren();
+      for (const v of niceTicks(xMin, xMax)) {
+        const x = xpx(v);
+        const line = document.createElementNS(NS, "line");
+        line.setAttribute("x1", String(x)); line.setAttribute("x2", String(x));
+        line.setAttribute("y1", String(mt)); line.setAttribute("y2", String(mt + plotH));
+        line.setAttribute("class", "grid");
+        line.setAttribute("stroke", "var(--hairline)");
+        line.setAttribute("stroke-width", "1");
+        const text = document.createElementNS(NS, "text");
+        text.setAttribute("x", String(x)); text.setAttribute("y", String(mt + plotH + 18));
+        text.setAttribute("class", "xlab"); text.setAttribute("text-anchor", "middle");
+        text.setAttribute("fill", "var(--muted)");
+        text.setAttribute("font-size", "11px");
+        text.setAttribute("font-family", "var(--font-mono, monospace)");
+        text.textContent = String(v);
+        xaxis.append(line, text);
+      }
+    }
+
+    function show(el: SVGCircleElement, e: MouseEvent) {
+      const d = el.dataset;
+      tip.innerHTML =
+        `<b>${d.name}</b><br>${d.year} · ${Number(d.itr).toLocaleString()} bits/min` +
+        `<br><span class="tip-cat">${d.systemlabel} · ${d.techlabel}</span>`;
+      const r = root!.getBoundingClientRect();
+      tip.style.left = `${e.clientX - r.left}px`;
+      tip.style.top = `${e.clientY - r.top}px`;
+      tip.hidden = false;
+    }
+
+    for (const el of pts) {
+      el.addEventListener("mouseenter", (e) => show(el, e as MouseEvent));
+      el.addEventListener("mousemove", (e) => show(el, e as MouseEvent));
+      el.addEventListener("mouseleave", () => (tip.hidden = true));
+      el.addEventListener("click", () => (window.location.href = `/interfaces/${el.dataset.id}`));
+    }
+
+    for (const item of Array.from(root.querySelectorAll<HTMLElement>(".leg"))) {
+      item.addEventListener("click", () => {
+        const axis = item.dataset.axis as "system" | "technique";
+        const key = item.dataset.key!;
+        const set = hidden[axis];
+        if (set.has(key)) { set.delete(key); item.classList.remove("off"); }
+        else { set.add(key); item.classList.add("off"); }
+        for (const el of pts) el.style.display = isHidden(el) ? "none" : "";
+        relayout();
+      });
+    }
+  }
+</script>

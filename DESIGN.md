@@ -1,8 +1,8 @@
 ---
-name: ITR Gallery — Lab Paper
+name: ITR Atlas — Lab Paper
 version: alpha
 description: >-
-  Warm "lab paper" visual system for the ITR Interface Gallery. Monochrome
+  Warm "lab paper" visual system for the ITR Atlas. Monochrome
   accent so color carries meaning (modality, invasiveness, provenance) rather
   than brand; ITR numbers stay ink-black; no gradients.
 colors:
@@ -120,15 +120,15 @@ components:
     padding: "6px 12px"
 ---
 
-# ITR Gallery — Lab Paper
+# ITR Atlas — Lab Paper
 
-The visual system for the [ITR Interface Gallery](./SPEC.md). It should read like a credible,
+The visual system for the [ITR Atlas](./SPEC.md). It should read like a credible,
 print-like scientific reference: warm paper, ink text, math you can trust. Color is reserved for
 *meaning* — modality, invasiveness, and provenance — never decoration.
 
 ## Overview
 
-A curated comparison gallery of information transfer rates across human–machine interfaces. The
+A curated comparison atlas of information transfer rates across human–machine interfaces. The
 aesthetic is "lab paper": a warm off-white page, ink-black text, hairline rules, and a single
 graphite accent. The personality is restrained and editorial — the data and the worked derivations
 are the visual interest, so the chrome stays quiet. No gradients, no brand hue, no drop shadows
@@ -163,8 +163,8 @@ except a faint lift on interactive cards.
 ## Layout
 
 - Centered content column, max width ~1040px, 24px side gutters.
-- Gallery grid: 3 columns desktop, 2 at ≤800px, 1 at ≤540px; 16px gap.
-- Entry detail: a single readable column; the device photo (220×150) sits left of the title.
+- Atlas grid: 3 columns desktop, 2 at ≤800px, 1 at ≤540px; 16px gap.
+- Entry detail: a single readable column; an optional device photo (220×150), when present, sits left of the title.
 - Derivations render as a numbered vertical list with a hairline connector on the left.
 
 ## Shapes
@@ -177,14 +177,14 @@ except a faint lift on interactive cards.
 
 ## Components
 
-- **`card`** — gallery stat card (style B): device photo strip, name, modality tags, large ink ITR,
+- **`card`** — atlas stat card (style B): optional photo strip, name, modality tags, large ink ITR,
   a right-aligned mini stat, and a provenance pill. Lifts 3px with a faint shadow on hover.
 - **`tag` / `tagInvasive`** — modality and invasiveness pills. Invasiveness is the only red element.
 - **`provenanceAuthor` / `provenanceRecomputed`** — the honesty signal; visible on cards and in the
   detail view.
 - **`calculationBlock` / `referenceCalculationBlock`** — a worked derivation; the reference variant
   is bordered in graphite and carries the "Reference method" badge.
-- **`filterChip` / `filterChipActive`** — gallery modality filters; the active chip is solid graphite.
+- **`filterChip` / `filterChipActive`** — atlas modality filters; the active chip is solid graphite.
 
 ## Do's and Don'ts
 

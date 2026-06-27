@@ -13,16 +13,18 @@ interface Props {
   referenceMethod: string;
   miniStat: string;
   provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted" | "recomputed-flawed";
+  rankable?: boolean;
 }
-const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance } = Astro.props;
+const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true } = Astro.props;
 const invasive = invasiveness !== "non-invasive";
 ---
 <a class="card"
    href={`/interfaces/${id}`}
    data-name={name.toLowerCase()}
    data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
-   data-itr={referenceBitsPerMin}>
-  <div class="photo">{image ? <img src={image} alt={name} /> : <span>device photo</span>}</div>
+   data-itr={referenceBitsPerMin}
+   data-rankable={String(rankable)}>
+  {image && <div class="photo"><img src={image} alt={name} /></div>}
   <div class="body">
     <div class="name">{name}</div>
     <div class="tags">
@@ -30,7 +32,9 @@ const invasive = invasiveness !== "non-invasive";
       {invasive && <Tag label={invasiveness} variant="invasive" />}
     </div>
     <div class="statrow">
-      <div class="itr">{formatBitsPerMin(referenceBitsPerMin)}<small> bits/min</small></div>
+      {rankable
+        ? <div class="itr">{formatBitsPerMin(referenceBitsPerMin)}<small> bits/min</small></div>
+        : <div class="itr ceiling">≤{formatBitsPerMin(referenceBitsPerMin)}<small> ceiling · no measured rate</small></div>}
       <div class="mini">{miniStat}<br /><b>{referenceMethod}</b></div>
     </div>
     <ProvenancePill provenance={provenance} />
@@ -51,6 +55,7 @@ const invasive = invasiveness !== "non-invasive";
     border-top: 1px solid var(--hairline); padding-top: 11px; }
   .itr { font-size: 26px; font-weight: 800; line-height: 1; }
   .itr small { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .itr.ceiling { font-size: 19px; font-weight: 700; color: var(--muted); }
   .mini { text-align: right; font-size: 11px; color: var(--muted); }
   .mini b { color: var(--ink); }
   .body :global(.pill) { margin-top: 9px; }

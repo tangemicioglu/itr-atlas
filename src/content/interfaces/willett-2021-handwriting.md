@@ -1,0 +1,77 @@
+---
+name: Handwriting BCI (Willett et al., 2021)
+year: 2021
+modalityTags: ["Intracortical", "Handwriting"]
+sensingModality: Intracortical
+invasiveness: invasive
+source:
+  authors: "Willett, Avansino, Hochberg, Henderson & Shenoy"
+  venue: "Nature 593"
+  year: 2021
+  doi: "10.1038/s41586-021-03506-2"
+  url: "https://doi.org/10.1038/s41586-021-03506-2"
+inputs:
+  - symbol: "N"
+    value: "31"
+    sourceNote: "Character set: 26 lowercase letters + comma, apostrophe, question mark, period, space (Methods)"
+  - symbol: "rate"
+    value: "90"
+    unit: "char/min"
+    sourceNote: "Real-time copy-typing speed (Abstract; Fig. 2)"
+  - symbol: "P"
+    value: "0.941"
+    sourceNote: "Raw online character accuracy (5.9% character error rate, no language model). With a general-purpose autocorrect, >99%."
+  - symbol: "WER"
+    value: "0.251"
+    sourceNote: "25.1% raw word error rate for online output, versus 5.9% raw character error rate (Table 1)."
+actionSpace:
+  kind: fixed-set
+  size: 31
+  prior: non-uniform
+  notes: "Per-character classification of attempted handwriting over a 31-symbol set. The reference figure uses the RAW decoder (no language model); the headline >99% accuracy adds an autocorrect/language model, which would make the prior strongly context-conditioned. English letters are not equiprobable, so even the raw figure is an upper bound on transmitted information. The paper also reports a stricter raw word error rate; that word-level view is included as a supplementary calculation."
+references:
+  - label: "Open-access full text (PMC)"
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC8163299/"
+calculations:
+  - id: comm
+    method: "Character-entropy throughput"
+    kind: "Effective bits transmitted as English text"
+    provenance: recomputed-omitted
+    resultBitsPerMin: 85
+    steps:
+      - title: "Error-corrected characters per minute"
+        math: "(1 − CER) × rate = 0.941 × 90 = 84.7 net char/min"
+      - title: "Shannon per-character entropy of English"
+        math: "H ≈ 1.0 bit/char"
+        note: "English letters are redundant, so the raw 31-symbol count overstates the information; 1 bit/char is the honest unit, consistent with the typing entries."
+      - title: "Information transfer rate"
+        math: "ITR = 84.7 × 1.0 ≈ 85 bits/min"
+  - id: raw-word-entropy
+    method: "Word-entropy throughput from raw WER"
+    kind: "Effective bits transmitted as English words, using the stricter raw word-level error rate"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerMin: 67
+    steps:
+      - title: "Convert character rate to words per minute"
+        math: "90 char/min ÷ 5.0 char/word ≈ 18.0 word/min"
+        note: "Uses the same average English word length convention (one word = five characters) as the other word-entropy calculations."
+      - title: "Apply raw word error rate"
+        math: "(1 − WER) × rate = (1 − 0.251) × 18.0 ≈ 13.5 net word/min"
+        note: "The 25.1% raw word error rate is much higher than the 5.9% raw character error rate because any character edit can make a whole word wrong."
+      - title: "Shannon per-word entropy of English"
+        math: "H ≈ 5.0 bits/word"
+      - title: "Information transfer rate"
+        math: "ITR = 13.5 × 5.0 ≈ 67 bits/min"
+  - id: wolpaw
+    method: "Wolpaw bitrate over N = 31 characters"
+    kind: "Per-character throughput, uniform-prior ceiling (raw decoder)"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    compute:
+      method: wolpaw
+      targets: 31
+      accuracy: 0.941
+      secondsPerSelection: 0.66667
+referenceCalculationId: comm
+---

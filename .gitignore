@@ -29,3 +29,7 @@ Thumbs.db
 
 # Tooling scratch (visual-companion sessions, agent workspaces)
 .superpowers/
+.playwright-cli/
+
+# Local-only entry commentary (kept out of the public site/repo)
+private-notes/

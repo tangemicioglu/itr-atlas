@@ -1,13 +1,13 @@
-# ITR Interface Gallery — Product & Architecture Spec
+# ITR Atlas — Product & Architecture Spec
 
 > Status: **approved design**, pre-implementation. Last updated 2026-06-24.
 > Visual design system (tokens) lives separately in [DESIGN.md](./DESIGN.md) (Google `design.md` format).
 
-A curated, shareable gallery comparing **information transfer rate (ITR, bits/min)** across all
+A curated, shareable atlas comparing **information transfer rate (ITR, bits/min)** across all
 human→machine input modalities — brain–computer interfaces, eye-tracking, speech, typing, Morse,
 and more.
 
-The hook is the gallery. The point is **rigor**: every number is sourced and re-derived, and the
+The hook is the atlas. The point is **rigor**: every number is sourced and re-derived, and the
 site foregrounds the fact that ITR is routinely misapplied. Wolpaw's assumptions (uniform target
 prior, symmetric errors, no error-correction cost) rarely hold in real interfaces — see
 Yuan et al. 2013, *"A study of the existing problems of estimating the information transfer rate in
@@ -70,7 +70,7 @@ prior, its number bakes in extra structure and must be read against its action s
 ranked naively. The site surfaces this per entry.
 
 Each entry designates **one reference calculation** — the number used for cross-comparison in the
-gallery. Other calculations may be shown as **supplementary** (explicitly *not used for ranking*).
+atlas. Other calculations may be shown as **supplementary** (explicitly *not used for ranking*).
 
 **Choosing the reference, in priority order:**
 1. Use the **original paper's own** calculation/number where it exists and is sound.
@@ -148,7 +148,7 @@ page shows a comparability caveat.
 
 ## 4. Pages
 
-1. **Gallery (home)** — title + one-line thesis + result count; controls (search, modality filter
+1. **Atlas (home)** — title + one-line thesis + result count; controls (search, modality filter
    chips, sort); responsive 3-up grid of stat cards. Each card: device photo, name, modality tags,
    large ink-black ITR, a mini secondary stat (key inputs + method), and a **provenance pill**.
 2. **Entry detail** — self-contained panel: header (photo, tags, invasiveness); **reference ITR**
