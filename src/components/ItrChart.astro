@@ -134,6 +134,17 @@ const plotted = points
   .glyph { display: inline-block; vertical-align: middle; }
   .glyph .mark { stroke: var(--hairline); stroke-width: 1; }
   figcaption { font-size: 11.5px; color: var(--muted); margin: 4px 2px 0; }
+  /* The SVG scales down to fit narrow screens, shrinking the markers with it.
+     Counter-scale just the plotted glyphs (not the legend) so they stay legible
+     and tappable on mobile. Hover scale is bumped to match so it never shrinks. */
+  @media (max-width: 640px) {
+    .pt .mark { transform: scale(1.7); }
+    .pt:hover .mark { transform: scale(2.1); }
+  }
+  @media (max-width: 420px) {
+    .pt .mark { transform: scale(2.1); }
+    .pt:hover .mark { transform: scale(2.5); }
+  }
 </style>
 
 <script>
