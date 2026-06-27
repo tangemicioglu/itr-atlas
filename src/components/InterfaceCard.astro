@@ -2,6 +2,7 @@
 import Tag from "./Tag.astro";
 import ProvenancePill from "./ProvenancePill.astro";
 import { formatBitsPerMin } from "../lib/itr/math";
+import { url } from "../lib/url";
 
 interface Props {
   id: string;
@@ -19,7 +20,7 @@ const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, refere
 const invasive = invasiveness !== "non-invasive";
 ---
 <a class="card"
-   href={`/interfaces/${id}`}
+   href={url(`/interfaces/${id}`)}
    data-name={name.toLowerCase()}
    data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
    data-itr={referenceBitsPerMin}

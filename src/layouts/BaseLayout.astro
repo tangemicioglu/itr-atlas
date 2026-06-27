@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { url } from "../lib/url";
 interface Props { title: string; description?: string; }
 const { title, description = "Information transfer rate across human–machine interfaces." } = Astro.props;
 ---
@@ -13,11 +14,11 @@ const { title, description = "Information transfer rate across human–machine i
   </head>
   <body>
     <header class="site-header">
-      <a href="/" class="brand">ITR Atlas</a>
+      <a href={url("/")} class="brand">ITR Atlas</a>
       <nav>
-        <a href="/">Atlas</a>
-        <a href="/methodology">Methodology</a>
-        <a href="/submit">Submit</a>
+        <a href={url("/")}>Atlas</a>
+        <a href={url("/methodology")}>Methodology</a>
+        <a href={url("/submit")}>Submit</a>
       </nav>
     </header>
     <main class="container">

@@ -7,14 +7,15 @@ Most ITR comparisons quietly misapply the math — Wolpaw's assumptions rarely h
 interfaces. This project makes the rigor visible: **every number is sourced and re-derived, step by
 step**, and each entry shows exactly which method was used and why.
 
+> 🌐 **Live: [tangemicioglu.com/itr-atlas](https://tangemicioglu.com/itr-atlas/)**
 > 📐 Full spec & data model: **[SPEC.md](./SPEC.md)** — visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
 
 ## Status
 
-✅ **Built.** 19 entries across BCI (intracortical, ECoG, endovascular), spellers (SSVEP, P300,
-eye, QWERTY), and silent speech (sEMG, electropalatography, ultrasound). Numbers are sourced and
-re-derived per entry. Four early seed entries (SSVEP, P300, eye-typing, QWERTY) still use
-placeholder figures pending re-derivation from their papers.
+✅ **Built and deployed.** ~45 entries across BCI (intracortical, ECoG, endovascular), spellers
+(SSVEP, P300, eye, QWERTY), silent speech (sEMG, electropalatography, lip-reading), pointing
+devices, and chord keyboards. Each entry has a sourced, re-derived reference figure. A few early
+seed entries still use placeholder figures pending re-derivation from their papers.
 
 ## What makes an entry honest
 
@@ -30,7 +31,11 @@ Each interface gets:
 
 - [Astro](https://astro.build) — static site, content collections with Zod-validated entry data.
 - Build-time computation of standard ITR formulas (Wolpaw, confusion-matrix mutual information).
-- Static hosting (Vercel / Netlify / GitHub Pages).
+- Deployed to **GitHub Pages** on every push to `main` via `.github/workflows/deploy.yml`.
+
+The site is served under the `/itr-atlas` base path (set in `astro.config.mjs`) on the account's
+custom domain; internal links go through `src/lib/url.ts` so they resolve under any base. To host
+at a different path, change `base` there — no link edits needed.
 
 ## Contributing an interface
 

@@ -5,6 +5,7 @@ import Tag from "../../components/Tag.astro";
 import SourceList from "../../components/SourceList.astro";
 import CalculationBlock from "../../components/CalculationBlock.astro";
 import { resolveCalculation } from "../../lib/itr/resolve";
+import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
   const entries = await getCollection("interfaces");
@@ -66,7 +67,7 @@ const COMPARABILITY: Record<string, string> = {
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
 <BaseLayout title={`${data.name} — ITR Atlas`}>
-  <a class="back" href="/">← All interfaces</a>
+  <a class="back" href={url("/")}>← All interfaces</a>
 
   <header class="head">
     {data.image && <div class="photo"><img src={data.image} alt={data.name} /></div>}

@@ -213,7 +213,7 @@ const plotted = points
       el.addEventListener("mouseenter", (e) => show(el, e as MouseEvent));
       el.addEventListener("mousemove", (e) => show(el, e as MouseEvent));
       el.addEventListener("mouseleave", () => (tip.hidden = true));
-      el.addEventListener("click", () => (window.location.href = `/interfaces/${el.dataset.id}`));
+      el.addEventListener("click", () => (window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/interfaces/${el.dataset.id}`));
     }
 
     for (const item of Array.from(root.querySelectorAll<HTMLElement>(".leg"))) {
