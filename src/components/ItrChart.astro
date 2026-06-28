@@ -294,6 +294,7 @@ const plotted = points
       let sx = 0, sy = 0, bdx = 0, bdy = 0, moved = false, scale = 1;
       t.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
+        e.preventDefault(); // stop the browser starting a text selection
         sx = e.clientX; sy = e.clientY; bdx = dx; bdy = dy; moved = false;
         scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
         t.classList.add("drag");
