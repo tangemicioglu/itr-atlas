@@ -11,9 +11,8 @@ interface Props {
   resultBitsPerMin: number;
   steps: DerivationStep[];
   isReference?: boolean;
-  flawReason?: string;
 }
-const { method, kind, provenance, resultBitsPerMin, steps, isReference = false, flawReason } = Astro.props;
+const { method, kind, provenance, resultBitsPerMin, steps, isReference = false } = Astro.props;
 ---
 <section class={`calc ${isReference ? "reference" : ""}`}>
   <header>
@@ -27,7 +26,6 @@ const { method, kind, provenance, resultBitsPerMin, steps, isReference = false, 
     </div>
     <div class="value">{formatBitsPerMin(resultBitsPerMin)}<small> bits/min</small></div>
   </header>
-  {flawReason && <p class="flaw">Why we replaced the paper's number: {flawReason}</p>}
   <DerivationSteps steps={steps} />
 </section>
 <style>
@@ -42,5 +40,4 @@ const { method, kind, provenance, resultBitsPerMin, steps, isReference = false, 
   .kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); margin-top: 3px; }
   .value { font-size: 24px; font-weight: 800; white-space: nowrap; }
   .value small { font-size: 12px; font-weight: 500; color: var(--muted); }
-  .flaw { font-size: 13px; color: var(--invasive); margin: 8px 0 0; }
 </style>

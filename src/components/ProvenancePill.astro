@@ -8,7 +8,7 @@ const { provenance } = Astro.props;
 const LABELS: Record<Provenance, string> = {
   "author-reported-verified": "Author-reported · reproduced",
   "author-reported-unverified": "Author-reported · not reproduced",
-  "recomputed-omitted": "Recomputed · paper omitted",
+  "recomputed-omitted": "Recomputed",
 };
 const recomputed = provenance.startsWith("recomputed");
 ---

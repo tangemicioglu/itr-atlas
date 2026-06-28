@@ -209,7 +209,7 @@ const plotted = points
       }
     }
 
-    function show(el: SVGCircleElement, e: MouseEvent) {
+    function show(el: SVGGElement, e: MouseEvent) {
       const d = el.dataset;
       tip.innerHTML =
         `<b>${d.name}</b><br>${d.year} · ${Number(d.itr).toLocaleString()} bits/min` +
