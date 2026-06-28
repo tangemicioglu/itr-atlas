@@ -17,8 +17,9 @@ interface Props {
   rankable?: boolean;
   system?: string;
   technique?: string;
+  year?: number;
 }
-const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true, system, technique } = Astro.props;
+const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true, system, technique, year } = Astro.props;
 const invasive = invasiveness !== "non-invasive";
 ---
 <a class="card"
@@ -28,7 +29,8 @@ const invasive = invasiveness !== "non-invasive";
    data-itr={referenceBitsPerMin}
    data-rankable={String(rankable)}
    data-system={system}
-   data-technique={technique}>
+   data-technique={technique}
+   data-year={year}>
   {image && <div class="photo"><img src={image} alt={name} /></div>}
   <div class="body">
     <div class="name">{name}</div>

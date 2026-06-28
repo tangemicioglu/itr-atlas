@@ -56,6 +56,8 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
     <select id="sort" class="sort">
       <option value="itr-desc">Sort: ITR (high → low)</option>
       <option value="itr-asc">Sort: ITR (low → high)</option>
+      <option value="year-desc">Sort: Year (newest first)</option>
+      <option value="year-asc">Sort: Year (oldest first)</option>
       <option value="name">Sort: A–Z</option>
     </select>
   </div>
@@ -113,7 +115,10 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
       const ar = a.dataset.rankable !== "false", br = b.dataset.rankable !== "false";
       if (ar !== br) return ar ? -1 : 1;
       const ai = Number(a.dataset.itr), bi = Number(b.dataset.itr);
+      const ay = Number(a.dataset.year), by = Number(b.dataset.year);
       if (sort.value === "itr-asc") return ai - bi;
+      if (sort.value === "year-desc") return by - ay;
+      if (sort.value === "year-asc") return ay - by;
       if (sort.value === "name") return (a.dataset.name ?? "").localeCompare(b.dataset.name ?? "");
       return bi - ai;
     });
