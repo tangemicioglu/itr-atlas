@@ -110,7 +110,14 @@ const plotted = points
 </figure>
 
 <style>
-  .chart { margin: 0 0 24px; position: relative; }
+  .chart { margin: 0 0 24px; position: relative; user-select: none;
+    -webkit-user-select: none; -webkit-touch-callout: none; }
+  .chart * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  :global(body.chart-label-dragging), :global(body.chart-label-dragging *) {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+  }
   .chart > svg { width: 100%; height: auto; display: block; background: var(--card);
     border: 1px solid var(--hairline); border-radius: var(--radius); }
   .grid { stroke: var(--hairline); stroke-width: 1; }
@@ -291,28 +298,45 @@ const plotted = points
       }
       place();
 
-      // Drag to reposition; a tap (no real movement) removes this pin.
+      // Drag to reposition; a tap (no real movement) opens this entry.
       let sx = 0, sy = 0, bdx = 0, bdy = 0, moved = false, scale = 1;
+      const clearTextSelection = () => window.getSelection?.()?.removeAllRanges();
+      function endDrag(pointerId: number) {
+        t.classList.remove("drag");
+        document.body.classList.remove("chart-label-dragging");
+        clearTextSelection();
+        if (t.hasPointerCapture(pointerId)) t.releasePointerCapture(pointerId);
+      }
       t.addEventListener("pointerdown", (e) => {
         e.stopPropagation();
         e.preventDefault(); // stop the browser starting a text selection
         sx = e.clientX; sy = e.clientY; bdx = dx; bdy = dy; moved = false;
         scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
+        clearTextSelection();
+        document.body.classList.add("chart-label-dragging");
         t.classList.add("drag");
         t.setPointerCapture(e.pointerId);
       });
       t.addEventListener("pointermove", (e) => {
         if (!t.classList.contains("drag")) return;
+        e.preventDefault();
         if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 4) moved = true;
         dx = bdx + (e.clientX - sx) * scale;
         dy = bdy + (e.clientY - sy) * scale;
+        clearTextSelection();
         place();
       });
       t.addEventListener("pointerup", (e) => {
         e.stopPropagation();
-        t.classList.remove("drag");
-        t.releasePointerCapture(e.pointerId);
+        e.preventDefault();
+        endDrag(e.pointerId);
         if (!moved) navTo(el); // tap the label = open the entry
+      });
+      t.addEventListener("pointercancel", (e) => endDrag(e.pointerId));
+      t.addEventListener("lostpointercapture", () => {
+        t.classList.remove("drag");
+        document.body.classList.remove("chart-label-dragging");
+        clearTextSelection();
       });
       t.addEventListener("click", (e) => e.stopPropagation());
     }
