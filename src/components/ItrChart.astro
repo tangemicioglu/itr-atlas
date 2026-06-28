@@ -126,7 +126,8 @@ const plotted = points
      fill (paint-order) is a halo so text stays legible over the gridlines. */
   .leader { vector-effect: non-scaling-stroke; stroke-width: 1.2; pointer-events: none; }
   .ptlabel { paint-order: stroke; stroke: var(--card); stroke-width: 3px;
-    stroke-linejoin: round; cursor: grab; }
+    stroke-linejoin: round; cursor: grab; user-select: none; -webkit-user-select: none;
+    touch-action: none; }
   .ptlabel.drag { cursor: grabbing; }
   .ptlabel-name { font-size: 11.5px; font-weight: 700; }
   .ptlabel-val { font-size: 10.5px; opacity: 0.8; }
