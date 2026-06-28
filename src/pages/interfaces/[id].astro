@@ -8,7 +8,7 @@ import { resolveCalculation } from "../../lib/itr/resolve";
 import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
-  const entries = await getCollection("interfaces");
+  const entries = (await getCollection("interfaces")).filter((e) => !e.data.hidden);
   return entries.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
 }
 

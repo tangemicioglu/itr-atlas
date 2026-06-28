@@ -1,5 +1,6 @@
 ---
 name: sEMG Silent Speech (Meltzner et al., 2018)
+hidden: true
 year: 2018
 modalityTags: ["sEMG", "Silent speech"]
 sensingModality: sEMG

@@ -1,5 +1,6 @@
 ---
 name: Digital Voicing of Silent Speech (Gaddy & Klein, 2020)
+hidden: true
 year: 2020
 modalityTags: ["sEMG", "Silent speech"]
 sensingModality: sEMG

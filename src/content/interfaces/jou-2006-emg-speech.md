@@ -1,5 +1,6 @@
 ---
 name: EMG Continuous Speech (Jou et al., 2006)
+hidden: true
 year: 2006
 modalityTags: ["sEMG", "Silent speech"]
 sensingModality: sEMG

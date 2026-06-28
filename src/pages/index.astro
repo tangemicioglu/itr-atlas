@@ -6,7 +6,7 @@ import ItrChart from "../components/ItrChart.astro";
 import { resolveCalculation } from "../lib/itr/resolve";
 import { systemOf, techniqueOf } from "../lib/itr/taxonomy";
 
-const entries = await getCollection("interfaces");
+const entries = (await getCollection("interfaces")).filter((e) => !e.data.hidden);
 
 const cards = entries.map((entry) => {
   const data = entry.data;
@@ -22,7 +22,7 @@ const cards = entries.map((entry) => {
     invasiveness: data.invasiveness,
     sensingModality: data.sensingModality,
     referenceBitsPerMin: resultBitsPerMin,
-    referenceMethod: refCalc.method.split(" ")[0],
+    referenceMethod: refCalc.method.startsWith("Fitts'") ? "Fitts' law" : refCalc.method.split(" ")[0],
     miniStat,
     provenance: refCalc.provenance,
     year: data.year ?? data.source.year,

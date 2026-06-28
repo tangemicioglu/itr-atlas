@@ -55,7 +55,6 @@ const calculationSchema = z
     steps: z.array(stepSchema).optional(),
     resultBitsPerMin: z.number().optional(),
     notUsedForRanking: z.boolean().default(false),
-    flawReason: z.string().optional(),
   })
   .refine((c) => c.compute || (c.steps && typeof c.resultBitsPerMin === 'number'), {
     message: 'A calculation needs either a compute spec or authored steps + resultBitsPerMin.',
@@ -66,6 +65,10 @@ const interfaces = defineCollection({
   schema: z.object({
     name: z.string(),
     image: z.string().optional(),
+    // Set true to drop an entry from the site entirely (no card, no chart point,
+    // no detail page). Used for ceiling-only entries with no measured rate; flip
+    // back to false if the authors supply a real duration/rate.
+    hidden: z.boolean().default(false),
     year: z.number().optional(),
     modalityTags: z.array(z.string()),
     sensingModality: z.string(),
