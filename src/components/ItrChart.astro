@@ -105,7 +105,7 @@ const plotted = points
       ))}
     </div>
   </div>
-  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to pin its label, tap again to open the entry; tap empty space to clear. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to label it; drag a label to reposition it, or tap it to remove. Tap the point again to open the entry; tap empty space to clear all. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
 </figure>
 
 <style>
@@ -121,12 +121,15 @@ const plotted = points
     transition: transform 0.1s; }
   .pt:hover .mark { stroke: var(--ink); transform: scale(1.4); }
   .pt.sel .mark { stroke: var(--ink); stroke-width: 2.5; }
-  /* Pinned label shown when a point is selected. Card-coloured stroke behind the
-     fill (paint-order) gives a halo so text stays legible over the gridlines. */
+  /* Pinned, draggable label joined to its point by a colour-matched leader line.
+     The label takes the point's system colour; a card-coloured stroke behind the
+     fill (paint-order) is a halo so text stays legible over the gridlines. */
+  .leader { vector-effect: non-scaling-stroke; stroke-width: 1.2; pointer-events: none; }
   .ptlabel { paint-order: stroke; stroke: var(--card); stroke-width: 3px;
-    stroke-linejoin: round; pointer-events: none; }
-  .ptlabel-name { fill: var(--ink); font-size: 11.5px; font-weight: 700; }
-  .ptlabel-val { fill: var(--muted); font-size: 10.5px; }
+    stroke-linejoin: round; cursor: grab; }
+  .ptlabel.drag { cursor: grabbing; }
+  .ptlabel-name { font-size: 11.5px; font-weight: 700; }
+  .ptlabel-val { font-size: 10.5px; opacity: 0.8; }
   .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 12px));
     background: var(--ink); color: #fff; padding: 7px 10px; border-radius: 7px; font-size: 12px;
     line-height: 1.35; white-space: nowrap; z-index: 5; box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
@@ -245,27 +248,70 @@ const plotted = points
     const navTo = (el: SVGGElement) =>
       (window.location.href = `${base}/interfaces/${el.dataset.id}`);
 
-    // Build the pinned label for a selected point. It lives inside the point's
-    // <g>, so it travels with the point on relayout. Anchor on whichever side
-    // keeps it inside the plot.
+    // Build the pinned label for a selected point: a leader line back to the
+    // marker plus two lines of text, both in the point's system colour. The whole
+    // thing lives inside the point's <g>, so it travels with the point on
+    // relayout. The label is draggable (reposition to avoid collisions / compose
+    // a figure); a tap without dragging removes just that pin.
     function pinLabel(el: SVGGElement) {
+      const color = el.querySelector<SVGElement>(".mark")?.getAttribute("fill") || "currentColor";
       const m = /translate\(([-\d.]+)/.exec(el.getAttribute("transform") || "");
-      const x = m ? +m[1] : 0;
-      const right = x > ml + plotW * 0.6;
-      const offX = right ? "-9" : "9";
+      const px = m ? +m[1] : 0;
+      let dx = px > ml + plotW * 0.6 ? -18 : 18; // default toward the open side
+      let dy = -24;
+
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "pin");
+      const leader = document.createElementNS(NS, "line");
+      leader.setAttribute("class", "leader");
+      leader.setAttribute("x1", "0"); leader.setAttribute("y1", "0");
+      leader.setAttribute("stroke", color);
       const t = document.createElementNS(NS, "text");
       t.setAttribute("class", "ptlabel");
-      t.setAttribute("text-anchor", right ? "end" : "start");
+      t.setAttribute("fill", color);
       const name = document.createElementNS(NS, "tspan");
       name.setAttribute("class", "ptlabel-name");
-      name.setAttribute("x", offX); name.setAttribute("y", "-3");
       name.textContent = el.dataset.name!;
       const val = document.createElementNS(NS, "tspan");
       val.setAttribute("class", "ptlabel-val");
-      val.setAttribute("x", offX); val.setAttribute("dy", "15");
       val.textContent = `${Number(el.dataset.itr).toLocaleString()} bits/min`;
       t.append(name, val);
-      el.appendChild(t);
+      g.append(leader, t);
+      el.appendChild(g);
+
+      function place() {
+        t.setAttribute("text-anchor", dx >= 0 ? "start" : "end");
+        name.setAttribute("x", String(dx)); name.setAttribute("y", String(dy));
+        val.setAttribute("x", String(dx)); val.setAttribute("y", String(dy + 14));
+        // stop the leader just short of the text
+        leader.setAttribute("x2", String(dx + (dx >= 0 ? -3 : 3)));
+        leader.setAttribute("y2", String(dy - 4));
+      }
+      place();
+
+      // Drag to reposition; a tap (no real movement) removes this pin.
+      let sx = 0, sy = 0, bdx = 0, bdy = 0, moved = false, scale = 1;
+      t.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        sx = e.clientX; sy = e.clientY; bdx = dx; bdy = dy; moved = false;
+        scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
+        t.classList.add("drag");
+        t.setPointerCapture(e.pointerId);
+      });
+      t.addEventListener("pointermove", (e) => {
+        if (!t.classList.contains("drag")) return;
+        if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 4) moved = true;
+        dx = bdx + (e.clientX - sx) * scale;
+        dy = bdy + (e.clientY - sy) * scale;
+        place();
+      });
+      t.addEventListener("pointerup", (e) => {
+        e.stopPropagation();
+        t.classList.remove("drag");
+        t.releasePointerCapture(e.pointerId);
+        if (!moved) { el.classList.remove("sel"); g.remove(); } // tap = dismiss
+      });
+      t.addEventListener("click", (e) => e.stopPropagation());
     }
 
     for (const el of pts) {
@@ -286,7 +332,7 @@ const plotted = points
       if ((e.target as Element).closest(".pt")) return;
       for (const el of pts) {
         el.classList.remove("sel");
-        el.querySelectorAll(".ptlabel").forEach((n) => n.remove());
+        el.querySelectorAll(".pin").forEach((n) => n.remove());
       }
     });
 
