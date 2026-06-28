@@ -105,7 +105,7 @@ const plotted = points
       ))}
     </div>
   </div>
-  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to show or hide its label; tap the label to open the entry, or drag it to reposition. Tap empty space to clear all. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to show or hide its label; tap the label to open the entry, or drag it to reposition. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
 </figure>
 
 <style>
@@ -333,14 +333,6 @@ const plotted = points
       });
     }
 
-    // A click on empty chart space clears every pinned selection.
-    svg.addEventListener("click", (e) => {
-      if ((e.target as Element).closest(".pt")) return;
-      for (const el of pts) {
-        el.classList.remove("sel");
-        el.querySelectorAll(".pin").forEach((n) => n.remove());
-      }
-    });
 
     for (const item of Array.from(root.querySelectorAll<HTMLElement>(".leg"))) {
       item.addEventListener("click", () => {
