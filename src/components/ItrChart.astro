@@ -105,7 +105,7 @@ const plotted = points
       ))}
     </div>
   </div>
-  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Hover for details, click to open. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to pin its label, tap again to open the entry; tap empty space to clear. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
 </figure>
 
 <style>
@@ -120,6 +120,13 @@ const plotted = points
   .mark { stroke: var(--card); stroke-width: 1.5; transform-box: fill-box; transform-origin: center;
     transition: transform 0.1s; }
   .pt:hover .mark { stroke: var(--ink); transform: scale(1.4); }
+  .pt.sel .mark { stroke: var(--ink); stroke-width: 2.5; }
+  /* Pinned label shown when a point is selected. Card-coloured stroke behind the
+     fill (paint-order) gives a halo so text stays legible over the gridlines. */
+  .ptlabel { paint-order: stroke; stroke: var(--card); stroke-width: 3px;
+    stroke-linejoin: round; pointer-events: none; }
+  .ptlabel-name { fill: var(--ink); font-size: 11.5px; font-weight: 700; }
+  .ptlabel-val { fill: var(--muted); font-size: 10.5px; }
   .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 12px));
     background: var(--ink); color: #fff; padding: 7px 10px; border-radius: 7px; font-size: 12px;
     line-height: 1.35; white-space: nowrap; z-index: 5; box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
@@ -145,11 +152,15 @@ const plotted = points
     .pt:hover .mark { transform: scale(2.4); }
     .ylab, .xlab { font-size: 17px; }
     .axis-title { display: none; }
+    .ptlabel-name { font-size: 16px; }
+    .ptlabel-val { font-size: 14px; }
   }
   @media (max-width: 420px) {
     .pt .mark { transform: scale(2.6); }
     .pt:hover .mark { transform: scale(3.0); }
     .ylab, .xlab { font-size: 19px; }
+    .ptlabel-name { font-size: 18px; }
+    .ptlabel-val { font-size: 16px; }
   }
 </style>
 
@@ -230,12 +241,54 @@ const plotted = points
       tip.hidden = false;
     }
 
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+    const navTo = (el: SVGGElement) =>
+      (window.location.href = `${base}/interfaces/${el.dataset.id}`);
+
+    // Build the pinned label for a selected point. It lives inside the point's
+    // <g>, so it travels with the point on relayout. Anchor on whichever side
+    // keeps it inside the plot.
+    function pinLabel(el: SVGGElement) {
+      const m = /translate\(([-\d.]+)/.exec(el.getAttribute("transform") || "");
+      const x = m ? +m[1] : 0;
+      const right = x > ml + plotW * 0.6;
+      const offX = right ? "-9" : "9";
+      const t = document.createElementNS(NS, "text");
+      t.setAttribute("class", "ptlabel");
+      t.setAttribute("text-anchor", right ? "end" : "start");
+      const name = document.createElementNS(NS, "tspan");
+      name.setAttribute("class", "ptlabel-name");
+      name.setAttribute("x", offX); name.setAttribute("y", "-3");
+      name.textContent = el.dataset.name!;
+      const val = document.createElementNS(NS, "tspan");
+      val.setAttribute("class", "ptlabel-val");
+      val.setAttribute("x", offX); val.setAttribute("dy", "15");
+      val.textContent = `${Number(el.dataset.itr).toLocaleString()} bits/min`;
+      t.append(name, val);
+      el.appendChild(t);
+    }
+
     for (const el of pts) {
       el.addEventListener("mouseenter", (e) => show(el, e as MouseEvent));
       el.addEventListener("mousemove", (e) => show(el, e as MouseEvent));
       el.addEventListener("mouseleave", () => (tip.hidden = true));
-      el.addEventListener("click", () => (window.location.href = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/interfaces/${el.dataset.id}`));
+      // First click pins the label; a second click on a selected point opens it.
+      el.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (el.classList.contains("sel")) { navTo(el); return; }
+        el.classList.add("sel");
+        pinLabel(el);
+      });
     }
+
+    // A click on empty chart space clears every pinned selection.
+    svg.addEventListener("click", (e) => {
+      if ((e.target as Element).closest(".pt")) return;
+      for (const el of pts) {
+        el.classList.remove("sel");
+        el.querySelectorAll(".ptlabel").forEach((n) => n.remove());
+      }
+    });
 
     for (const item of Array.from(root.querySelectorAll<HTMLElement>(".leg"))) {
       item.addEventListener("click", () => {
