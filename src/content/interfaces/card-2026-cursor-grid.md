@@ -14,10 +14,10 @@ inputs:
   - symbol: "B"
     value: "2.90"
     unit: "bits/s"
-    sourceNote: "Mean achieved grid-task bitrate (2.90 +/- 0.16 bits/s; peak 3.16). The authors note this is comparable to previous intracortical cursor studies, i.e. the field-standard achieved-bitrate metric (log2(N-1) per cued selection), not a Fitts throughput."
+    sourceNote: "Mean achieved grid-task bitrate (2.90 +/- 0.16 bits/s; peak 3.16) for the neural cursor on the main 14x14 grid (0.77-inch tiles; Methods). It is the field-standard achieved-bitrate metric (log2(N-1) per cued selection), which the authors call comparable to arrays in hand motor cortex -- notably T15's arrays were in ventral precentral (speech) cortex. This is not a Fitts throughput. A separate larger-tile 6x6 condition gave 1.67 bits/s with the neural cursor."
   - symbol: "method"
     value: "log2(N-1)/selection, net of errors"
-    sourceNote: "Standard achieved-bitrate for 2D target acquisition (Nuyujukian et al. 2015), reported directly by the authors and explicitly benchmarked against prior intracortical cursor work."
+    sourceNote: "Standard achieved-bitrate for 2D target acquisition (Nuyujukian et al. 2015; the paper's grid-task refs 9,18,34-37), reported directly by the authors and explicitly benchmarked against prior intracortical cursor work."
 actionSpace:
   kind: continuous
   size: continuous
@@ -33,18 +33,18 @@ calculations:
     method: "Fitts' law throughput on the grid task"
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 69
+    resultBitsPerMin: 70
     steps:
       - title: "Grid geometry -> movement difficulty"
-        math: "Square grid, cell width W = S/n; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 0.52*n"
-        note: "S = board span; 0.52 is the mean distance between two random points on a unit square. The exact grid size is not published, but the discount below is nearly size-independent. Using the predecessor ReFIT 6x6 board (n = 6) gives A/W ~= 3.12."
+        math: "14x14 grid, 0.77-inch tiles: cell width W = S/14; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 0.52*14 = 7.28"
+        note: "S = board span; 0.52 is the mean distance between two random points on a unit square. Grid dimensions are taken directly from the paper's Methods (the headline 2.90 bits/s is the neural cursor on this 14x14 board)."
       - title: "Information per movement (Fitts index of difficulty)"
-        math: "ID = log2(A/W + 1) = log2(4.12) ~= 2.04 bits/movement   (vs log2(35) ~= 5.13 bits the achieved-bitrate credits)"
-        note: "The target is cued before the movement, so the user supplies a pointing movement, not a 1-of-N choice. The discount ratio ID/log2(N-1) is 0.398 at 6x6, 0.401 at 14x14 and 0.414 at 30x30, so the result barely depends on the unpublished grid size."
+        math: "ID = log2(A/W + 1) = log2(8.28) ~= 3.05 bits/movement   (vs log2(195) ~= 7.61 bits the achieved-bitrate credits)"
+        note: "The target is cued before the movement, so the user supplies a pointing movement, not a 1-of-196 choice. The discount ratio ID/log2(N-1) is 0.401 here, 0.398 at 6x6 and 0.414 at 30x30, so it is nearly grid-size independent."
       - title: "Selection rate"
-        math: "B / log2(N-1) = 2.90 / 5.13 ~= 0.565 net correct selections/s"
+        math: "B / log2(N-1) = 2.90 / 7.61 ~= 0.381 net correct selections/s"
       - title: "Fitts throughput"
-        math: "TP = 2.04 bits x 0.565/s ~= 1.15 bits/s -> x60 ~= 69 bits/min"
+        math: "TP = 3.05 bits x 0.381/s ~= 1.16 bits/s -> x60 ~= 70 bits/min"
         note: "Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
