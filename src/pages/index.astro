@@ -43,7 +43,6 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
   system: c.system, technique: c.technique,
 }));
 
-const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 ---
 <BaseLayout title="ITR Atlas: Information Transfer Rate across interfaces">
   <section class="top">
@@ -54,11 +53,6 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 
   <div class="controls">
     <input id="search" class="search" placeholder="Search interfaces…" />
-    <div class="chips" id="chips">
-      <button class="chip on" data-filter="all">All</button>
-      {modalities.map((m) => <button class="chip" data-filter={m.toLowerCase()}>{m}</button>)}
-      <button class="chip" data-filter="invasive">Invasive</button>
-    </div>
     <select id="sort" class="sort">
       <option value="itr-desc">Sort: ITR (high → low)</option>
       <option value="itr-asc">Sort: ITR (low → high)</option>
@@ -77,10 +71,6 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
   .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
   .search { flex: 1; min-width: 180px; border: 1px solid var(--hairline); background: var(--card);
     border-radius: 8px; padding: 9px 12px; font-size: 13px; }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .chip { font-size: 12px; padding: 6px 12px; border-radius: 20px; border: 1px solid var(--hairline);
-    background: var(--card); color: var(--tag-ink); cursor: pointer; }
-  .chip.on { background: var(--accent); color: #fff; border-color: var(--accent); }
   .sort { border: 1px solid var(--hairline); background: var(--card); border-radius: 8px;
     padding: 8px 11px; font-size: 12px; }
   .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -92,10 +82,11 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 <script>
   const search = document.getElementById("search") as HTMLInputElement;
   const sort = document.getElementById("sort") as HTMLSelectElement;
-  const chips = document.getElementById("chips") as HTMLElement;
   const grid = document.getElementById("grid") as HTMLElement;
   const empty = document.getElementById("empty") as HTMLElement;
-  let activeFilter = "all";
+  // Mirrors the chart legend's two-axis filter state, broadcast by ItrChart.
+  let hiddenSystem = new Set<string>();
+  let hiddenTechnique = new Set<string>();
 
   function cards(): HTMLElement[] {
     return Array.from(grid.querySelectorAll<HTMLElement>(".card"));
@@ -108,7 +99,9 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
       const name = card.dataset.name ?? "";
       const modality = card.dataset.modality ?? "";
       const matchesSearch = !q || name.includes(q) || modality.includes(q);
-      const matchesFilter = activeFilter === "all" || modality.includes(activeFilter);
+      const matchesFilter =
+        !hiddenSystem.has(card.dataset.system ?? "") &&
+        !hiddenTechnique.has(card.dataset.technique ?? "");
       const show = matchesSearch && matchesFilter;
       card.style.display = show ? "" : "none";
       if (show) visible++;
@@ -127,12 +120,12 @@ const modalities = [...new Set(cards.map((c) => c.sensingModality))];
     sorted.forEach((c) => grid.appendChild(c));
   }
 
-  chips.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest(".chip") as HTMLElement | null;
-    if (!btn) return;
-    chips.querySelectorAll(".chip").forEach((c) => c.classList.remove("on"));
-    btn.classList.add("on");
-    activeFilter = btn.dataset.filter ?? "all";
+  // The chart legend (system/technique toggles) is the single filter source; it
+  // broadcasts its hidden sets and the grid mirrors them.
+  document.addEventListener("itr-filter", (e) => {
+    const d = (e as CustomEvent).detail as { system: string[]; technique: string[] };
+    hiddenSystem = new Set(d.system);
+    hiddenTechnique = new Set(d.technique);
     apply();
   });
   search.addEventListener("input", apply);

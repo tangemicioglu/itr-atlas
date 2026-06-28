@@ -236,6 +236,10 @@ const plotted = points
         else { set.add(key); item.classList.add("off"); }
         for (const el of pts) el.style.display = isHidden(el) ? "none" : "";
         relayout();
+        // Broadcast so the card grid mirrors the same two-axis filter.
+        document.dispatchEvent(new CustomEvent("itr-filter", {
+          detail: { system: [...hidden.system], technique: [...hidden.technique] },
+        }));
       });
     }
   }

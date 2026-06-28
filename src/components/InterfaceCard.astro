@@ -15,8 +15,10 @@ interface Props {
   miniStat: string;
   provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
   rankable?: boolean;
+  system?: string;
+  technique?: string;
 }
-const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true } = Astro.props;
+const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true, system, technique } = Astro.props;
 const invasive = invasiveness !== "non-invasive";
 ---
 <a class="card"
@@ -24,7 +26,9 @@ const invasive = invasiveness !== "non-invasive";
    data-name={name.toLowerCase()}
    data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
    data-itr={referenceBitsPerMin}
-   data-rankable={String(rankable)}>
+   data-rankable={String(rankable)}
+   data-system={system}
+   data-technique={technique}>
   {image && <div class="photo"><img src={image} alt={name} /></div>}
   <div class="body">
     <div class="name">{name}</div>

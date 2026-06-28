@@ -2,7 +2,7 @@
 name: LipType Word-Initial Silent Speech (Su et al., 2025)
 year: 2025
 modalityTags: ["Video", "Silent speech", "Touch"]
-sensingModality: front-facing camera + touchscreen
+sensingModality: Video
 invasiveness: non-invasive
 source:
   authors: "Su, Fang & Rekimoto"
