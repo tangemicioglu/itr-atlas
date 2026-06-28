@@ -33,7 +33,7 @@ calculations:
     steps:
       - title: "Characters per minute"
         math: "25 wpm (corrected) × 5 chars/word = 125 chars/min"
-        note: "Recognition errors were frequent: raw dictation ran ~105–107 wpm but correction cut the effective rate to ~25 wpm. The error shows up here as that correction overhead rather than a published WER%, and it is already in the corrected rate — not re-applied."
+        note: "Recognition errors were frequent: raw dictation ran ~105–107 wpm but correction cut the effective rate to ~25 wpm. The error shows up here as that correction overhead rather than a published WER%, and it is already in the corrected rate, not re-applied."
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"

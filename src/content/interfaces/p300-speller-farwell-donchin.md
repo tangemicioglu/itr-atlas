@@ -20,12 +20,12 @@ inputs:
   - symbol: "t_sel"
     value: "23"
     unit: "s"
-    sourceNote: "≈2.6 selections/min — the original relied on extensive ERP signal averaging, so each selection was slow"
+    sourceNote: "≈2.6 selections/min; the original relied on extensive ERP signal averaging, so each selection was slow"
 actionSpace:
   kind: fixed-set
   size: 36
   prior: context-conditioned
-  notes: "6×6 character matrix; the decoder classifies which letter drew the P300 response (covert attention — no pointing, no cursor). The realized output is English text, so the reference uses the same character-entropy method (~1 bit/char) as the other text-entry entries; the Wolpaw-over-36 figure assumes a uniform 1-of-36 choice and is kept as a secondary classifier metric. Modern P300 spellers are far faster, but this is the 1988 original."
+  notes: "6×6 character matrix; the decoder classifies which letter drew the P300 response (covert attention, no pointing, no cursor). The realized output is English text, so the reference uses the same character-entropy method (~1 bit/char) as the other text-entry entries; the Wolpaw-over-36 figure assumes a uniform 1-of-36 choice and is kept as a secondary classifier metric. Modern P300 spellers are far faster, but this is the 1988 original."
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
@@ -37,7 +37,7 @@ calculations:
         math: "≈ 2.6 selections/min × 0.95 accuracy ≈ 2.5 correct char/min"
         note: "Each selection emits one character of English; ~23 s/selection due to extensive ERP signal averaging. This is the rate of correct text actually produced."
       - title: "Bits per character"
-        math: "H(English) ≈ 1.0 bit/char (Shannon) — the same predictor used for QWERTY, eye-typing and the other BCI text entries"
+        math: "H(English) ≈ 1.0 bit/char (Shannon), the same predictor used for QWERTY, eye-typing and the other BCI text entries"
       - title: "Information transfer rate"
         math: "ITR = 2.5 × 1.0 ≈ 2 bits/min"
   - id: wolpaw

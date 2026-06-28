@@ -13,7 +13,7 @@ source:
 inputs:
   - symbol: "N"
     value: "8"
-    sourceNote: "Eight target locations on the screen periphery; the user drove a cursor from the center to a block-randomized target via sensorimotor-rhythm (mu/beta) modulation — i.e. continuous 2D control, not a discrete classifier."
+    sourceNote: "Eight target locations on the screen periphery; the user drove a cursor from the center to a block-randomized target via sensorimotor-rhythm (mu/beta) modulation, i.e. continuous 2D control, not a discrete classifier."
   - symbol: "MT"
     value: "2.75"
     unit: "s"
@@ -29,9 +29,9 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A continuous 2D cursor driven by sensorimotor-rhythm modulation (left/right-hand and rest motor imagery) — the canonical non-invasive cursor BCI, and the paper that showed scalp EEG can approach invasive cursor control. The paper reports an eight-target center-out task, so the reference follows the Wolpaw-style target-acquisition estimate over those cued endpoints. The Fitts estimate is kept as a geometry-based check, but the paper does not publish pixel geometry or endpoint scatter, so that calculation rests on inferred target size and amplitude."
+  notes: "A continuous 2D cursor driven by sensorimotor-rhythm modulation (left/right-hand and rest motor imagery): the canonical non-invasive cursor BCI, and the paper that showed scalp EEG can approach invasive cursor control. The paper reports an eight-target center-out task, so the reference follows the Wolpaw-style target-acquisition estimate over those cued endpoints. The Fitts estimate is kept as a geometry-based check, but the paper does not publish pixel geometry or endpoint scatter, so that calculation rests on inferred target size and amplitude."
 references:
-  - label: "Wolpaw & McFarland 2004 — open-access PMC copy"
+  - label: "Wolpaw & McFarland 2004: open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC535103/"
 calculations:
   - id: fitts
@@ -52,7 +52,7 @@ calculations:
         math: "ITR ≈ 1.00 bits/s × 60 ≈ 60 bits/min (best users ≈ 95 bits/min)"
   - id: wolpaw
     method: "Wolpaw / achieved-bitrate over the 8 cued targets"
-    kind: "Discrete-selection figure — UNDER-counts the continuous cursor (only 8 targets)"
+    kind: "Discrete-selection figure, UNDER-counts the continuous cursor (only 8 targets)"
     provenance: recomputed-omitted
     compute:
       method: wolpaw

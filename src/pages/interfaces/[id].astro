@@ -30,9 +30,9 @@ const KIND_LABEL: Record<typeof as.kind, string> = {
   continuous: "Continuous control space",
 };
 const PRIOR_LABEL: Record<typeof as.prior, string> = {
-  uniform: "Uniform — all actions assumed equally likely",
-  "non-uniform": "Non-uniform — some actions more likely than others",
-  "context-conditioned": "Context-conditioned — likelihoods depend on prior actions",
+  uniform: "Uniform: all actions assumed equally likely",
+  "non-uniform": "Non-uniform: some actions more likely than others",
+  "context-conditioned": "Context-conditioned: likelihoods depend on prior actions",
 };
 // Comparability is governed by the realized-output rule, not Wolpaw's uniform-prior
 // assumption (which the methodology now deliberately violates by baking in the
@@ -54,19 +54,19 @@ const comparabilityClass = reference.calc.notUsedForRanking
       : "language";
 const COMPARABILITY: Record<string, string> = {
   ceiling:
-    "The figure above is a ceiling, not a measured throughput — a raw-channel capacity or an assumed-rate estimate — so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
+    "The figure above is a ceiling, not a measured throughput (a raw-channel capacity or an assumed-rate estimate), so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
   pointing:
-    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries — mouse, trackball, stylus, gaze and the cursor BCIs. Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/min, but one measures movement difficulty and the other text information, so compare within the family first.",
+    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/min, but one measures movement difficulty and the other text information, so compare within the family first.",
   "pointing-selection":
     "Ranked on a Wolpaw-style target-acquisition estimate over cued endpoints. This is a continuous cursor task, so compare it carefully with the Fitts-ranked pointing entries: the number reflects the published target set and completion rate, not a full Fitts effective-width throughput.",
   selection:
-    "Ranked on the raw selection rate — log₂(N) over the real action set, discounted by accuracy. This is the right measure here because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
+    "Ranked on the raw selection rate: log₂(N) over the real action set, discounted by accuracy. This is the right measure here because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
   language:
-    "Ranked on the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor is what makes it directly comparable to every other text entry — keyboards, spellers, silent speech and speech BCIs — regardless of each entry's prior or vocabulary size. Any raw-channel figure shown below (Wolpaw or log₂(N)) is a ceiling, not this rank.",
+    "Ranked on the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor is what makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of each entry's prior or vocabulary size. Any raw-channel figure shown below (Wolpaw or log₂(N)) is a ceiling, not this rank.",
 };
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
-<BaseLayout title={`${data.name} — ITR Atlas`}>
+<BaseLayout title={`${data.name} | ITR Atlas`}>
   <a class="back" href={url("/")}>← All interfaces</a>
 
   <header class="head">
@@ -94,7 +94,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
 
   <h2>{rankable ? "Reference ITR" : "Headline ceiling (not ranked)"}</h2>
   <p class="seclbl">{rankable
-    ? "One designated method per entry — the number used for cross-comparison."
+    ? "One designated method per entry: the number used for cross-comparison."
     : "This entry has no measured communication rate, so it is not ranked. The figure below is a ceiling computed from an assumed rate, kept for documentation only."}</p>
   <CalculationBlock
     method={reference.calc.method}
@@ -110,8 +110,8 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     <b>What counts as a bit depends on the action space.</b> The number of distinguishable
     actions and how likely each one is are design choices of the task, not the sensing hardware.
     The same modality can present a fixed set of targets, a set pruned per step by a grammar or
-    language model, or a continuous control space — each changes how many actions are live and how
-    the probability mass is spread, and therefore the information per selection. Read the action
+    language model, or a continuous control space. Each of these changes how many actions are live
+    and how the probability mass is spread, and therefore the information per selection. Read the action
     space below before comparing headline numbers across entries.
   </p>
 
@@ -143,7 +143,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   {supplementary.length > 0 && (
     <>
       <h2>Supplementary calculations</h2>
-      <p class="seclbl">Shown for transparency — not used for ranking.</p>
+      <p class="seclbl">Shown for transparency, not used for ranking.</p>
       {supplementary.map((r) => (
         <CalculationBlock
           method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}

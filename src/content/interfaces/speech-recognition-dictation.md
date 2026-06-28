@@ -34,7 +34,7 @@ calculations:
         math: "152.86 wpm × 5 chars/word = 764 chars/min"
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
-        note: "Recognition WER was 4.37% uncorrected (Deep Speech 2, English). The entry rate already includes error-correction time and participants corrected to near-perfect final text, so net throughput ≈ entry rate — the WER is documented here, not re-applied."
+        note: "Recognition WER was 4.37% uncorrected (Deep Speech 2, English). The entry rate already includes error-correction time and participants corrected to near-perfect final text, so net throughput ≈ entry rate; the WER is documented here, not re-applied."
       - title: "Information transfer rate"
         math: "ITR = 764 × 1.0 ≈ 764 bits/min"
 referenceCalculationId: transcription

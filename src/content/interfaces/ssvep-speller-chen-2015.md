@@ -22,7 +22,7 @@ actionSpace:
   kind: fixed-set
   size: 40
   prior: context-conditioned
-  notes: "40 flicker-coded characters; the decoder classifies which flicker frequency the user is gazing at — a classifier, not Fitts pointing (selection time is set by the flicker-integration window, not by target distance/size). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like the other text entries; the Wolpaw-over-40 figure counts log2(N) per selection and is kept as a secondary classifier metric. The c-VEP entry (EEG2Code) is a useful comparison point because it reports very large code-space discrimination separately from active spelling throughput."
+  notes: "40 flicker-coded characters; the decoder classifies which flicker frequency the user is gazing at: a classifier, not Fitts pointing (selection time is set by the flicker-integration window, not by target distance/size). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like the other text entries; the Wolpaw-over-40 figure counts log2(N) per selection and is kept as a secondary classifier metric. The c-VEP entry (EEG2Code) is a useful comparison point because it reports very large code-space discrimination separately from active spelling throughput."
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
@@ -34,7 +34,7 @@ calculations:
         math: "~1 selection/s (0.5 s flicker + 0.5 s gaze shift) → ~60 char/min × 89.83% ≈ 54 correct char/min"
         note: "Each selection emits one character; this is the rate of correct English text produced (~12 wpm gross)."
       - title: "Bits per character"
-        math: "H(English) ≈ 1.0 bit/char (Shannon) — the same predictor used for QWERTY and the other text entries"
+        math: "H(English) ≈ 1.0 bit/char (Shannon), the same predictor used for QWERTY and the other text entries"
       - title: "Information transfer rate"
         math: "ITR = 54 × 1.0 ≈ 54 bits/min"
   - id: reported

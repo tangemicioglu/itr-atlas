@@ -31,7 +31,7 @@ actionSpace:
 references:
   - label: "System date: Ballard & Stockman 1995 facial-aspect computer control"
     url: "https://doi.org/10.1109/21.370199"
-  - label: "I. S. MacKenzie — paper page with full results"
+  - label: "I. S. MacKenzie: paper page with full results"
     url: "https://www.yorku.ca/mack/etra2018.html"
 calculations:
   - id: fitts
@@ -42,7 +42,7 @@ calculations:
     steps:
       - title: "Information per movement (index of difficulty)"
         math: "ID = log2(A/W + 1);  amplitudes (160, 260 px) × widths (50, 100 px) → ID = 1.4–2.6 bits (mean ≈ 2.0 bits/movement)"
-        note: "Each head-pointing acquisition selects among endpoints set by the distance-to-width ratio — that ratio, in bits, is the information the movement carries."
+        note: "Each head-pointing acquisition selects among endpoints set by the distance-to-width ratio; that ratio, in bits, is the information the movement carries."
       - title: "Accuracy folded in via effective width"
         math: "W → We per ISO 9241-9, from endpoint scatter; head effective target width = 51.707 px"
         note: "The head pointer had lower click-condition error than eye gaze in this study (0.26% vs 1.53%), and the effective-width correction is already reflected in the reported throughput."

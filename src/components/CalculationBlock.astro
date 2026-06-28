@@ -7,7 +7,7 @@ import type { DerivationStep } from "../lib/itr/types";
 interface Props {
   method: string;
   kind: string;
-  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted" | "recomputed-flawed";
+  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
   resultBitsPerMin: number;
   steps: DerivationStep[];
   isReference?: boolean;

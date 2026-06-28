@@ -12,7 +12,7 @@ source:
 inputs:
   - symbol: "t"
     value: "30"
-    sourceNote: "Webgrid grid dimension — the standard board is 30×30 = 900 cells (Neuralink's Webgrid source: BPS = log2(t²−1)·f/60, f = net correct clicks/min)."
+    sourceNote: "Webgrid grid dimension: the standard board is 30×30 = 900 cells (Neuralink's Webgrid source: BPS = log2(t²−1)·f/60, f = net correct clicks/min)."
   - symbol: "B"
     value: "8.01"
     unit: "bits/s"
@@ -35,17 +35,17 @@ calculations:
     steps:
       - title: "Webgrid geometry → movement difficulty"
         math: "30×30 board: cell width W = S/30; random targets → mean amplitude A ≈ 0.52·S, so A/W ≈ 15.6"
-        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued (shown), so the user supplies a pointing movement, not a 1-of-900 choice — the information that movement carries is the Fitts index of difficulty."
+        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued (shown), so the user supplies a pointing movement, not a 1-of-900 choice; the information that movement carries is the Fitts index of difficulty."
       - title: "Information per movement (Fitts index of difficulty)"
         math: "ID = log2(A/W + 1) = log2(16.6) ≈ 4.06 bits/movement   (vs the log2(899) ≈ 9.81 bits the Webgrid metric credits)"
       - title: "Selection rate"
         math: "f ≈ 49 net correct selections/min = 0.82/s   (back-derived from the 8.01 BPS record)"
       - title: "Fitts throughput"
         math: "TP = 4.06 bits × 0.82/s ≈ 3.3 bits/s → ×60 ≈ 199 bits/min"
-        note: "Validation: the able-bodied ~10 BPS on this same 30×30 board reduces by the identical method to ~4.1 bits/s Fitts — matching MacKenzie's independently-measured mouse throughput (4.5 bits/s). The correction is self-consistent, and it places the BCI cursor just below an able-bodied mouse, not above it."
+        note: "Validation: the able-bodied ~10 BPS on this same 30×30 board reduces by the identical method to ~4.1 bits/s Fitts, matching MacKenzie's independently-measured mouse throughput (4.5 bits/s). The correction is self-consistent, and it places the BCI cursor just below an able-bodied mouse, not above it."
   - id: reported
     method: "Wolpaw bitrate over the 899-cell grid (Neuralink's Webgrid BPS)"
-    kind: "Webgrid full-grid score — secondary task metric, not atlas-ranked pointing throughput"
+    kind: "Webgrid full-grid score, a secondary task metric, not atlas-ranked pointing throughput"
     provenance: author-reported-unverified
     notUsedForRanking: true
     compute:

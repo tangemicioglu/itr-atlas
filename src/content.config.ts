@@ -32,7 +32,6 @@ const provenance = z.enum([
   'author-reported-verified',
   'author-reported-unverified',
   'recomputed-omitted',
-  'recomputed-flawed',
 ]);
 
 // The set of distinguishable actions available at each selection and how they

@@ -25,9 +25,9 @@ actionSpace:
   kind: fixed-set
   size: 30
   prior: context-conditioned
-  notes: "Motor imagery used for TEXT, not cursor pointing: two mental commands drive a hexagonal menu (rotate / select) in which each letter is reached by a two-step selection. Because the output is English text, the reference uses character-entropy (~1 bit/char) like every other text entry — the right comparison is to the other spellers and keyboards, not to a Fitts pointing channel. This is the canonical motor-imagery speller; its low rate reflects the narrow 2-command channel, the same reason its bits/min sit far below the visual-evoked spellers."
+  notes: "Motor imagery used for TEXT, not cursor pointing: two mental commands drive a hexagonal menu (rotate / select) in which each letter is reached by a two-step selection. Because the output is English text, the reference uses character-entropy (~1 bit/char) like every other text entry; the right comparison is to the other spellers and keyboards, not to a Fitts pointing channel. This is the canonical motor-imagery speller; its low rate reflects the narrow 2-command channel, the same reason its bits/min sit far below the visual-evoked spellers."
 references:
-  - label: "Williamson et al. 2009 (J. Neural Eng.) — Hex-o-Spell interaction design and uncertainty handling"
+  - label: "Williamson et al. 2009 (J. Neural Eng.): Hex-o-Spell interaction design and uncertainty handling"
     url: "https://doi.org/10.1088/1741-2560/6/5/056012"
 calculations:
   - id: comm

@@ -13,7 +13,7 @@ interface Props {
   referenceBitsPerMin: number;
   referenceMethod: string;
   miniStat: string;
-  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted" | "recomputed-flawed";
+  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
   rankable?: boolean;
 }
 const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true } = Astro.props;

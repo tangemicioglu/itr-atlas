@@ -9,7 +9,7 @@ interface Point {
 }
 const { points } = Astro.props as { points: Point[] };
 
-// Color encodes the input system, symbol encodes the input technique — two
+// Color encodes the input system, symbol encodes the input technique: two
 // independent axes, each with its own legend filter row.
 const presentSystems = SYSTEMS.filter((s) => points.some((p) => p.system === s.key));
 const presentTechniques = TECHNIQUES.filter((t) => points.some((p) => p.technique === t.key));

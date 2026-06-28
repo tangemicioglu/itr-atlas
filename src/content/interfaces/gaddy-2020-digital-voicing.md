@@ -29,7 +29,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Assumed-rate estimate — not ranked"
+    kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 482

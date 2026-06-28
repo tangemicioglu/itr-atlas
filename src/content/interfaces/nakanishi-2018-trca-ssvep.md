@@ -28,14 +28,14 @@ inputs:
   - symbol: "ITR_reported"
     value: "325.33"
     unit: "bit/min"
-    sourceNote: "Authors' online cue-guided Wolpaw ITR (free-spelling 198.67 bit/min) — the highest ITR reported for an EEG BCI at the time. Counts log2(N) per selection."
+    sourceNote: "Authors' online cue-guided Wolpaw ITR (free-spelling 198.67 bit/min): the highest ITR reported for an EEG BCI at the time. Counts log2(N) per selection."
 actionSpace:
   kind: fixed-set
   size: 40
   prior: context-conditioned
   notes: "Same 40-target SSVEP paradigm as Chen et al. 2015; the decoder classifies which flicker frequency the user gazes at (a classifier, not Fitts pointing). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 325 bit/min Wolpaw figure counts log2(N) per selection and is kept as a secondary classifier metric. The faster decoder (0.8 s/selection vs ~1 s in Chen 2015) is why the atlas text-throughput estimate edges above Chen's."
 references:
-  - label: "Nakanishi et al. 2018 — open-access PMC copy"
+  - label: "Nakanishi et al. 2018: open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5783827/"
 calculations:
   - id: comm

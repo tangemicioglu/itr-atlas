@@ -35,7 +35,7 @@ calculations:
     steps:
       - title: "Grid geometry → movement difficulty"
         math: "6×6 board: cell width W = S/6; random targets → mean amplitude A ≈ 0.52·S, so A/W ≈ 3.1"
-        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so the user supplies a pointing movement, not a 1-of-36 choice — the information that movement carries is the Fitts index of difficulty, not log2(N)."
+        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so the user supplies a pointing movement, not a 1-of-36 choice; the information that movement carries is the Fitts index of difficulty, not log2(N)."
       - title: "Information per movement (Fitts index of difficulty)"
         math: "ID = log2(A/W + 1) = log2(4.1) ≈ 2.05 bits/movement   (vs the log2(35) ≈ 5.13 bits the achieved-bitrate metric credits)"
       - title: "Selection rate"

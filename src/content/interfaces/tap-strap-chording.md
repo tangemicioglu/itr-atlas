@@ -30,7 +30,7 @@ actionSpace:
 references:
   - label: "System date: Tap press kit listing shipping since February 2018"
     url: "https://www.tapwithus.com/press-kit/"
-  - label: "Mrazek et al. 2021/2022 — independent Tap Strap 2 usability and accuracy evaluation (not the speed source)"
+  - label: "Mrazek et al. 2021/2022: independent Tap Strap 2 usability and accuracy evaluation (not the speed source)"
     url: "https://www.researchgate.net/publication/356096675_The_Tap_Strap_2_Evaluating_Performance_of_One-Handed_Wearable_Keyboard_and_Mouse"
 calculations:
   - id: entropy

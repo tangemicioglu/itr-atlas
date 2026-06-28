@@ -23,7 +23,7 @@ describe("system classification (chart color)", () => {
 
 describe("technique classification (chart symbol)", () => {
   test("same EEG/motor-imagery modality splits by paradigm", () => {
-    // Hex-o-Spell selects letters; the SMR cursor points — same sensing, different technique.
+    // Hex-o-Spell selects letters; the SMR cursor points; same sensing, different technique.
     expect(techniqueOf(["EEG", "Motor imagery"])).toBe("selection");
     expect(techniqueOf(["EEG", "Motor imagery", "Cursor"])).toBe("pointing");
   });

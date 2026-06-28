@@ -56,6 +56,6 @@ calculations:
       secondsPerSelection: 4.34468
 referenceCalculationId: comm
 references:
-  - label: "Mitchell et al. 2023 (JAMA Neurology) — SWITCH trial 4-patient safety outcomes"
+  - label: "Mitchell et al. 2023 (JAMA Neurology): SWITCH trial 4-patient safety outcomes"
     url: "https://doi.org/10.1001/jamaneurol.2022.4847"
 ---

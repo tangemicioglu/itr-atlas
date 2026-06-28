@@ -19,7 +19,7 @@ inputs:
   - symbol: "rate"
     value: "100"
     unit: "word/min"
-    sourceNote: "ASSUMED. Offline recognizer — no real-time rate reported; ~100 wpm is taken as a typical silent-articulation rate (see AlterEgo, which reports >100 wpm) so a bits/min can be stated. Treat the rate, not the per-word bits, as the soft number here."
+    sourceNote: "ASSUMED. Offline recognizer with no real-time rate reported; ~100 wpm is taken as a typical silent-articulation rate (see AlterEgo, which reports >100 wpm) so a bits/min can be stated. Treat the rate, not the per-word bits, as the soft number here."
 actionSpace:
   kind: fixed-set
   size: 100
@@ -28,14 +28,14 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Assumed-rate estimate — not ranked"
+    kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 351
     steps:
       - title: "Error-corrected words per minute"
         math: "(1 − WER) × rate = 0.701 × 100 = 70.1 net word/min"
-        note: "Rate is the ASSUMED ~100 wpm articulation rate, not a measured one — the soft input here."
+        note: "Rate is the ASSUMED ~100 wpm articulation rate, not a measured one. It is the soft input here."
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
       - title: "Information transfer rate"

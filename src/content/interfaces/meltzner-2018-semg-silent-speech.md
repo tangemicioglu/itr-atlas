@@ -29,7 +29,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
-    kind: "Assumed-rate estimate — not ranked"
+    kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerMin: 456
@@ -39,7 +39,7 @@ calculations:
         note: "Rate is the ASSUMED ~100 wpm articulation rate, not measured."
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
-        note: "Independent of vocabulary size — so the 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw comparison metric."
+        note: "Independent of vocabulary size, so the 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw comparison metric."
       - title: "Information transfer rate"
         math: "ITR = 91.1 × 5.0 ≈ 456 bits/min"
   - id: wolpaw

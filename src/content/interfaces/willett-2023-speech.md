@@ -13,7 +13,7 @@ source:
 inputs:
   - symbol: "N"
     value: "125000"
-    sourceNote: "125,000-word large-vocabulary decoding (Abstract) — the reference operating point"
+    sourceNote: "125,000-word large-vocabulary decoding (Abstract): the reference operating point"
   - symbol: "rate"
     value: "62"
     unit: "word/min"

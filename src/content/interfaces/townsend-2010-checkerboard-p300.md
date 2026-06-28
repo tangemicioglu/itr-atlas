@@ -33,9 +33,9 @@ actionSpace:
   kind: fixed-set
   size: 72
   prior: context-conditioned
-  notes: "8×9 matrix; the decoder classifies which character drew the P300 response (covert attention — no pointing, no cursor), the modern descendant of the 1988 Farwell-Donchin speller. The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 23 bit/min Wolpaw figure assumes a uniform 1-of-72 choice and is kept as a secondary classifier metric. The checkerboard paradigm is a well-cited modern P300 design — useful here as the modern bookend to the 1988 original."
+  notes: "8×9 matrix; the decoder classifies which character drew the P300 response (covert attention, no pointing, no cursor), the modern descendant of the 1988 Farwell-Donchin speller. The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 23 bit/min Wolpaw figure assumes a uniform 1-of-72 choice and is kept as a secondary classifier metric. The checkerboard paradigm is a well-cited modern P300 design, useful here as the modern bookend to the 1988 original."
 references:
-  - label: "Townsend et al. 2010 — open-access PMC copy"
+  - label: "Townsend et al. 2010: open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2879474/"
 calculations:
   - id: comm
@@ -50,7 +50,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 4.0 × 1.0 ≈ 4 bits/min  (vs ~2 bits/min for the 1988 original — the paradigm roughly doubled realized rate)"
+        math: "ITR = 4.0 × 1.0 ≈ 4 bits/min  (vs ~2 bits/min for the 1988 original; the paradigm roughly doubled realized rate)"
   - id: reported
     method: "Wolpaw bitrate over N = 72 targets (authors' reported ITR)"
     kind: "Uniform 1-of-72 classifier metric, shown for comparison"

@@ -36,7 +36,7 @@ calculations:
     steps:
       - title: "Characters per minute"
         math: "47 wpm × 5 chars/word = 235 chars/min"
-        note: "Uncorrected word-level error was ~0.3% for experts (chording errors fell below 5% after the second session). Users mostly left errors in, so the 47 wpm already reflects them — documented, not re-applied."
+        note: "Uncorrected word-level error was ~0.3% for experts (chording errors fell below 5% after the second session). Users mostly left errors in, so the 47 wpm already reflects them; documented, not re-applied."
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"

@@ -1,6 +1,6 @@
 // Two orthogonal axes label every interface entry:
-//   system    — how the signal is sensed (the hardware / biological source) → chart COLOR
-//   technique — the interaction paradigm the user performs                  → chart SYMBOL
+//   system:    how the signal is sensed (the hardware / biological source) → chart COLOR
+//   technique: the interaction paradigm the user performs                  → chart SYMBOL
 // They are independent so the chart reads on both axes at once: e.g. an
 // intracortical cursor and a mouse share the "pointing" symbol but differ in
 // colour, while an EEG speller and an EEG cursor share a colour but differ in

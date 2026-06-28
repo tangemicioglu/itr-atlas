@@ -22,17 +22,17 @@ inputs:
   - symbol: "ITR_passive"
     value: "701"
     unit: "bit/min"
-    sourceNote: "Mean passive (raw discrimination) ITR; best subject 1237 bit/min — the 'world's fastest BCI' headline. This is a signal-discrimination metric, separate from active spelling throughput."
+    sourceNote: "Mean passive (raw discrimination) ITR; best subject 1237 bit/min, the 'world's fastest BCI' headline. This is a signal-discrimination metric, separate from active spelling throughput."
   - symbol: "N"
     value: "500000"
-    sourceNote: "The decoder discriminated 500,000 distinct random black/white stimulation patterns at ~100% from 2 s of EEG — log2(500000) ≈ 19 bits per selection. N is a code-space size, not a set of communicative choices."
+    sourceNote: "The decoder discriminated 500,000 distinct random black/white stimulation patterns at ~100% from 2 s of EEG: log2(500000) ≈ 19 bits per selection. N is a code-space size, not a set of communicative choices."
 actionSpace:
   kind: fixed-set
   size: 32
   prior: context-conditioned
   notes: "c-VEP: targets flicker by random black/white codes and the decoder classifies which code the user is gazing at (a classifier, not Fitts pointing). The ranked atlas figure uses the active speller's English text output (~35 letters/min), so it follows the same character-entropy convention as the other text entries. The headline 701–1237 bit/min and the 500,000-stimulus discrimination are retained as secondary signal-discrimination metrics. The authors explicitly discuss a ceiling effect for very large code spaces, which is why the atlas separates raw code discrimination from ranked text throughput."
 references:
-  - label: "Nagel & Spüler 2019 (PLOS ONE) — 'World's fastest brain-computer interface: Combining EEG2Code with deep learning'"
+  - label: "Nagel & Spüler 2019 (PLOS ONE): 'World's fastest brain-computer interface: Combining EEG2Code with deep learning'"
     url: "https://doi.org/10.1371/journal.pone.0221909"
 calculations:
   - id: comm
