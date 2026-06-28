@@ -111,7 +111,7 @@ const plotted = points
 
 <style>
   .chart { margin: 0 0 24px; position: relative; user-select: none;
-    -webkit-user-select: none; -webkit-touch-callout: none; }
+    -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
   .chart * { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
   :global(body.chart-label-dragging), :global(body.chart-label-dragging *) {
     user-select: none !important;
@@ -119,6 +119,7 @@ const plotted = points
     -webkit-touch-callout: none !important;
   }
   .chart > svg { width: 100%; height: auto; display: block; background: var(--card);
+    touch-action: none;
     border: 1px solid var(--hairline); border-radius: var(--radius); }
   .grid { stroke: var(--hairline); stroke-width: 1; }
   .axis { stroke: var(--muted); stroke-width: 1; }
@@ -192,6 +193,13 @@ const plotted = points
     const ml = +svg.dataset.ml!, plotW = +svg.dataset.plotw!;
     const mt = +svg.dataset.mt!, plotH = +svg.dataset.ploth!;
     const NS = "http://www.w3.org/2000/svg";
+
+    const stopNativeSelection = (e: Event) => e.preventDefault();
+    root.addEventListener("selectstart", stopNativeSelection);
+    root.addEventListener("dragstart", stopNativeSelection);
+    root.addEventListener("contextmenu", (e) => {
+      if (document.body.classList.contains("chart-label-dragging")) e.preventDefault();
+    });
 
     // Mirrors the frontmatter helpers so the client re-fit matches the server fallback.
     function padDomain(min: number, max: number): [number, number] {
@@ -271,6 +279,7 @@ const plotted = points
 
       const g = document.createElementNS(NS, "g");
       g.setAttribute("class", "pin");
+      g.setAttribute("draggable", "false");
       const leader = document.createElementNS(NS, "line");
       leader.setAttribute("class", "leader");
       leader.setAttribute("x1", "0"); leader.setAttribute("y1", "0");
@@ -278,11 +287,14 @@ const plotted = points
       const t = document.createElementNS(NS, "text");
       t.setAttribute("class", "ptlabel");
       t.setAttribute("fill", color);
+      t.setAttribute("draggable", "false");
       const name = document.createElementNS(NS, "tspan");
       name.setAttribute("class", "ptlabel-name");
+      name.setAttribute("draggable", "false");
       name.textContent = el.dataset.name!;
       const val = document.createElementNS(NS, "tspan");
       val.setAttribute("class", "ptlabel-val");
+      val.setAttribute("draggable", "false");
       val.textContent = `${Number(el.dataset.itr).toLocaleString()} bits/s`;
       t.append(name, val);
       g.append(leader, t);
@@ -300,44 +312,84 @@ const plotted = points
 
       // Drag to reposition; a tap (no real movement) opens this entry.
       let sx = 0, sy = 0, bdx = 0, bdy = 0, moved = false, scale = 1;
+      let activePointerId: number | null = null;
       const clearTextSelection = () => window.getSelection?.()?.removeAllRanges();
-      function endDrag(pointerId: number) {
-        t.classList.remove("drag");
-        document.body.classList.remove("chart-label-dragging");
-        clearTextSelection();
-        if (t.hasPointerCapture(pointerId)) t.releasePointerCapture(pointerId);
-      }
-      t.addEventListener("pointerdown", (e) => {
-        e.stopPropagation();
-        e.preventDefault(); // stop the browser starting a text selection
-        sx = e.clientX; sy = e.clientY; bdx = dx; bdy = dy; moved = false;
+      function startDrag(clientX: number, clientY: number) {
+        sx = clientX; sy = clientY; bdx = dx; bdy = dy; moved = false;
         scale = svg.viewBox.baseVal.width / svg.getBoundingClientRect().width;
         clearTextSelection();
         document.body.classList.add("chart-label-dragging");
         t.classList.add("drag");
-        t.setPointerCapture(e.pointerId);
-      });
-      t.addEventListener("pointermove", (e) => {
+      }
+      function moveDrag(clientX: number, clientY: number) {
         if (!t.classList.contains("drag")) return;
-        e.preventDefault();
-        if (Math.abs(e.clientX - sx) + Math.abs(e.clientY - sy) > 4) moved = true;
-        dx = bdx + (e.clientX - sx) * scale;
-        dy = bdy + (e.clientY - sy) * scale;
+        if (Math.abs(clientX - sx) + Math.abs(clientY - sy) > 4) moved = true;
+        dx = bdx + (clientX - sx) * scale;
+        dy = bdy + (clientY - sy) * scale;
         clearTextSelection();
         place();
-      });
-      t.addEventListener("pointerup", (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        endDrag(e.pointerId);
-        if (!moved) navTo(el); // tap the label = open the entry
-      });
-      t.addEventListener("pointercancel", (e) => endDrag(e.pointerId));
-      t.addEventListener("lostpointercapture", () => {
+      }
+      function finishDrag(openOnTap = false) {
         t.classList.remove("drag");
         document.body.classList.remove("chart-label-dragging");
         clearTextSelection();
+        activePointerId = null;
+        document.removeEventListener("pointermove", onDocumentPointerMove);
+        document.removeEventListener("pointerup", onDocumentPointerUp);
+        document.removeEventListener("pointercancel", onDocumentPointerCancel);
+        document.removeEventListener("touchmove", onDocumentTouchMove);
+        document.removeEventListener("touchend", onDocumentTouchEnd);
+        document.removeEventListener("touchcancel", onDocumentTouchCancel);
+        if (openOnTap && !moved) navTo(el);
+      }
+      function onDocumentPointerMove(e: PointerEvent) {
+        if (activePointerId !== e.pointerId) return;
+        e.preventDefault();
+        moveDrag(e.clientX, e.clientY);
+      }
+      function onDocumentPointerUp(e: PointerEvent) {
+        if (activePointerId !== e.pointerId) return;
+        e.preventDefault();
+        finishDrag(true);
+      }
+      function onDocumentPointerCancel(e: PointerEvent) {
+        if (activePointerId !== e.pointerId) return;
+        e.preventDefault();
+        finishDrag();
+      }
+      function onDocumentTouchMove(e: TouchEvent) {
+        e.preventDefault();
+        const touch = e.changedTouches[0];
+        if (touch) moveDrag(touch.clientX, touch.clientY);
+      }
+      function onDocumentTouchEnd(e: TouchEvent) {
+        e.preventDefault();
+        finishDrag(true);
+      }
+      function onDocumentTouchCancel(e: TouchEvent) {
+        e.preventDefault();
+        finishDrag();
+      }
+      t.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        e.preventDefault(); // stop the browser starting a text selection
+        activePointerId = e.pointerId;
+        startDrag(e.clientX, e.clientY);
+        document.addEventListener("pointermove", onDocumentPointerMove, { passive: false });
+        document.addEventListener("pointerup", onDocumentPointerUp, { passive: false });
+        document.addEventListener("pointercancel", onDocumentPointerCancel, { passive: false });
       });
+      t.addEventListener("touchstart", (e) => {
+        if ("PointerEvent" in window) return;
+        e.stopPropagation();
+        e.preventDefault();
+        const touch = e.changedTouches[0];
+        if (!touch) return;
+        startDrag(touch.clientX, touch.clientY);
+        document.addEventListener("touchmove", onDocumentTouchMove, { passive: false });
+        document.addEventListener("touchend", onDocumentTouchEnd, { passive: false });
+        document.addEventListener("touchcancel", onDocumentTouchCancel, { passive: false });
+      }, { passive: false });
       t.addEventListener("click", (e) => e.stopPropagation());
     }
 
