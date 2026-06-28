@@ -105,7 +105,7 @@ const plotted = points
       ))}
     </div>
   </div>
-  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to label it; drag a label to reposition it, or tap it to remove. Tap the point again to open the entry; tap empty space to clear all. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to show or hide its label; tap the label to open the entry, or drag it to reposition. Tap empty space to clear all. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
 </figure>
 
 <style>
@@ -311,7 +311,7 @@ const plotted = points
         e.stopPropagation();
         t.classList.remove("drag");
         t.releasePointerCapture(e.pointerId);
-        if (!moved) { el.classList.remove("sel"); g.remove(); } // tap = dismiss
+        if (!moved) navTo(el); // tap the label = open the entry
       });
       t.addEventListener("click", (e) => e.stopPropagation());
     }
@@ -320,12 +320,16 @@ const plotted = points
       el.addEventListener("mouseenter", (e) => show(el, e as MouseEvent));
       el.addEventListener("mousemove", (e) => show(el, e as MouseEvent));
       el.addEventListener("mouseleave", () => (tip.hidden = true));
-      // First click pins the label; a second click on a selected point opens it.
+      // Clicking the point toggles its label on/off.
       el.addEventListener("click", (e) => {
         e.stopPropagation();
-        if (el.classList.contains("sel")) { navTo(el); return; }
-        el.classList.add("sel");
-        pinLabel(el);
+        if (el.classList.contains("sel")) {
+          el.classList.remove("sel");
+          el.querySelectorAll(".pin").forEach((n) => n.remove());
+        } else {
+          el.classList.add("sel");
+          pinLabel(el);
+        }
       });
     }
 
