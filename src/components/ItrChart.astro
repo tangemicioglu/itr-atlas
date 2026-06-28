@@ -137,13 +137,19 @@ const plotted = points
   /* The SVG scales down to fit narrow screens, shrinking the markers with it.
      Counter-scale just the plotted glyphs (not the legend) so they stay legible
      and tappable on mobile. Hover scale is bumped to match so it never shrinks. */
+  /* On narrow screens the enlarged y-tick labels would collide with the rotated
+     axis title (its x position is fixed in user units), so hide the title; the
+     tick numbers plus the figcaption carry the same information. */
   @media (max-width: 640px) {
-    .pt .mark { transform: scale(1.7); }
-    .pt:hover .mark { transform: scale(2.1); }
+    .pt .mark { transform: scale(2.0); }
+    .pt:hover .mark { transform: scale(2.4); }
+    .ylab, .xlab { font-size: 17px; }
+    .axis-title { display: none; }
   }
   @media (max-width: 420px) {
-    .pt .mark { transform: scale(2.1); }
-    .pt:hover .mark { transform: scale(2.5); }
+    .pt .mark { transform: scale(2.6); }
+    .pt:hover .mark { transform: scale(3.0); }
+    .ylab, .xlab { font-size: 19px; }
   }
 </style>
 
@@ -188,7 +194,11 @@ const plotted = points
       // reposition every point (hidden ones too, so they're correct when re-shown)
       for (const el of pts)
         el.setAttribute("transform", `translate(${xpx(+el.dataset.year!)},${el.dataset.cy})`);
-      // rebuild the x gridlines + tick labels
+      // rebuild the x gridlines + tick labels. Scoped CSS (incl. the mobile
+      // media queries) doesn't reach these dynamically-created nodes, so the
+      // label size is set inline at the same breakpoints used in the stylesheet.
+      const w = window.innerWidth;
+      const labSize = w <= 420 ? "19px" : w <= 640 ? "17px" : "13px";
       xaxis.replaceChildren();
       for (const v of niceTicks(xMin, xMax)) {
         const x = xpx(v);
@@ -202,7 +212,7 @@ const plotted = points
         text.setAttribute("x", String(x)); text.setAttribute("y", String(mt + plotH + 18));
         text.setAttribute("class", "xlab"); text.setAttribute("text-anchor", "middle");
         text.setAttribute("fill", "var(--muted)");
-        text.setAttribute("font-size", "13px");
+        text.setAttribute("font-size", labSize);
         text.setAttribute("font-family", "var(--font-mono, monospace)");
         text.textContent = String(v);
         xaxis.append(line, text);
