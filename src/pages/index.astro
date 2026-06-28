@@ -45,9 +45,9 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
 
 const modalities = [...new Set(cards.map((c) => c.sensingModality))];
 ---
-<BaseLayout title="Information Transfer Rate — Atlas">
+<BaseLayout title="ITR Atlas — Information Transfer Rate across interfaces">
   <section class="top">
-    <h1>Interface Atlas</h1>
+    <h1>Information Transfer Rate Atlas</h1>
   </section>
 
   <ItrChart points={chartPoints} />
