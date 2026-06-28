@@ -114,8 +114,8 @@ const plotted = points
     border: 1px solid var(--hairline); border-radius: var(--radius); }
   .grid { stroke: var(--hairline); stroke-width: 1; }
   .axis { stroke: var(--muted); stroke-width: 1; }
-  .ylab, .xlab { fill: var(--muted); font-size: 11px; font-family: var(--font-mono, monospace); }
-  .axis-title { fill: var(--muted); font-size: 11px; letter-spacing: 0.4px; }
+  .ylab, .xlab { fill: var(--muted); font-size: 13px; font-family: var(--font-mono, monospace); }
+  .axis-title { fill: var(--muted); font-size: 13px; letter-spacing: 0.4px; }
   .pt { cursor: pointer; transition: transform 0.35s ease; }
   .mark { stroke: var(--card); stroke-width: 1.5; transform-box: fill-box; transform-origin: center;
     transition: transform 0.1s; }
@@ -202,7 +202,7 @@ const plotted = points
         text.setAttribute("x", String(x)); text.setAttribute("y", String(mt + plotH + 18));
         text.setAttribute("class", "xlab"); text.setAttribute("text-anchor", "middle");
         text.setAttribute("fill", "var(--muted)");
-        text.setAttribute("font-size", "11px");
+        text.setAttribute("font-size", "13px");
         text.setAttribute("font-family", "var(--font-mono, monospace)");
         text.textContent = String(v);
         xaxis.append(line, text);
