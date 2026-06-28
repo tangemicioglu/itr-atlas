@@ -9,10 +9,10 @@ export type ComputeSpec =
 export interface CalculationInput {
   compute?: ComputeSpec;
   steps?: DerivationStep[];
-  resultBitsPerMin?: number;
+  resultBitsPerSecond?: number;
 }
 
-/** Normalize a calculation to { resultBitsPerMin, steps } regardless of source. */
+/** Normalize a calculation to { resultBitsPerSecond, steps } regardless of source. */
 export function resolveCalculation(calc: CalculationInput): CalcResult {
   if (calc.compute) {
     switch (calc.compute.method) {
@@ -22,8 +22,8 @@ export function resolveCalculation(calc: CalculationInput): CalcResult {
         return computeConfusionMI(calc.compute.matrix, calc.compute.secondsPerSelection);
     }
   }
-  if (calc.steps && typeof calc.resultBitsPerMin === 'number') {
-    return { resultBitsPerMin: calc.resultBitsPerMin, steps: calc.steps };
+  if (calc.steps && typeof calc.resultBitsPerSecond === 'number') {
+    return { resultBitsPerSecond: calc.resultBitsPerSecond, steps: calc.steps };
   }
-  throw new Error('Calculation must have either a compute spec or authored steps + resultBitsPerMin.');
+  throw new Error('Calculation must have either a compute spec or authored steps + resultBitsPerSecond.');
 }

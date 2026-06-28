@@ -22,13 +22,13 @@ actionSpace:
   kind: context-dependent
   size: continuous
   prior: context-conditioned
-  notes: "Open-vocabulary automatic speech recognition with a language model in the loop. The bits/min uses an English character-entropy proxy on the produced text; the per-utterance action space is effectively unbounded, so this is not a fixed-target selection."
+  notes: "Open-vocabulary automatic speech recognition with a language model in the loop. The bits/s figure uses an English character-entropy proxy on the produced text; the per-utterance action space is effectively unbounded, so this is not a fixed-target selection."
 calculations:
   - id: transcription
     method: "Character-entropy throughput"
     kind: "Modern ASR, transcription task (Ruan et al. 2016)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 764
+    resultBitsPerSecond: 12.7
     steps:
       - title: "Characters per minute"
         math: "152.86 wpm × 5 chars/word = 764 chars/min"
@@ -36,6 +36,6 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
         note: "Recognition WER was 4.37% uncorrected (Deep Speech 2, English). The entry rate already includes error-correction time and participants corrected to near-perfect final text, so net throughput ≈ entry rate; the WER is documented here, not re-applied."
       - title: "Information transfer rate"
-        math: "ITR = 764 × 1.0 ≈ 764 bits/min"
+        math: "ITR = 12.7 bits/s"
 referenceCalculationId: transcription
 ---

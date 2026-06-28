@@ -26,8 +26,8 @@ export function mutualInformationBits(matrix: number[][]): number {
 
 export function computeConfusionMI(matrix: number[][], secondsPerSelection: number): CalcResult {
   const mi = mutualInformationBits(matrix);
-  const selectionsPerMin = 60 / secondsPerSelection;
-  const resultBitsPerMin = mi * selectionsPerMin;
+  const selectionsPerSecond = 1 / secondsPerSelection;
+  const resultBitsPerSecond = mi * selectionsPerSecond;
 
   const steps: DerivationStep[] = [
     {
@@ -39,9 +39,9 @@ export function computeConfusionMI(matrix: number[][], secondsPerSelection: numb
     },
     {
       title: 'Information transfer rate',
-      math: `ITR = I(X;Y) * 60 / ${secondsPerSelection} = ${round(mi, 3)} * ${round(selectionsPerMin, 2)} = ${round(resultBitsPerMin, 1)} bits/min`,
+      math: `ITR = I(X;Y) / ${secondsPerSelection} = ${round(mi, 3)} * ${round(selectionsPerSecond, 3)} = ${round(resultBitsPerSecond, 3)} bits/s`,
     },
   ];
 
-  return { resultBitsPerMin, steps };
+  return { resultBitsPerSecond, steps };
 }

@@ -31,7 +31,7 @@ calculations:
     method: "Fitts' law throughput on the grid task"
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 89
+    resultBitsPerSecond: 1.48
     steps:
       - title: "Grid geometry → movement difficulty"
         math: "6×6 board: cell width W = S/6; random targets → mean amplitude A ≈ 0.52·S, so A/W ≈ 3.1"
@@ -41,14 +41,14 @@ calculations:
       - title: "Selection rate"
         math: "≈ 0.72 net correct selections/s   (from the as-reported block below: 3.7 b/s ÷ 5.13 bits)"
       - title: "Fitts throughput"
-        math: "TP = 2.05 bits × 0.72/s ≈ 1.5 bits/s → ×60 ≈ 89 bits/min   (T5, best of three)"
+        math: "ITR = 1.48 bits/s"
         note: "The same correction applied to Neuralink's Webgrid; it puts both intracortical cursor BCIs on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s), so the chart compares like for like."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
     kind: "Achieved-bitrate task metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerMin: 222
+    resultBitsPerSecond: 3.7
     steps:
       - title: "Information per target acquisition"
         math: "6×6 grid → N = 36 targets;  log2(N − 1) = log2(35) ≈ 5.13 bits per correct selection"
@@ -58,7 +58,7 @@ calculations:
         note: "Participant T5 (best of three), 29 blocks over 4 days, randomly cued targets. ≈ 0.72 net correct selections/s."
       - title: "Achieved bitrate"
         math: "0.72 sel/s × 5.13 bits ≈ 3.7 ± 0.4 bits/s  (T5; T6 2.2, T7 1.4; dense 9×9 grid reached 4.16 bits/s)"
-      - title: "Convert to bits per minute"
-        math: "ITR = 3.7 bits/s × 60 s/min = 222 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 3.7 bits/s"
 referenceCalculationId: fitts
 ---

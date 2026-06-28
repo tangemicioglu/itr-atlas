@@ -35,13 +35,13 @@ calculations:
     method: "Character-entropy throughput"
     kind: "Net of English redundancy and typing errors"
     provenance: recomputed-omitted
-    resultBitsPerMin: 177
+    resultBitsPerSecond: 2.95
     steps:
       - title: "Net words per minute"
         math: "36.2 wpm × (1 − 0.0234) = 35.3 net wpm"
       - title: "Characters per minute"
         math: "35.3 × 5 chars/word = 176.7 chars/min"
       - title: "Information transfer rate"
-        math: "ITR = 176.7 × 1.0 ≈ 177 bits/min"
+        math: "ITR = 2.95 bits/s"
 referenceCalculationId: entropy
 ---

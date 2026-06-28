@@ -53,11 +53,11 @@ const calculationSchema = z
     provenance,
     compute: computeSchema.optional(),
     steps: z.array(stepSchema).optional(),
-    resultBitsPerMin: z.number().optional(),
+    resultBitsPerSecond: z.number().optional(),
     notUsedForRanking: z.boolean().default(false),
   })
-  .refine((c) => c.compute || (c.steps && typeof c.resultBitsPerMin === 'number'), {
-    message: 'A calculation needs either a compute spec or authored steps + resultBitsPerMin.',
+  .refine((c) => c.compute || (c.steps && typeof c.resultBitsPerSecond === 'number'), {
+    message: 'A calculation needs either a compute spec or authored steps + resultBitsPerSecond.',
   });
 
 const interfaces = defineCollection({

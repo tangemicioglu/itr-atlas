@@ -1,7 +1,7 @@
 ---
 import Tag from "./Tag.astro";
 import ProvenancePill from "./ProvenancePill.astro";
-import { formatBitsPerMin } from "../lib/itr/math";
+import { formatBitsPerSecond } from "../lib/itr/math";
 import { url } from "../lib/url";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   image?: string;
   modalityTags: string[];
   invasiveness: "non-invasive" | "partially-invasive" | "invasive";
-  referenceBitsPerMin: number;
+  referenceBitsPerSecond: number;
   referenceMethod: string;
   miniStat: string;
   provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
@@ -19,14 +19,14 @@ interface Props {
   technique?: string;
   year?: number;
 }
-const { id, name, image, modalityTags, invasiveness, referenceBitsPerMin, referenceMethod, miniStat, provenance, rankable = true, system, technique, year } = Astro.props;
+const { id, name, image, modalityTags, invasiveness, referenceBitsPerSecond, referenceMethod, miniStat, provenance, rankable = true, system, technique, year } = Astro.props;
 const invasive = invasiveness !== "non-invasive";
 ---
 <a class="card"
    href={url(`/interfaces/${id}`)}
    data-name={name.toLowerCase()}
    data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
-   data-itr={referenceBitsPerMin}
+   data-itr={referenceBitsPerSecond}
    data-rankable={String(rankable)}
    data-system={system}
    data-technique={technique}
@@ -40,8 +40,8 @@ const invasive = invasiveness !== "non-invasive";
     </div>
     <div class="statrow">
       {rankable
-        ? <div class="itr">{formatBitsPerMin(referenceBitsPerMin)}<small> bits/min</small></div>
-        : <div class="itr ceiling">≤{formatBitsPerMin(referenceBitsPerMin)}<small> ceiling · no measured rate</small></div>}
+        ? <div class="itr">{formatBitsPerSecond(referenceBitsPerSecond)}<small> bits/s</small></div>
+        : <div class="itr ceiling">≤{formatBitsPerSecond(referenceBitsPerSecond)}<small> ceiling · no measured rate</small></div>}
       <div class="mini">{miniStat}<br /><b>{referenceMethod}</b></div>
     </div>
     <ProvenancePill provenance={provenance} />

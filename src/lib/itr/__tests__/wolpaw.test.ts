@@ -18,13 +18,13 @@ describe('bitsPerSelection', () => {
 describe('computeWolpaw', () => {
   it('produces the reference ITR for the SSVEP example', () => {
     const r = computeWolpaw({ targets: 40, accuracy: 0.96, secondsPerSelection: 1.5 });
-    expect(r.resultBitsPerMin).toBeCloseTo(194.7, 1);
+    expect(r.resultBitsPerSecond).toBeCloseTo(3.245, 3);
   });
   it('emits ordered derivation steps with titles', () => {
     const r = computeWolpaw({ targets: 40, accuracy: 0.96, secondsPerSelection: 1.5 });
     expect(r.steps.map((s) => s.title)).toEqual([
       'Bits per selection (Wolpaw formula)',
-      'Selections per minute',
+      'Selections per second',
       'Information transfer rate',
     ]);
     expect(r.steps[0].math).toContain('log');

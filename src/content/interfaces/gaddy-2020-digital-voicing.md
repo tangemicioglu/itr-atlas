@@ -33,7 +33,7 @@ calculations:
     kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerMin: 482
+    resultBitsPerSecond: 8.03
     steps:
       - title: "Error-corrected words per minute"
         math: "(1 − WER) × rate = 0.964 × 100 = 96.4 net word/min"
@@ -41,7 +41,7 @@ calculations:
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
       - title: "Information transfer rate"
-        math: "ITR = 96.4 × 5.0 ≈ 482 bits/min"
+        math: "ITR = 8.03 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 67 words (closed-vocabulary condition)"
     kind: "Uniform-prior comparison metric (assumed rate)"

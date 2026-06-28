@@ -26,7 +26,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: context-conditioned
-  notes: "The first chronic intracortical communication BCI (patient Johnny Ray, locked-in). A low-DOF continuous cursor plus a select signal, used to point at characters on a virtual keyboard, i.e. pointing-to-type, like the ReFIT typing and Synchron entries. The realized output is English text, so the reference uses the character-entropy method (~1 bit/char) on the documented 3 char/min rate rather than a raw cursor bitrate. Independent reviews quote ~2–3 bits/min for this system, which agrees with the 3 bits/min derived here."
+  notes: "The first chronic intracortical communication BCI (patient Johnny Ray, locked-in). A low-DOF continuous cursor plus a select signal, used to point at characters on a virtual keyboard, i.e. pointing-to-type, like the ReFIT typing and Synchron entries. The realized output is English text, so the reference uses the character-entropy method (~1 bit/char) on the documented 3 char/min rate rather than a raw cursor bitrate. Independent reviews quote ~0.03-0.05 bits/s for this system, which agrees with the 0.05 bits/s derived here."
 references:
   - label: "Brumberg, Nieto-Castanon, Kennedy & Guenther 2010 (Speech Communication): reports JR produced ~3 characters/min over a virtual keyboard"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2829990/"
@@ -37,7 +37,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 3
+    resultBitsPerSecond: 0.05
     steps:
       - title: "Characters per minute"
         math: "≈ 3 correct char/min (patient JR: 2D cursor over a virtual keyboard, imagined hand movements)"
@@ -45,6 +45,6 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 3 × 1.0 ≈ 3 bits/min   (independent reviews quote ~2–3 bits/min for this system, in close agreement)"
+        math: "ITR = 0.05 bits/s"
 referenceCalculationId: comm
 ---

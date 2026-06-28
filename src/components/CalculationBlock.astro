@@ -1,18 +1,18 @@
 ---
 import ProvenancePill from "./ProvenancePill.astro";
 import DerivationSteps from "./DerivationSteps.astro";
-import { formatBitsPerMin } from "../lib/itr/math";
+import { formatBitsPerSecond } from "../lib/itr/math";
 import type { DerivationStep } from "../lib/itr/types";
 
 interface Props {
   method: string;
   kind: string;
   provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
-  resultBitsPerMin: number;
+  resultBitsPerSecond: number;
   steps: DerivationStep[];
   isReference?: boolean;
 }
-const { method, kind, provenance, resultBitsPerMin, steps, isReference = false } = Astro.props;
+const { method, kind, provenance, resultBitsPerSecond, steps, isReference = false } = Astro.props;
 ---
 <section class={`calc ${isReference ? "reference" : ""}`}>
   <header>
@@ -24,7 +24,7 @@ const { method, kind, provenance, resultBitsPerMin, steps, isReference = false }
       <div class="name">{method}</div>
       <div class="kind">{kind}</div>
     </div>
-    <div class="value">{formatBitsPerMin(resultBitsPerMin)}<small> bits/min</small></div>
+    <div class="value">{formatBitsPerSecond(resultBitsPerSecond)}<small> bits/s</small></div>
   </header>
   <DerivationSteps steps={steps} />
 </section>

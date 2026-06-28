@@ -11,7 +11,7 @@ const entries = (await getCollection("interfaces")).filter((e) => !e.data.hidden
 const cards = entries.map((entry) => {
   const data = entry.data;
   const refCalc = data.calculations.find((c) => c.id === data.referenceCalculationId) ?? data.calculations[0];
-  const { resultBitsPerMin } = resolveCalculation(refCalc);
+  const { resultBitsPerSecond } = resolveCalculation(refCalc);
   const firstInput = data.inputs[0];
   const miniStat = firstInput ? `${firstInput.symbol}=${firstInput.value}` : "";
   return {
@@ -21,7 +21,7 @@ const cards = entries.map((entry) => {
     modalityTags: data.modalityTags,
     invasiveness: data.invasiveness,
     sensingModality: data.sensingModality,
-    referenceBitsPerMin: resultBitsPerMin,
+    referenceBitsPerSecond: resultBitsPerSecond,
     referenceMethod: refCalc.method.startsWith("Fitts'") ? "Fitts' law" : refCalc.method.split(" ")[0],
     miniStat,
     provenance: refCalc.provenance,
@@ -34,12 +34,12 @@ const cards = entries.map((entry) => {
   };
 }).sort((a, b) =>
   a.rankable === b.rankable
-    ? b.referenceBitsPerMin - a.referenceBitsPerMin
+    ? b.referenceBitsPerSecond - a.referenceBitsPerSecond
     : a.rankable ? -1 : 1,
 );
 
 const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
-  id: c.id, name: c.name, year: c.year, itr: c.referenceBitsPerMin,
+  id: c.id, name: c.name, year: c.year, itr: c.referenceBitsPerSecond,
   system: c.system, technique: c.technique,
 }));
 

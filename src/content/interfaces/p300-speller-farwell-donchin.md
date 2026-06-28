@@ -31,7 +31,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 2
+    resultBitsPerSecond: 0.033
     steps:
       - title: "Correct characters per minute"
         math: "≈ 2.6 selections/min × 0.95 accuracy ≈ 2.5 correct char/min"
@@ -39,7 +39,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon), the same predictor used for QWERTY, eye-typing and the other BCI text entries"
       - title: "Information transfer rate"
-        math: "ITR = 2.5 × 1.0 ≈ 2 bits/min"
+        math: "ITR = 0.033 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 36 targets"
     kind: "Uniform 1-of-36 classifier metric, shown for comparison"

@@ -30,7 +30,7 @@ calculations:
     method: "Fitts' law throughput, re-derived from the task conditions"
     kind: "2D pointing channel"
     provenance: author-reported-verified
-    resultBitsPerMin: 270
+    resultBitsPerSecond: 4.5
     steps:
       - title: "Information per movement (index of difficulty)"
         math: "ID = log2(A/W + 1);  4 amplitudes (8–64) × 4 widths (1–8) fully crossed → ID = 1.0–6.0 bits (mean 3.26 bits/movement)"
@@ -40,7 +40,7 @@ calculations:
         note: "The effective-width correction discounts movements whose endpoints scattered wider than the target, the pointing analogue of subtracting wrong selections, so the bits are net of the user's real hit precision."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 674 ms → IP = 4.5 bits/s (Fitts regression over the ID conditions)"
-      - title: "Convert to bits per minute"
-        math: "ITR = 4.5 bits/s × 60 = 270 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 4.5 bits/s"
 referenceCalculationId: fitts
 ---

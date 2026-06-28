@@ -21,19 +21,19 @@ inputs:
   - symbol: "rate"
     value: "100"
     unit: "word/min"
-    sourceNote: "ASSUMED ~100 wpm silent-articulation rate (not reported; offline recognition). Used only to convert per-word bits to bits/min; see note."
+    sourceNote: "ASSUMED ~100 wpm silent-articulation rate (not reported; offline recognition). Used only to convert per-word bits to bits/s; see note."
 actionSpace:
   kind: fixed-set
   size: 2200
   prior: context-conditioned
-  notes: "Conformable facial/neck sEMG sensors decoding continuous phrases over a large 2,200-word vocabulary with a language model. Large vocabulary + low WER make the per-word comparison metric high, but the rate is assumed rather than measured online, so the headline bits/min should not be read as a demonstrated communication speed."
+  notes: "Conformable facial/neck sEMG sensors decoding continuous phrases over a large 2,200-word vocabulary with a language model. Large vocabulary + low WER make the per-word comparison metric high, but the rate is assumed rather than measured online, so the headline bits/s should not be read as a demonstrated communication speed."
 calculations:
   - id: comm
     method: "Word-entropy throughput"
     kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerMin: 456
+    resultBitsPerSecond: 7.6
     steps:
       - title: "Error-corrected words per minute"
         math: "(1 − WER) × rate = 0.911 × 100 = 91.1 net word/min"
@@ -42,7 +42,7 @@ calculations:
         math: "H ≈ 5.0 bits/word"
         note: "Independent of vocabulary size, so the 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw comparison metric."
       - title: "Information transfer rate"
-        math: "ITR = 91.1 × 5.0 ≈ 456 bits/min"
+        math: "ITR = 7.6 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 2,200 words"
     kind: "Uniform-prior comparison metric (assumed rate)"

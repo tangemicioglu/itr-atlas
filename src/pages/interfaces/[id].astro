@@ -56,7 +56,7 @@ const COMPARABILITY: Record<string, string> = {
   ceiling:
     "The figure above is a ceiling, not a measured throughput (a raw-channel capacity or an assumed-rate estimate), so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
   pointing:
-    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/min, but one measures movement difficulty and the other text information, so compare within the family first.",
+    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/s, but one measures movement difficulty and the other text information, so compare within the family first.",
   "pointing-selection":
     "Ranked on a Wolpaw-style target-acquisition estimate over cued endpoints. This is a continuous cursor task, so compare it carefully with the Fitts-ranked pointing entries: the number reflects the published target set and completion rate, not a full Fitts effective-width throughput.",
   selection:
@@ -101,7 +101,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     method={reference.calc.method}
     kind={reference.calc.kind}
     provenance={reference.calc.provenance}
-    resultBitsPerMin={reference.result.resultBitsPerMin}
+    resultBitsPerSecond={reference.result.resultBitsPerSecond}
     steps={reference.result.steps}
     isReference={rankable}
   />
@@ -134,7 +134,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
       {additional.map((r) => (
         <CalculationBlock
           method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
-          resultBitsPerMin={r.result.resultBitsPerMin} steps={r.result.steps} />
+          resultBitsPerSecond={r.result.resultBitsPerSecond} steps={r.result.steps} />
       ))}
     </>
   )}
@@ -146,7 +146,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
       {supplementary.map((r) => (
         <CalculationBlock
           method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
-          resultBitsPerMin={r.result.resultBitsPerMin} steps={r.result.steps} />
+          resultBitsPerSecond={r.result.resultBitsPerSecond} steps={r.result.steps} />
       ))}
     </>
   )}

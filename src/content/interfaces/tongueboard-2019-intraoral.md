@@ -20,7 +20,7 @@ inputs:
   - symbol: "rate"
     value: "2.18"
     unit: "bits/s"
-    sourceNote: "Authors' reported information transfer rate (≈131 bits/min), held across stationary and mobile contexts: a real measured online rate. Equivalent to 3.78 bits/decision at ~0.58 decisions/s (≈1.73 s/decision)."
+    sourceNote: "Authors' reported information transfer rate (≈2.18 bits/s), held across stationary and mobile contexts: a real measured online rate. Equivalent to 3.78 bits/decision at ~0.58 decisions/s (≈1.73 s/decision)."
 references:
   - label: "Open-access PDF"
     url: "https://andymatuschak.org/files/papers/Li%20et%20al.%20-%202019%20-%20TongueBoard%20An%20Oral%20Interface%20for%20Subtle%20Input.pdf"

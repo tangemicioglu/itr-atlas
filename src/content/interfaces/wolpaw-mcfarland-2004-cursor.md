@@ -38,7 +38,7 @@ calculations:
     method: "Fitts' law throughput (estimated from the task conditions)"
     kind: "2D cursor channel (apples-to-apples with the mouse and the cursor BCIs)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 60
+    resultBitsPerSecond: 1
     steps:
       - title: "Information per movement (index of difficulty)"
         math: "ID = log2(A/W + 1); target W ≈ 4.9% of workspace, amplitude A ≈ 45% (center to periphery) → A/W ≈ 9.2 → ID ≈ 3.35 bits/movement"
@@ -48,8 +48,8 @@ calculations:
       - title: "Discount for completion rate"
         math: "× 0.82 (mean fraction of targets reached within the 10 s limit) → ≈ 1.00 bits/s"
         note: "This is a COMPLETION discount, not a Fitts effective-width adjustment: the paper publishes no endpoint scatter (SDx), so the index of difficulty uses nominal width and the 82% is targets reached in time, not a spatial-miss rate. Accuracy is therefore folded as a simple throughput multiplier (the same fallback used for the Neuralink cursor), not via the standard We = 4.133·SDx."
-      - title: "Convert to bits per minute"
-        math: "ITR ≈ 1.00 bits/s × 60 ≈ 60 bits/min (best users ≈ 95 bits/min)"
+      - title: "Use bits per second"
+        math: "ITR = 1 bits/s"
   - id: wolpaw
     method: "Wolpaw / achieved-bitrate over the 8 cued targets"
     kind: "Discrete-selection figure, UNDER-counts the continuous cursor (only 8 targets)"

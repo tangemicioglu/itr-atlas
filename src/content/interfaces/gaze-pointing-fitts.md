@@ -34,7 +34,7 @@ calculations:
     method: "Fitts' law throughput, re-derived from the task conditions"
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: author-reported-verified
-    resultBitsPerMin: 128
+    resultBitsPerSecond: 2.13
     steps:
       - title: "Information per movement (index of difficulty)"
         math: "ID = log2(A/W + 1);  amplitudes (160, 260 px) × widths (50, 100 px) → ID = 1.4–2.6 bits (mean ≈ 2.0 bits/movement)"
@@ -44,7 +44,7 @@ calculations:
         note: "Effective width discounts fixations that landed off-target, so throughput is net of the user's real gaze precision."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 812 ms → TP = 2.127 bits/s for eye gaze (head 2.472, mouse 3.239 in the same study)"
-      - title: "Convert to bits per minute"
-        math: "ITR = 2.127 bits/s × 60 ≈ 128 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 2.13 bits/s"
 referenceCalculationId: fitts
 ---

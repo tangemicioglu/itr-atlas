@@ -9,7 +9,9 @@ export function round(value: number, dp = 1): number {
   return Math.round(value * f) / f;
 }
 
-/** Format a bits/min value as a whole-number string for display. */
-export function formatBitsPerMin(value: number): string {
-  return String(Math.round(value));
+/** Format a bits/s value for display. */
+export function formatBitsPerSecond(value: number): string {
+  if (value >= 10) return String(Math.round(value));
+  if (value >= 1) return value.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  return value.toFixed(3).replace(/0+$/, '').replace(/\.$/, '');
 }

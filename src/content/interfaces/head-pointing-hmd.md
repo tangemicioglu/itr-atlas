@@ -38,7 +38,7 @@ calculations:
     method: "Fitts' law throughput, re-derived from the task conditions"
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: author-reported-verified
-    resultBitsPerMin: 148
+    resultBitsPerSecond: 2.47
     steps:
       - title: "Information per movement (index of difficulty)"
         math: "ID = log2(A/W + 1);  amplitudes (160, 260 px) × widths (50, 100 px) → ID = 1.4–2.6 bits (mean ≈ 2.0 bits/movement)"
@@ -48,7 +48,7 @@ calculations:
         note: "The head pointer had lower click-condition error than eye gaze in this study (0.26% vs 1.53%), and the effective-width correction is already reflected in the reported throughput."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 850 ms → TP = 2.472 bits/s for head pointing (gaze 2.127, mouse 3.239 in the same study)"
-      - title: "Convert to bits per minute"
-        math: "ITR = 2.472 bits/s × 60 = 148.32 ≈ 148 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 2.47 bits/s"
 referenceCalculationId: fitts
 ---

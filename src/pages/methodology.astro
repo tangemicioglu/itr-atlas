@@ -6,11 +6,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h1>Methodology</h1>
 
     <h2>What ITR measures</h2>
-    <p>Information transfer rate (ITR) estimates how many bits per minute a user can communicate
+    <p>Information transfer rate (ITR) estimates how many bits per second a user can communicate
        through an interface. For discrete selection it is usually computed with the
        <strong>Wolpaw formula</strong> for bits per selection:</p>
     <pre class="mono">B = log2(N) + P*log2(P) + (1-P)*log2((1-P)/(N-1))</pre>
-    <p>multiplied by selections per minute. Here <em>N</em> is the number of targets and
+    <p>multiplied by selections per second. Here <em>N</em> is the number of targets and
        <em>P</em> is accuracy.</p>
 
     <h2>Why a single number is often misleading</h2>
@@ -103,7 +103,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        continuous cursor into 900 cells (~9.8 bits/selection). Make the grid denser and the number
        rises while the control is unchanged. EEG2Code shows the same problem at a larger scale: it
        discriminates <strong>500,000</strong> random codes at ~100% from 2 s of EEG, log₂(500,000) ≈ 19 bits per
-       selection, 701 bits/min, and the authors themselves flag a "ceiling effect" where those bits
+       selection, 11.7 bits/s, and the authors themselves flag a "ceiling effect" where those bits
        are not all usable as control commands
        (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). A speller
        that emits English but is credited log₂(40) per letter is being evaluated with a different predictor than

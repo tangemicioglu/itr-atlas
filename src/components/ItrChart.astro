@@ -33,13 +33,14 @@ function niceTicks(min: number, max: number): number[] {
 }
 const years = points.map((p) => p.year);
 const [xMin, xMax] = padDomain(Math.min(...years), Math.max(...years));
-const yMinL = Math.log10(1), yMaxL = Math.log10(1200);
+const yMin = 0.01, yMax = 20;
+const yMinL = Math.log10(yMin), yMaxL = Math.log10(yMax);
 const xpx = (yr: number) => ml + ((yr - xMin) / (xMax - xMin)) * plotW;
 const ypx = (itr: number) =>
-  mt + (1 - (Math.log10(Math.min(1200, Math.max(1, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
+  mt + (1 - (Math.log10(Math.min(yMax, Math.max(yMin, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
 
 const xticks = niceTicks(xMin, xMax);
-const yticks = [1, 10, 100, 1000];
+const yticks = [0.01, 0.1, 1, 10];
 const plotted = points
   .map((p) => ({ ...p, cx: xpx(p.year), cy: ypx(p.itr) }))
   .sort((a, b) => b.itr - a.itr); // draw big values first so small ones sit on top
@@ -65,7 +66,7 @@ const plotted = points
     <!-- axis frame -->
     <line x1={ml} x2={ml} y1={mt} y2={mt + plotH} class="axis" />
     <line x1={ml} x2={W - mr} y1={mt + plotH} y2={mt + plotH} class="axis" />
-    <text class="axis-title" x={16} y={mt + plotH / 2} text-anchor="middle" transform={`rotate(-90 16 ${mt + plotH / 2})`}>ITR (bits/min, log)</text>
+    <text class="axis-title" x={16} y={mt + plotH / 2} text-anchor="middle" transform={`rotate(-90 16 ${mt + plotH / 2})`}>ITR (bits/s, log)</text>
     <!-- points (color = system, symbol = technique) -->
     {plotted.map((p) => (
       <g
@@ -74,7 +75,7 @@ const plotted = points
         data-id={p.id}
         data-name={p.name}
         data-year={String(p.year)}
-        data-itr={String(Math.round(p.itr))}
+        data-itr={String(p.itr)}
         data-cy={String(p.cy)}
         data-system={p.system}
         data-technique={p.technique}
@@ -82,7 +83,7 @@ const plotted = points
         data-techlabel={techniqueLabel(p.technique)}
       >
         <Fragment set:html={markSvg(p.technique, systemColor(p.system))} />
-        <title>{p.name} ({p.year}): {Math.round(p.itr)} bits/min</title>
+        <title>{p.name} ({p.year}): {p.itr} bits/s</title>
       </g>
     ))}
   </svg>
@@ -237,7 +238,7 @@ const plotted = points
     function show(el: SVGGElement, e: MouseEvent) {
       const d = el.dataset;
       tip.innerHTML =
-        `<b>${d.name}</b><br>${d.year} · ${Number(d.itr).toLocaleString()} bits/min` +
+        `<b>${d.name}</b><br>${d.year} · ${Number(d.itr).toLocaleString()} bits/s` +
         `<br><span class="tip-cat">${d.systemlabel} · ${d.techlabel}</span>`;
       const r = root!.getBoundingClientRect();
       tip.style.left = `${e.clientX - r.left}px`;
@@ -275,7 +276,7 @@ const plotted = points
       name.textContent = el.dataset.name!;
       const val = document.createElementNS(NS, "tspan");
       val.setAttribute("class", "ptlabel-val");
-      val.textContent = `${Number(el.dataset.itr).toLocaleString()} bits/min`;
+      val.textContent = `${Number(el.dataset.itr).toLocaleString()} bits/s`;
       t.append(name, val);
       g.append(leader, t);
       el.appendChild(g);

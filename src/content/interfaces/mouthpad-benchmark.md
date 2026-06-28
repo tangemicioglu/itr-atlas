@@ -38,13 +38,13 @@ calculations:
     method: "Fitts' law throughput from Augmental's benchmark"
     kind: "2D pointing channel"
     provenance: author-reported-unverified
-    resultBitsPerMin: 212
+    resultBitsPerSecond: 3.53
     steps:
       - title: "Use the benchmark's Fitts throughput"
         math: "TP = 3.53 bits/s"
         note: "The YouTube run displays a separate BPS (Fitts) value. This is the apples-to-apples pointing-channel measure; it is not back-derived from the headline 8.51 BPS score."
-      - title: "Convert to bits per minute"
-        math: "ITR = 3.53 bits/s x 60 = 211.8 ~= 212 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 3.53 bits/s"
       - title: "Why this differs from Neuralink's Webgrid correction"
         note: "For Neuralink, the public headline BPS had to be reduced to an estimated Fitts throughput. Here Augmental's benchmark itself reports the Fitts measure, so the reference entry follows Augmental's own metric rather than applying a separate correction."
   - id: reported
@@ -52,12 +52,12 @@ calculations:
     kind: "30x30 grid choice-entropy score, shown for transparency, not used for ranking"
     provenance: author-reported-unverified
     notUsedForRanking: true
-    resultBitsPerMin: 511
+    resultBitsPerSecond: 8.52
     steps:
       - title: "Use the headline benchmark score"
         math: "BPS = 8.51 bits/s"
         note: "The video title, description and on-screen result report 8.51 BPS for this 60-second run. The description also notes a 9.98 BPS personal best, but that is not the run shown."
-      - title: "Convert to bits per minute"
-        math: "ITR = 8.51 bits/s x 60 = 510.6 ~= 511 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 8.52 bits/s"
 referenceCalculationId: fitts
 ---

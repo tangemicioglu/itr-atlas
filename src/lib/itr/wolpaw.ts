@@ -23,8 +23,8 @@ export function bitsPerSelection(N: number, P: number): number {
 export function computeWolpaw(inputs: WolpawInputs): CalcResult {
   const { targets: N, accuracy: P, secondsPerSelection: T } = inputs;
   const B = bitsPerSelection(N, P);
-  const selectionsPerMin = 60 / T;
-  const resultBitsPerMin = B * selectionsPerMin;
+  const selectionsPerSecond = 1 / T;
+  const resultBitsPerSecond = B * selectionsPerSecond;
 
   const steps: DerivationStep[] = [
     {
@@ -36,14 +36,14 @@ export function computeWolpaw(inputs: WolpawInputs): CalcResult {
       note: 'Term 1 is the information if every choice were correct; terms 2-3 subtract the bits lost to the error rate, assumed spread evenly over the other N-1 targets.',
     },
     {
-      title: 'Selections per minute',
-      math: `T = ${T} s/selection  ->  60 / ${T} = ${round(selectionsPerMin, 2)} selections/min`,
+      title: 'Selections per second',
+      math: `T = ${T} s/selection  ->  1 / ${T} = ${round(selectionsPerSecond, 3)} selections/s`,
     },
     {
       title: 'Information transfer rate',
-      math: `ITR = B * selections/min = ${round(B, 3)} * ${round(selectionsPerMin, 2)} = ${round(resultBitsPerMin, 1)} bits/min`,
+      math: `ITR = B * selections/s = ${round(B, 3)} * ${round(selectionsPerSecond, 3)} = ${round(resultBitsPerSecond, 3)} bits/s`,
     },
   ];
 
-  return { resultBitsPerMin, steps };
+  return { resultBitsPerSecond, steps };
 }

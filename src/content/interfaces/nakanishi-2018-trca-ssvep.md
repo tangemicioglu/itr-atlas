@@ -27,13 +27,13 @@ inputs:
     sourceNote: "English-text entropy (Shannon); the same ~1 bit/char standard applied to QWERTY and every other text entry."
   - symbol: "ITR_reported"
     value: "325.33"
-    unit: "bit/min"
-    sourceNote: "Authors' online cue-guided Wolpaw ITR (free-spelling 198.67 bit/min): the highest ITR reported for an EEG BCI at the time. Counts log2(N) per selection."
+    unit: "bits/s"
+    sourceNote: "Authors' online cue-guided Wolpaw ITR (free-spelling 3.31 bits/s): the highest ITR reported for an EEG BCI at the time. Counts log2(N) per selection."
 actionSpace:
   kind: fixed-set
   size: 40
   prior: context-conditioned
-  notes: "Same 40-target SSVEP paradigm as Chen et al. 2015; the decoder classifies which flicker frequency the user gazes at (a classifier, not Fitts pointing). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 325 bit/min Wolpaw figure counts log2(N) per selection and is kept as a secondary classifier metric. The faster decoder (0.8 s/selection vs ~1 s in Chen 2015) is why the atlas text-throughput estimate edges above Chen's."
+  notes: "Same 40-target SSVEP paradigm as Chen et al. 2015; the decoder classifies which flicker frequency the user gazes at (a classifier, not Fitts pointing). The realized output is English text, so the reference uses character-entropy (~1 bit/char) like every other text entry; the authors' 5.42 bits/s Wolpaw figure counts log2(N) per selection and is kept as a secondary classifier metric. The faster decoder (0.8 s/selection vs ~1 s in Chen 2015) is why the atlas text-throughput estimate edges above Chen's."
 references:
   - label: "Nakanishi et al. 2018: open-access PMC copy"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5783827/"
@@ -42,7 +42,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 67
+    resultBitsPerSecond: 1.12
     steps:
       - title: "Correct characters per minute"
         math: "~75 selections/min (0.3 s flicker + 0.5 s gaze shift) × 89.83% ≈ 67 correct char/min"
@@ -50,16 +50,16 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 67 × 1.0 ≈ 67 bits/min"
+        math: "ITR = 1.12 bits/s"
   - id: reported
     method: "Wolpaw bitrate over N = 40 targets (authors' reported ITR)"
     kind: "Uniform 1-of-40 classifier metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerMin: 325
+    resultBitsPerSecond: 5.42
     steps:
       - title: "Authors' online ITR"
-        math: "325.33 bit/min cue-guided (198.67 bit/min free-spelling) ≈ log2(40)-scale bits per selection × ~75 sel/min"
+        math: "ITR = 5.42 bits/s"
         note: "Uses log2(N) per selection, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries. It was the record EEG-BCI ITR at publication."
 referenceCalculationId: comm
 ---

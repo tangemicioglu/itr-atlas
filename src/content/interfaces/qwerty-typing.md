@@ -35,7 +35,7 @@ calculations:
     method: "Character-entropy throughput"
     kind: "Net of English redundancy and typing errors"
     provenance: recomputed-omitted
-    resultBitsPerMin: 255
+    resultBitsPerSecond: 4.25
     steps:
       - title: "Net words per minute"
         math: "51.56 wpm × (1 − 0.0116) = 50.96 net wpm"
@@ -45,6 +45,6 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
         note: "English is highly redundant, so raw keystroke count would overstate information."
       - title: "Information transfer rate"
-        math: "ITR = 254.8 × 1.0 ≈ 255 bits/min"
+        math: "ITR = 4.25 bits/s"
 referenceCalculationId: entropy
 ---

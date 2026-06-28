@@ -23,13 +23,13 @@ actionSpace:
   kind: context-dependent
   size: continuous
   prior: context-conditioned
-  notes: "Open-vocabulary ASR with a language model in the loop, scored on composed (not read-aloud) text. The bits/min uses an English character-entropy proxy; the per-utterance action space is effectively unbounded, so this is not a fixed-target selection."
+  notes: "Open-vocabulary ASR with a language model in the loop, scored on composed (not read-aloud) text. The bits/s figure uses an English character-entropy proxy; the per-utterance action space is effectively unbounded, so this is not a fixed-target selection."
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
     kind: "Modern ASR, composition task"
     provenance: recomputed-omitted
-    resultBitsPerMin: 585
+    resultBitsPerSecond: 9.75
     steps:
       - title: "Characters per minute"
         math: "117 wpm × 5 chars/word = 585 chars/min"
@@ -37,6 +37,6 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 585 × 1.0 ≈ 585 bits/min"
+        math: "ITR = 9.75 bits/s"
 referenceCalculationId: entropy
 ---

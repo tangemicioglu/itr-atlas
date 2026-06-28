@@ -42,7 +42,7 @@ calculations:
     method: "Fitts' law throughput on the 16-target grid task"
     kind: "2D cursor channel (estimated from grid density)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 11
+    resultBitsPerSecond: 0.183
     steps:
       - title: "Grid geometry to movement difficulty"
         math: "4x4 board: cell width W = S/4; random grid targets -> mean amplitude A ~= 0.52 S, so A/W ~= 2.1"
@@ -54,13 +54,13 @@ calculations:
         math: "net movements/s = 0.578 / 5 = 0.116/s"
         note: "The paper reports a 5 s trial timeout rather than mean acquisition time. Using the timeout makes this a lower-bound-style estimate."
       - title: "Fitts throughput"
-        math: "TP = 1.62 bits x 0.116/s = 0.187 bits/s; ITR = 0.187 x 60 = 11.2 ~= 11 bits/min"
+        math: "ITR = 0.183 bits/s"
   - id: wolpaw-grid
     method: "Wolpaw bitrate over N = 16 targets"
     kind: "Discrete-selection grid benchmark"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerMin: 16
+    resultBitsPerSecond: 0.267
     steps:
       - title: "Per-selection information with errors"
         math: "B = log2(16) + 0.578 log2(0.578) + 0.422 log2(0.422 / 15) = 1.37 bits/selection"
@@ -69,6 +69,6 @@ calculations:
         math: "60 / 5 = 12 trials/min"
         note: "The public supplement reports a 5 s trial timeout, not mean acquisition time. Using the timeout for every trial makes the throughput a lower-bound style estimate."
       - title: "Information transfer rate"
-        math: "ITR = 1.37 x 12 = 16.4 ~= 16 bits/min"
+        math: "ITR = 0.267 bits/s"
 referenceCalculationId: fitts
 ---

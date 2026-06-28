@@ -32,7 +32,7 @@ calculations:
     method: "Word-entropy throughput (measured end-to-end rate)"
     kind: "Net of English redundancy, at the measured lip-reading rate"
     provenance: recomputed-omitted
-    resultBitsPerMin: 22
+    resultBitsPerSecond: 0.367
     steps:
       - title: "Error-corrected words per minute"
         math: "(1 − WER) × rate = 0.802 × 5.59 ≈ 4.5 net word/min"
@@ -40,6 +40,6 @@ calculations:
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
       - title: "Information transfer rate"
-        math: "ITR = 4.5 × 5.0 ≈ 22 bits/min"
+        math: "ITR = 0.367 bits/s"
 referenceCalculationId: comm
 ---

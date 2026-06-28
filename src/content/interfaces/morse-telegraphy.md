@@ -31,7 +31,7 @@ calculations:
     method: "Character-entropy throughput"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 125
+    resultBitsPerSecond: 2.08
     steps:
       - title: "Characters per minute"
         math: "25 wpm × 5 chars/word = 125 chars/min"
@@ -39,6 +39,6 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 125 × 1.0 = 125 bits/min   (world-record 75.2 wpm → ~376 bits/min)"
+        math: "ITR = 2.08 bits/s"
 referenceCalculationId: entropy
 ---

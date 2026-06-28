@@ -31,7 +31,7 @@ calculations:
     method: "Word-entropy throughput"
     kind: "Effective bits actually transmitted as English"
     provenance: recomputed-omitted
-    resultBitsPerMin: 57
+    resultBitsPerSecond: 0.95
     steps:
       - title: "Error-corrected words per minute"
         math: "(1 − WER) × rate = 0.744 × 15.2 = 11.3 net word/min"
@@ -39,7 +39,7 @@ calculations:
         math: "H ≈ 5.0 bits/word"
         note: "Credits only the information in the English produced, independent of vocabulary size."
       - title: "Information transfer rate"
-        math: "ITR = 11.3 × 5.0 ≈ 57 bits/min"
+        math: "ITR = 0.95 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 50 words"
     kind: "Uniform-prior comparison metric"

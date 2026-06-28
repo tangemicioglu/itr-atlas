@@ -38,7 +38,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 10
+    resultBitsPerSecond: 0.167
     steps:
       - title: "Correct characters per minute"
         math: "10.4 correct char/min"
@@ -46,18 +46,18 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ~= 1.0 bit/char"
       - title: "Information transfer rate"
-        math: "ITR = 10.4 x 1.0 ~= 10 bits/min"
+        math: "ITR = 0.167 bits/s"
   - id: chat
     method: "QWERTY internet chat demonstration"
     kind: "Real-time native-app communication"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerMin: 8
+    resultBitsPerSecond: 0.133
     steps:
       - title: "Reported chat typing rate"
         math: "8.1 correct char/min at 100% accuracy"
         note: "The participant used BrainGate2 Desktop with Google Chat from her residence. This is a native-application demonstration, not the fastest copy-spelling condition."
       - title: "Information transfer rate"
-        math: "ITR = 8.1 x 1.0 ~= 8 bits/min"
+        math: "ITR = 0.133 bits/s"
 referenceCalculationId: comm
 ---

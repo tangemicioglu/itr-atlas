@@ -8,7 +8,7 @@ describe('resolveCalculation', () => {
       compute: { method: 'wolpaw', targets: 40, accuracy: 0.96, secondsPerSelection: 1.5 },
     };
     const r = resolveCalculation(calc);
-    expect(r.resultBitsPerMin).toBeCloseTo(194.7, 1);
+    expect(r.resultBitsPerSecond).toBeCloseTo(3.245, 3);
     expect(r.steps.length).toBe(3);
   });
 
@@ -17,16 +17,16 @@ describe('resolveCalculation', () => {
       compute: { method: 'confusion-mi', matrix: [[5, 0], [0, 5]], secondsPerSelection: 2 },
     };
     const r = resolveCalculation(calc);
-    expect(r.resultBitsPerMin).toBeCloseTo(30, 6);
+    expect(r.resultBitsPerSecond).toBeCloseTo(0.5, 6);
   });
 
   it('passes through authored steps and result', () => {
     const calc: CalculationInput = {
       steps: [{ title: 'Word entropy', math: 'H = 9.1 bits/word' }],
-      resultBitsPerMin: 912,
+      resultBitsPerSecond: 15.2,
     };
     const r = resolveCalculation(calc);
-    expect(r.resultBitsPerMin).toBe(912);
+    expect(r.resultBitsPerSecond).toBe(15.2);
     expect(r.steps[0].title).toBe('Word entropy');
   });
 

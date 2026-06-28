@@ -35,7 +35,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 14
+    resultBitsPerSecond: 0.233
     steps:
       - title: "Characters per minute"
         math: "13.81 correct char/min (Participant 1, predictive text disabled; P2 reached 20.10 cpm)"
@@ -43,7 +43,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 13.81 × 1.0 ≈ 14 bits/min"
+        math: "ITR = 0.233 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 28 keyboard targets"
     kind: "Uniform-prior selection metric, shown for comparison"

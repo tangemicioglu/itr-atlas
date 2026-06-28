@@ -47,7 +47,7 @@ calculations:
     method: "Fitts' law throughput on the radial point-and-click task"
     kind: "2D pointing channel"
     provenance: recomputed-omitted
-    resultBitsPerMin: 22
+    resultBitsPerSecond: 0.367
     steps:
       - title: "Compute the radial-task index of difficulty"
         math: "ID = log2(A/W + 1) = log2(278/48 + 1) = 2.76 bits"
@@ -58,14 +58,14 @@ calculations:
       - title: "Discount for incomplete runs"
         math: "TP_net = 0.384 bits/s x 0.974 = 0.374 bits/s"
         note: "S3 missed 2.6% of runs by timeout and made no false target selections, so completion rate is applied as a simple net-throughput discount."
-      - title: "Convert to bits per minute"
-        math: "ITR = 0.374 bits/s x 60 = 22.4 ~= 22 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 0.367 bits/s"
   - id: wolpaw-radial
     method: "Wolpaw bitrate over N = 8 radial targets"
     kind: "Discrete-selection radial-target benchmark"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerMin: 23
+    resultBitsPerSecond: 0.383
     steps:
       - title: "Per-selection information with errors"
         math: "B = log2(8) + 0.974 log2(0.974) + 0.026 log2(0.026 / 7) = 2.75 bits/selection"
@@ -74,16 +74,16 @@ calculations:
         math: "60 / 7.20 = 8.33 selections/min"
         note: "Uses the same S3 four-session average successful-run movement time as the Fitts reference calculation."
       - title: "Information transfer rate"
-        math: "ITR = 2.75 x 8.33 = 22.9 ~= 23 bits/min"
+        math: "ITR = 0.383 bits/s"
   - id: best-session-check
     method: "Fitts' law best-session check"
     kind: "2D pointing channel"
     provenance: recomputed-omitted
-    resultBitsPerMin: 26
+    resultBitsPerSecond: 0.433
     notUsedForRanking: true
     steps:
       - title: "Apply the same calculation to S3 day 303"
-        math: "ID = 2.76 bits; MT = 6.18 s; success = 96.1%; ITR = (2.76 / 6.18) x 0.961 x 60 = 25.8 ~= 26 bits/min"
-        note: "This reproduces the old 26 bits/min scale from raw task values rather than accepting a standalone throughput number. The reference remains the S3 four-session average."
+        math: "ITR = 0.433 bits/s"
+        note: "This reproduces the old 0.43 bits/s scale from raw task values rather than accepting a standalone throughput number. The reference remains the S3 four-session average."
 referenceCalculationId: fitts
 ---

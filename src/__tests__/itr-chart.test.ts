@@ -2,9 +2,9 @@ import { describe, expect, test } from "vitest";
 import chart from "../components/ItrChart.astro?raw";
 
 describe("ITR chart rendering", () => {
-  test("log axis extends down to 1 bit per minute", () => {
-    expect(chart).toContain("Math.log10(1)");
-    expect(chart).toContain("const yticks = [1, 10, 100, 1000]");
+  test("log axis extends down to 0.01 bits per second", () => {
+    expect(chart).toContain("const yMin = 0.01, yMax = 20");
+    expect(chart).toContain("const yticks = [0.01, 0.1, 1, 10]");
   });
 
   test("rebuilt x-axis gridlines keep their SVG presentation styling", () => {

@@ -27,7 +27,7 @@ calculations:
     method: "Fitts' law throughput, re-derived from the task conditions"
     kind: "2D pointing channel"
     provenance: author-reported-verified
-    resultBitsPerMin: 100
+    resultBitsPerSecond: 1.67
     steps:
       - title: "Information per movement (effective index of difficulty)"
         math: "IDe = log2(De/We + 1);  3 distances (80–320 px) × 3 widths (40–160 px) × 8 directions → IDe = 1.58–3.17 bits/movement"
@@ -37,7 +37,7 @@ calculations:
         note: "Effective width is computed from where the cursor actually landed, so throughput is net of the user's spatial error, with no separate error term needed."
       - title: "Throughput = information ÷ movement time"
         math: "TP = IDe/MT = 1.67 ± 0.37 bits/s for the tongue  (same task, same subjects: mouse 3.99, keypad 2.17 bits/s)"
-      - title: "Convert to bits per minute"
-        math: "ITR = 1.67 bits/s × 60 ≈ 100 bits/min  (~42% of mouse throughput)"
+      - title: "Use bits per second"
+        math: "ITR = 1.67 bits/s"
 referenceCalculationId: fitts
 ---

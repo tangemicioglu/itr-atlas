@@ -16,6 +16,6 @@ export interface DerivationStep {
 
 /** Output of any compute helper: the number plus how it was reached. */
 export interface CalcResult {
-  resultBitsPerMin: number;
+  resultBitsPerSecond: number;
   steps: DerivationStep[];
 }

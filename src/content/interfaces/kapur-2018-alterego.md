@@ -1,5 +1,5 @@
 ---
-name: AlterEgo continuous silent speech (Wadkins, 2019)
+name: AlterEgo continuous silent speech (Kapur et al., 2018)
 year: 2019
 modalityTags: ["sEMG", "Silent speech"]
 sensingModality: sEMG
@@ -24,7 +24,7 @@ actionSpace:
   kind: fixed-set
   size: 20
   prior: non-uniform
-  notes: "The reference task is Wadkins' 20-word, 200-sentence continuous silent-speech dataset, decoded from facial sEMG with CNN+CTC and a simple language model. This avoids mixing the IUI 2018 command-task accuracy with the follow-on thesis rate: N, WER, rate, and the reported bitrate all come from the same task. The action space is a 20-word closed vocabulary, and the sentence set is constrained, so the headline bits/min should not be read as open-vocabulary language throughput. Vocabulary size mainly changes the per-token comparison metric: log2(20) is only about 4.3 bits/word, while natural English content is not proportional to dictionary size."
+  notes: "The reference task is Wadkins' 20-word, 200-sentence continuous silent-speech dataset, decoded from facial sEMG with CNN+CTC and a simple language model. This avoids mixing the IUI 2018 command-task accuracy with the follow-on thesis rate: N, WER, rate, and the reported bitrate all come from the same task. The action space is a 20-word closed vocabulary, and the sentence set is constrained, so the headline bits/s should not be read as open-vocabulary language throughput. Vocabulary size mainly changes the per-token comparison metric: log2(20) is only about 4.3 bits/word, while natural English content is not proportional to dictionary size."
 references:
   - label: "Kapur, Kapur & Maes 2018 - original AlterEgo IUI paper"
     url: "https://doi.org/10.1145/3172944.3172977"

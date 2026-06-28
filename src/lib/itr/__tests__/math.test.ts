@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { log2, round, formatBitsPerMin } from '../math';
+import { log2, round, formatBitsPerSecond } from '../math';
 
 describe('log2', () => {
   it('computes base-2 logarithm', () => {
@@ -18,9 +18,10 @@ describe('round', () => {
   });
 });
 
-describe('formatBitsPerMin', () => {
-  it('rounds to a whole number string', () => {
-    expect(formatBitsPerMin(194.7)).toBe('195');
-    expect(formatBitsPerMin(22.6)).toBe('23');
+describe('formatBitsPerSecond', () => {
+  it('formats bits per second compactly', () => {
+    expect(formatBitsPerSecond(17.816)).toBe('18');
+    expect(formatBitsPerSecond(4.25)).toBe('4.25');
+    expect(formatBitsPerSecond(0.033)).toBe('0.033');
   });
 });

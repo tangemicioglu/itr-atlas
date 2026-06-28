@@ -28,7 +28,7 @@ calculations:
     method: "Character-entropy throughput (realized text entry)"
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 54
+    resultBitsPerSecond: 0.9
     steps:
       - title: "Correct characters per minute"
         math: "~1 selection/s (0.5 s flicker + 0.5 s gaze shift) → ~60 char/min × 89.83% ≈ 54 correct char/min"
@@ -36,19 +36,19 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon), the same predictor used for QWERTY and the other text entries"
       - title: "Information transfer rate"
-        math: "ITR = 54 × 1.0 ≈ 54 bits/min"
+        math: "ITR = 0.9 bits/s"
   - id: reported
     method: "Wolpaw bitrate over N = 40 targets (authors' reported ITR)"
     kind: "Uniform 1-of-40 classifier metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerMin: 267
+    resultBitsPerSecond: 4.45
     steps:
       - title: "Bits per selection (Wolpaw, N = 40 at 89.83%)"
         math: "B = log2(40) + 0.8983·log2(0.8983) + 0.1017·log2(0.1017/39) ≈ 4.31 bits/selection"
         note: "Online accuracy averaged 89.83%. Perfect-accuracy ceiling is log2(40) = 5.32 bits, approached by the best subject (peak 5.32 bits/s)."
       - title: "Information transfer rate"
-        math: "ITR = 4.45 bits/s (authors' reported online mean) × 60 = 267 bits/min; peak 5.32 × 60 ≈ 319"
+        math: "ITR = 4.45 bits/s"
         note: "This counts log2(N) per selection. The atlas-ranked text figure instead uses the same 1 bit/char English-output convention as the other text entries."
 referenceCalculationId: comm
 ---

@@ -17,9 +17,9 @@ describe('mutualInformationBits', () => {
 });
 
 describe('computeConfusionMI', () => {
-  it('scales MI by selections per minute and emits steps', () => {
+  it('scales MI by selections per second and emits steps', () => {
     const r = computeConfusionMI([[5, 0], [0, 5]], 2);
-    expect(r.resultBitsPerMin).toBeCloseTo(30, 6);
+    expect(r.resultBitsPerSecond).toBeCloseTo(0.5, 6);
     expect(r.steps[0].title).toBe('Mutual information from the confusion matrix');
   });
 });

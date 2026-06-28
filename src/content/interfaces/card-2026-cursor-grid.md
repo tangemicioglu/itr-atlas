@@ -33,7 +33,7 @@ calculations:
     method: "Fitts' law throughput on the grid task"
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
-    resultBitsPerMin: 70
+    resultBitsPerSecond: 1.17
     steps:
       - title: "Grid geometry -> movement difficulty"
         math: "14x14 grid, 0.77-inch tiles: cell width W = S/14; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 0.52*14 = 7.28"
@@ -44,19 +44,19 @@ calculations:
       - title: "Selection rate"
         math: "B / log2(N-1) = 2.90 / 7.61 ~= 0.381 net correct selections/s"
       - title: "Fitts throughput"
-        math: "TP = 3.05 bits x 0.381/s ~= 1.16 bits/s -> x60 ~= 70 bits/min"
+        math: "ITR = 1.17 bits/s"
         note: "Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
     kind: "Achieved-bitrate task metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerMin: 174
+    resultBitsPerSecond: 2.9
     steps:
       - title: "Use the reported grid-task bitrate"
         math: "B = 2.90 bits/s (mean; peak 3.16)"
         note: "Field-standard BCI achieved-bitrate (Nuyujukian et al. 2015): log2(N-1) grid choice entropy per cued selection, net of errors."
-      - title: "Convert to bits per minute"
-        math: "ITR = 2.90 bits/s x 60 = 174 bits/min"
+      - title: "Use bits per second"
+        math: "ITR = 2.9 bits/s"
 referenceCalculationId: fitts
 ---

@@ -37,7 +37,7 @@ calculations:
     method: "Character-entropy throughput"
     kind: "Net of English redundancy and measured letter accuracy"
     provenance: recomputed-omitted
-    resultBitsPerMin: 101
+    resultBitsPerSecond: 1.68
     steps:
       - title: "Characters per minute"
         math: "22.11 wpm × 5 chars/word = 110.55 char/min"
@@ -48,6 +48,6 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 100.6 × 1.0 ≈ 101 bits/min"
+        math: "ITR = 1.68 bits/s"
 referenceCalculationId: entropy
 ---
