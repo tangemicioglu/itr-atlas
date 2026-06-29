@@ -1,9 +1,9 @@
 # ITR Atlas — Product & Architecture Spec
 
-> Status: **approved design**, pre-implementation. Last updated 2026-06-24.
+> Status: **implemented**. Last updated 2026-06-29.
 > Visual design system (tokens) lives separately in [DESIGN.md](./DESIGN.md) (Google `design.md` format).
 
-A curated, shareable atlas comparing **information transfer rate (ITR, bits/min)** across all
+A curated, shareable atlas comparing **information transfer rate (ITR, bits/s)** across all
 human→machine input modalities — brain–computer interfaces, eye-tracking, speech, typing, Morse,
 and more.
 
@@ -19,7 +19,7 @@ Inspired by [this comparison](https://x.com/SumnerLN/status/2069225927486435548)
 ## 1. Goals & non-goals
 
 **Goals**
-- Compare interfaces on a single, defensible ITR number per entry.
+- Compare interfaces on the strictest defensible ITR bound per entry, with every method shown.
 - Make every figure auditable: sourced inputs + a fully worked, step-by-step derivation.
 - Treat "this ITR is misleading" as a first-class, visible property — not a footnote.
 - Be shareable and pleasant to browse.
@@ -38,13 +38,14 @@ Inspired by [this comparison](https://x.com/SumnerLN/status/2069225927486435548)
 - **Curated entries** stored as schema-validated content collection files in the repo.
 - **Submissions** via a **Google Form** → responses land in a Sheet → maintainer curates good ones
   into entry files by hand. No backend.
-- **Browsing**: search + modality filter + sort (ITR high→low default). No compare mode.
+- **Browsing**: search + score-type selector + system/technique legend filter + sort (ITR
+  high→low default). No compare mode.
 
 ---
 
 ## 3. Core model
 
-### 3.1 The "reference calculation" principle
+### 3.1 The "strictest upper bound" principle
 
 Calculation methods are **heterogeneous** — there is no universal formula. The heterogeneity is
 **not** primarily about the sensing modality; it is about the **action space** and the **source
@@ -59,24 +60,35 @@ statistics** of the task, which are design choices independent of the hardware:
 
 A text interface is the clearest illustration: free-word (open vocabulary), fixed dictionary, and
 bigram-grammar variants of the *same* modality have different action spaces and priors, so they
-have different information per selection — and the resulting bits/min are not equivalent. The chosen
-method (Wolpaw, confusion-matrix mutual information, entropy/perplexity, Fitts'-law throughput)
-follows from the action space and source model, not from the modality label.
+have different information per selection — and the resulting bits/s are not equivalent. The
+applicable methods (Wolpaw, confusion-matrix mutual information, character/word entropy, Fitts'-law
+throughput, Nuyujukian achieved bitrate) follow from the action space and source model, not from the
+modality label.
 
-**Comparability caveat.** Because the "bit" is defined by the action space, headline bits/min are
-only directly comparable across entries that count raw selections over a **uniform, fixed** target
-set. When an entry's action space is context-dependent, continuous, or has a non-uniform/learned
-prior, its number bakes in extra structure and must be read against its action space (see §3.4), not
-ranked naively. The site surfaces this per entry.
+**The strictest-bound rule.** Every method **except** the Shannon realized-text figure is an *upper
+bound* on the channel — it caps the rate under its own idealizing assumptions. So no single method is
+"correct"; the best-supported estimate is the **strictest (smallest)** of the bounds that validly
+apply to an entry, and that is the headline number. Shannon realized-text throughput participates in
+the same minimum on equal footing (it tends to win for text entries, where it is tighter than the
+raw-channel bounds). Each calculation carries a **`scoreType`** (`fitts`, `wolpaw`, `nuyujukian`,
+`shannon`, `self-reported`) so the home page can re-rank the whole atlas by any single method via a
+selector; entries lacking the selected method are greyed out.
 
-Each entry designates **one reference calculation** — the number used for cross-comparison in the
-atlas. Other calculations may be shown as **supplementary** (explicitly *not used for ranking*).
+**Comparability caveat.** Because the "bit" is defined by the action space, a raw-selection bound
+over a knob-sized alphabet inflates without limit (log₂(N) rises as you split the space finer), so
+such bounds are loose and the strictest-min discards them in favor of the realized-text figure. An
+entry's number must still be read against its action space (see §3.4); the site surfaces this per
+entry.
 
-**Choosing the reference, in priority order:**
+Calculations excluded from the strictest-min (ceilings, slower demo conditions, raw pre-correction
+operating points, hypotheticals) are flagged **`notUsedForRanking`** and shown as supplementary.
+`referenceCalculationId` survives only as a fallback when no scored calc is eligible.
+
+**Computing the methods, in priority order:**
 1. Use the **original paper's own** calculation/number where it exists and is sound.
-2. If the paper omits ITR, **we compute one** with a modality-appropriate method.
-3. If the paper's method is **flawed**, **we recompute** and replace it — and show **both** the
-   original derivation and ours, so the discrepancy is auditable rather than asserted.
+2. If the paper omits a comparable ITR, **we compute one** with a modality-appropriate method.
+3. Where more than one method applies, we compute each and rank on the strictest, keeping the rest
+   as auditable secondary derivations.
 
 ### 3.2 Provenance taxonomy
 
@@ -84,10 +96,9 @@ Every calculation carries one provenance badge:
 
 | Badge                          | Meaning                                                       |
 |--------------------------------|--------------------------------------------------------------|
-| `Author-reported · verified`   | We re-derived the paper's own method and matched its number. |
-| `Author-reported · unverified` | Paper gives a number but lacks detail to re-derive it.       |
-| `Recomputed — paper omitted`   | No ITR in the paper; we computed one.                        |
-| `Recomputed — original flawed` | Paper's method was broken; ours replaces it (reason linked). |
+| `Author-reported · reproduced` | We re-derived the paper's own method and matched its number. |
+| `Author-reported · not reproduced` | Paper gives a number but lacks detail to re-derive it.   |
+| `Recomputed`                   | No comparable ITR in the paper; we computed one from its inputs. |
 
 ### 3.3 Entry shape (conceptual schema)
 
@@ -112,16 +123,17 @@ Entry {
   }
 
   calculations[] {
-    method                  // "Wolpaw bitrate"
-    kind                    // short descriptor: "Theoretical upper bound"
+    method                  // "Wolpaw bitrate over N = 40 targets"
+    scoreType               // "fitts" | "wolpaw" | "nuyujukian" | "shannon" | "self-reported"
+    kind                    // short descriptor: "Per-word continuous throughput"
     provenance              // one of the taxonomy values above
-    steps[]                 // ordered, worked derivation (see §6)
-    resultBitsPerMin
-    notUsedForRanking?      // true => supplementary
-    flawReason?             // when "Recomputed — original flawed"
+    steps[]                 // ordered, worked derivation (see §6) — OR a `compute` block
+    resultBitsPerSecond     // for authored-steps calcs; compute calcs emit it
+    notUsedForRanking?      // true => excluded from the strictest-min, shown as supplementary
   }
 
-  referenceCalculationId    // which calculation is the comparison number
+  // Headline = strictest eligible bound across calculations[] (see §3.1).
+  referenceCalculationId    // fallback designation only, used when nothing is rankable
   notes                     // caveats, free text
 }
 ```
@@ -140,22 +152,25 @@ detail (dictionary vs grammar, language model, Fitts' index of difficulty) lives
 
 Examples: an SSVEP grid is `fixed-set / 40 / uniform`; skilled QWERTY (scored by English character
 entropy) is `fixed-set / ~30 / context-conditioned`; a 2D cursor is `continuous / continuous / —`; a
-grammar-constrained speller is `context-dependent / varies / context-conditioned`. An entry counts
-as directly comparable only when `kind = fixed-set` **and** `prior = uniform`; otherwise the detail
-page shows a comparability caveat.
+grammar-constrained speller is `context-dependent / varies / context-conditioned`. Direct
+comparability follows from the **scoring method**, not these axes alone: entries that share a method
+(or, for text, the shared ~1 bit/char Shannon predictor) are directly comparable, and the detail
+page shows a per-entry comparability note framed by whichever method won the strictest-min.
 
 ---
 
 ## 4. Pages
 
-1. **Atlas (home)** — title + one-line thesis + result count; controls (search, modality filter
-   chips, sort); responsive 3-up grid of stat cards. Each card: device photo, name, modality tags,
-   large ink-black ITR, a mini secondary stat (key inputs + method), and a **provenance pill**.
-2. **Entry detail** — self-contained panel: header (photo, tags, invasiveness); **reference ITR**
-   with full step-by-step derivation; a "method varies by modality" note; any additional full
-   derivations (e.g. paper's vs ours); supplementary calculations; citations.
+1. **Atlas (home)** — title; a **score-type selector** (Strictest + each method) above the chart
+   that re-ranks chart and cards; an ITR-vs-year chart whose legend filters by system/technique;
+   controls (search, sort); responsive 3-up grid of stat cards. Each card: device photo, name,
+   modality tags, large ink-black ITR, a mini secondary stat (key inputs + method), and a
+   **provenance pill**. Cards grey out when the selected method has no value for them.
+2. **Entry detail** — self-contained panel: header (photo, tags, invasiveness); **strictest ITR**
+   with full step-by-step derivation; a "method varies by action space" note; any additional full
+   derivations; supplementary calculations; citations.
 3. **Methodology / About** — explains ITR and the Wolpaw formula, its assumptions, the Yuan et al.
-   critique, and how reference methods and provenance are assigned.
+   critique, the strictest-upper-bound rule, and how the headline method and provenance are assigned.
 4. **Submit** — embeds/links the Google Form.
 
 ---
