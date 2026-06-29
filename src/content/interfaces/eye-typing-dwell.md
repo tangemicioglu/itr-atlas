@@ -22,6 +22,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon)."
+  - symbol: "N"
+    value: "30"
+    sourceNote: "On-screen keys, for the raw-key Wolpaw ceiling (uniform prior over the alphabet). The headline Shannon figure uses English entropy instead."
+  - symbol: "T_key"
+    value: "0.603"
+    unit: "s/key"
+    sourceNote: "Gross dwell-selection interval for the Wolpaw ceiling: 60 / (19.9 wpm × 5) = 0.603 s. The bare gaze-pointing Fitts channel is a separate entry (Eye-Gaze Pointing), not duplicated here."
 actionSpace:
   kind: fixed-set
   size: 30
@@ -41,5 +48,15 @@ calculations:
         math: "19.83 × 5 chars/word = 99.1 chars/min"
       - title: "Information transfer rate"
         math: "ITR = 1.65 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw key set"
+    scoreType: wolpaw
+    kind: "Uniform-prior ceiling on the dwell-key channel, before English redundancy"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 30
+      accuracy: 0.9964
+      secondsPerSelection: 0.603
 referenceCalculationId: entropy
 ---

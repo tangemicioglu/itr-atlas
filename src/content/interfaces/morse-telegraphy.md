@@ -18,6 +18,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon); Morse encodes ordinary English letters."
+  - symbol: "N"
+    value: "36"
+    sourceNote: "26 letters + 10 numerals, for the raw-symbol Wolpaw ceiling (uniform prior). The dot/dash code is itself frequency-optimized, so real symbols are not uniform; this is a loose upper bound."
+  - symbol: "T_char"
+    value: "0.48"
+    unit: "s/char"
+    sourceNote: "Gross character interval for the Wolpaw ceiling: 60 / (25 wpm × 5) = 0.48 s. Skilled-operator copy error is not reported, so accuracy is taken as perfect (P=1) — a strict upper bound."
 actionSpace:
   kind: fixed-set
   size: 36
@@ -41,5 +48,15 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
         math: "ITR = 2.08 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw symbol set"
+    scoreType: wolpaw
+    kind: "Uniform-prior, perfect-copy ceiling on the 36-symbol channel"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 36
+      accuracy: 1
+      secondsPerSelection: 0.48
 referenceCalculationId: entropy
 ---

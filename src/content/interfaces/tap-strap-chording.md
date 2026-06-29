@@ -22,6 +22,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon)."
+  - symbol: "N"
+    value: "30"
+    sourceNote: "Output alphabet size for the raw-character Wolpaw ceiling (uniform prior). Characters are tap chords, but the produced set is the same ~30-symbol alphabet."
+  - symbol: "T_char"
+    value: "0.5428"
+    unit: "s/char"
+    sourceNote: "Gross character interval for the Wolpaw ceiling: 60 / (22.11 wpm × 5) = 0.5428 s."
 actionSpace:
   kind: fixed-set
   size: 30
@@ -50,5 +57,15 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
         math: "ITR = 1.68 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw character set"
+    scoreType: wolpaw
+    kind: "Uniform-prior ceiling on the character channel, before English redundancy"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 30
+      accuracy: 0.9102
+      secondsPerSelection: 0.5428
 referenceCalculationId: entropy
 ---

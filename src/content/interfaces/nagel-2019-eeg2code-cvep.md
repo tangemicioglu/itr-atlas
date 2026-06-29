@@ -55,8 +55,8 @@ calculations:
         math: "ITR = 0.583 bits/s"
   - id: utility
     method: "Authors' utility rate (log2(N) per selection over the speller alphabet)"
-    scoreType: nuyujukian
-    kind: "Alphabet-level utility metric, shown for comparison"
+    scoreType: wolpaw
+    kind: "Alphabet-level selection metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
     resultBitsPerSecond: 2.92

@@ -22,6 +22,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon)."
+  - symbol: "N"
+    value: "30"
+    sourceNote: "Distinguishable keys on the on-screen QWERTY, used only for the raw-key Wolpaw ceiling (uniform prior). The headline Shannon figure uses English entropy instead, since touch keystrokes with autocorrect are far from uniform."
+  - symbol: "T_key"
+    value: "0.3315"
+    unit: "s/keystroke"
+    sourceNote: "Gross keystroke interval for the Wolpaw ceiling: 60 / (36.2 wpm × 5) = 0.3315 s. Gross because Wolpaw's accuracy term P handles errors separately."
 actionSpace:
   kind: fixed-set
   size: 30
@@ -44,5 +51,15 @@ calculations:
         math: "35.3 × 5 chars/word = 176.7 chars/min"
       - title: "Information transfer rate"
         math: "ITR = 2.95 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw key set"
+    scoreType: wolpaw
+    kind: "Uniform-prior ceiling on the touch-key channel, before English redundancy"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 30
+      accuracy: 0.9766
+      secondsPerSelection: 0.3315
 referenceCalculationId: entropy
 ---
