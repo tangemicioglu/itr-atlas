@@ -6,37 +6,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h1>Methodology</h1>
 
     <h2>What ITR measures</h2>
-    <p>Information transfer rate (ITR) estimates how many bits per second a user can communicate
-       through an interface. For discrete selection it is usually computed with the
-       <strong>Wolpaw formula</strong> for bits per selection:</p>
+    <p>Information transfer rate (ITR) is the rate, in bits per second, at which a user gets
+       information through an interface. For a discrete selection task, papers usually start with
+       the <strong>Wolpaw formula</strong> for bits per selection:</p>
     <pre class="mono">B = log2(N) + P*log2(P) + (1-P)*log2((1-P)/(N-1))</pre>
-    <p>multiplied by selections per second. Here <em>N</em> is the number of targets and
-       <em>P</em> is accuracy.</p>
+    <p>Then they multiply by selections per second. Here <em>N</em> is the number of targets and
+       <em>P</em> is the selection accuracy.</p>
 
-    <h2>Why a single number is often misleading</h2>
-    <p>The Wolpaw ITR is the channel capacity of an <em>idealized</em> discrete channel. It assumes
-       that every target is equally likely (a uniform prior), errors are spread evenly over the other
-       targets (symmetric and memoryless), selection time is fixed, and no time is spent correcting
-       mistakes. Under those assumptions, the formula above is exact. For real interfaces it is
-       better read as an <strong>upper bound</strong>, because the assumptions fail in ordinary use.
-       The overestimate grows with both accuracy and the number of symbols
+    <h2>Why one number can mislead</h2>
+    <p>The Wolpaw formula describes an <em>idealized</em> discrete channel. Every target is equally
+       likely, errors are spread evenly over the other targets, selection time is fixed, and mistakes
+       cost no correction time. Under those assumptions, the formula above is exact. Real interfaces
+       rarely satisfy all of them, so the number is better read as an <strong>upper bound</strong>.
+       The overestimate grows with accuracy and with the number of symbols
        (<a href="https://doi.org/10.1371/journal.pone.0078432">Speier, Arnold &amp; Pouratian 2013</a>;
        <a href="https://pubmed.ncbi.nlm.nih.gov/23448963/">Yuan et al. 2013</a>).</p>
-    <p>Other estimators remove specific assumptions. Confusion-matrix mutual information drops the
-       symmetric-error assumption
+    <p>Different estimators relax different assumptions. Confusion-matrix mutual information removes
+       the symmetric-error assumption
        (<a href="https://www.yumpu.com/en/document/view/33702582/statistical-modelling-issues-for-the-adaptive-brain-interface">Nykopp 2001</a>;
        <a href="https://archive-ouverte.unige.ch/unige:47811">Kronegg et al. 2005</a>). A language
-       model drops the uniform-prior assumption (Speier and colleagues, above). A continuous control
-       channel needs a throughput model rather than a discrete-selection count. The entries in this
-       atlas differ mainly in which assumption they break and which replacement measure is defensible.</p>
+       model removes the uniform-prior assumption (Speier and colleagues, above). A continuous
+       control channel needs a throughput model instead of a discrete-selection count. Most entries
+       in the atlas come down to that choice: which assumption fails, and which replacement measure
+       the source data can support.</p>
 
     <h2>The predictor is part of the measurement</h2>
-    <p>A bits figure depends on the <em>predictor</em> assumed at the receiving end, not only on the
-       physical or neural channel. If a language model can reconstruct some redundancy from context,
-       that redundancy did not need to cross the interface. A stronger predictor therefore gives a
-       lower information rate. To keep entries comparable, the predictor has to stay
-       <strong>constant across every entry</strong>. We use a conservative full-context bound of about
-       <strong>1 bit per character</strong> for English text throughout.
+    <p>A bits figure depends on the <em>predictor</em> assumed at the receiving end, not just on the
+       physical or neural channel. If a language model can recover redundancy from context, that
+       redundancy did not have to cross the interface. A stronger predictor gives a lower information
+       rate. For comparisons to mean anything, the predictor has to stay
+       <strong>constant across entries</strong>. We use a conservative full-context bound of about
+       <strong>1 bit per character</strong> for English text.
        Shannon's prediction experiments first bracketed printed English between 0.6 and 1.3 bits/char
        (<a href="https://ieeexplore.ieee.org/document/6773263">Shannon 1951</a>). Modern estimates
        land just above our working value: about <strong>1.12 bits/char</strong> by extrapolating
@@ -49,82 +49,78 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        (<a href="https://doi.org/10.1145/642611.642632">Soukoreff &amp; MacKenzie 2003</a>), the same
        convention behind the words-per-minute figures in this atlas, so the bound is equivalently
        <strong>5 bits per word</strong>.</p>
-    <p>Speech shows the problem plainly. A widely cited cross-language study reports an average
+    <p>Speech makes the predictor issue easy to see. A widely cited cross-language study reports an average
        information rate of <strong>~39 bits/second</strong> for spoken language
        (<a href="https://www.science.org/doi/10.1126/sciadv.aaw2594">Coupé et al. 2019</a>). That
        study set out to compare encoding efficiency <em>across</em> 17 languages, and for that
        purpose it uses syllable-level entropy estimated from local context. That estimator is
        computable and comparable across languages with very different corpus resources. It also
        counts redundancy that a full-context predictor would resolve, so it measures a different
-       quantity from the channel-net information this atlas tracks. If we used ~39 bps here, speech
+       quantity from the channel-net information tracked here. If we used ~39 bps here, speech
        would be evaluated with a different predictor from QWERTY, Morse, and the BCI spellers.</p>
-    <p>With the predictor held fixed, the speech estimate comes back into line. When conversational
-       English is measured with a large language model as the predictor, the same full-context
-       standard we apply to text, it
+    <p>Hold the predictor fixed and the speech number changes. When conversational English is measured
+       with a large language model as the predictor, the same full-context standard we apply to text, it
        lands at <strong>~13 bits/second</strong>
        (<a href="https://arxiv.org/abs/2403.08890">Bergey &amp; DeDeo 2024</a>), matching our text
        entries (≈150 wpm × 5 bits/word). Spoken and written English carry essentially the same net
-       information when they are evaluated with the same predictor. The 3× spread is an estimator
-       difference, not a modality difference, which is why this atlas keeps one predictor across
-       entries.</p>
+       information under the same predictor. The 3× spread is an estimator difference, not a speech
+       versus text difference.</p>
 
     <h2>What we rank on: the strictest upper bound</h2>
     <p>Every measure in the atlas is an <strong>upper bound</strong> on the information a channel
-       delivers — each caps the rate under its own idealizing assumptions, and none is privileged.
-       Fitts' index of difficulty, the Wolpaw bits-per-selection, log₂(N), the Nuyujukian achieved
-       bitrate, and the Shannon entropy of the realized text all bound the same quantity from
-       different directions. Because one entry usually admits several, we report the
-       <strong>strictest (smallest)</strong> of them as the headline — the best-supported estimate of
-       what the interface really achieves — and a score selector on the home page re-ranks the whole
-       atlas by any single method instead. The methods, and how each is computed:</p>
+       delivers. Each one caps the rate under its own assumptions. Fitts' index of difficulty, the
+       Wolpaw bits-per-selection, log₂(N), the Nuyujukian achieved bitrate, and the Shannon entropy of
+       the realized text all bound the same quantity from different directions. Since one entry often
+       admits several measures, the headline uses the <strong>strictest (smallest)</strong> valid
+       bound. The score selector on the home page can still re-rank the atlas by any single method.
+       The methods are computed as follows:</p>
     <ul>
-      <li><strong>Shannon entropy of the output text</strong> — characters/min × ~1 bit/char (or the
+      <li><strong>Shannon entropy of the output text</strong>: characters/min × ~1 bit/char (or the
          equivalent 5 bits/word), under the full-context predictor held constant across every text
          entry (see above). Applies wherever the interface emits English: keyboards, Morse,
          eye-typing, and the BCI spellers (P300, SSVEP, c-VEP). It bounds the rate at the information
          the text carries, not at the raw selections the decoder happened to make.</li>
-      <li><strong>Fitts throughput</strong> — <strong>log₂(A/W + 1)</strong> per movement ÷ movement
+      <li><strong>Fitts throughput</strong>: <strong>log₂(A/W + 1)</strong> per movement ÷ movement
          time, from the interface's own geometry, for continuous cursor motion (mouse, trackball,
          stylus, tongue drive, gaze pointing, cursor BCIs). Accuracy enters through the
          <em>effective</em> width W<sub>e</sub> = 4.133·SD of the endpoints (ISO 9241-9), so the bound
-         tracks the precision actually achieved and cannot be gamed by moving fast and missing. Where a
-         source publishes no endpoint scatter (e.g. the sensorimotor-rhythm cursor), we say so and fall
-         back to a plain completion-rate discount.</li>
-      <li><strong>Wolpaw / log₂(N)</strong> — bits per selection over the real action set, discounted
+         tracks the precision actually achieved. Moving fast and missing does not help. Where a source
+         publishes no endpoint scatter (e.g. the sensorimotor-rhythm cursor), we say so and fall back
+         to a plain completion-rate discount.</li>
+      <li><strong>Wolpaw / log₂(N)</strong>: bits per selection over the real action set, discounted
          by accuracy, for a closed command set with no language model to apply. (No current speller is
-         such a set; every speller here types English.)</li>
-      <li><strong>Nuyujukian achieved bitrate</strong> — log₂(N−1) per correct selection × net correct
+         such a set. Every speller here types English.)</li>
+      <li><strong>Nuyujukian achieved bitrate</strong>: log₂(N−1) per correct selection × net correct
          rate, the sustained grid metric papers report as Webgrid BPS and the like.</li>
     </ul>
-    <p>Taking the strictest settles the cases that read more than one way, without privileging any
-       method. A speller that emits English admits both a Shannon bound (~1 bit/char) and a
-       raw-selection bound (log₂(40) per letter); the latter is loose — enlarge the alphabet and it
-       rises while the typing is unchanged — so the minimum discards it for the text figure. Grid
-       cursors are the mirror image: Neuralink's Webgrid credits log₂(900) ≈ 9.8 bits per cell, but the
-       Fitts bound on the very same movement is ~4.1 bits/s, and the tighter figure wins. (As a check,
-       the able-bodied ~10 BPS on Webgrid reduces by this method to ~4.1 bits/s, close to a physical
-       mouse's independently measured ~4.5 bits/s.) It cuts the other way just as readily: the
-       sensorimotor-rhythm cursor's eight cued targets give a Wolpaw estimate below its Fitts estimate,
-       and Moses et al.'s 50-word ECoG speech ranks on its Wolpaw bound (0.86 bits/s) rather than its
-       Shannon figure (0.95) — Shannon is not a floor, just one bound among several.</p>
-    <p>Some raw-channel bounds are so loose they essentially never win, and that is exactly why they
-       are not headlines. EEG2Code discriminates <strong>500,000</strong> random codes at ~100% from
-       2 s of EEG — log₂(500,000) ≈ 19 bits per selection, 11.7 bits/s — yet the authors themselves
-       flag a "ceiling effect" where those bits are not usable as control
+    <p>The strictest-bound rule handles cases that can be scored more than one way. A speller that
+       emits English has both a Shannon bound (~1 bit/char) and a raw-selection bound (log₂(40) per
+       letter). The raw-selection figure is loose: enlarge the alphabet and it rises while the typing
+       behavior is unchanged, so the headline uses the text figure. Grid cursors go the other way.
+       Neuralink's Webgrid credits log₂(900) ≈ 9.8 bits per cell, while the Fitts bound on the same
+       movement is ~4.1 bits/s. The tighter figure is the headline. As a check, the able-bodied ~10
+       BPS on Webgrid reduces by this method to ~4.1 bits/s, close to a physical mouse's independently
+       measured ~4.5 bits/s. The rule can also favor Wolpaw: the sensorimotor-rhythm cursor's eight
+       cued targets give a Wolpaw estimate below its Fitts estimate, and Moses et al.'s 50-word ECoG
+       speech ranks on its Wolpaw bound (0.86 bits/s) rather than its Shannon figure (0.95). Shannon is
+       one bound among several, not a floor.</p>
+    <p>Some raw-channel bounds are too loose to make good headlines. EEG2Code discriminates
+       <strong>500,000</strong> random codes at ~100% from 2 s of EEG: log₂(500,000) ≈ 19 bits per
+       selection, or 11.7 bits/s. The authors themselves flag a "ceiling effect" where those bits are
+       not usable as control
        (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). It stays
-       in the atlas as a selectable secondary figure, never the rank. This is the same inflation we
-       reject for speech, where a syllable-level estimator reports ~39 bps against the ~13 bps a
-       full-context predictor gives.</p>
-    <p>Ranking on the strictest bound also keeps the taxonomy from doing too much work: a cursor
-       traversing space (Fitts), a code classifier (SSVEP, c-VEP), and covert attention with no
-       movement (P300) can carry different method labels without our having to decide whether covert
-       attention "really" obeys Fitts' law — the smallest valid bound is the headline regardless.</p>
+       in the atlas as a selectable secondary figure, not the ranked number. Speech has a similar
+       issue: a syllable-level estimator gives ~39 bps, while a full-context predictor gives ~13 bps.</p>
+    <p>The same rule keeps the taxonomy from carrying too much weight. A cursor moving through space
+       (Fitts), a code classifier (SSVEP, c-VEP), and covert attention with no movement (P300) can use
+       different method labels. We do not need to decide whether covert attention obeys Fitts' law. The
+       smallest valid bound is the headline.</p>
 
     <h2>How we pick the headline number</h2>
     <ol>
-      <li>Compute every applicable method from the paper's inputs — the paper's own calculation where
+      <li>Compute every applicable method from the paper's inputs: the paper's own calculation where
          it exists and is sound, otherwise a modality-appropriate recomputation.</li>
-      <li>Rank the entry on the <strong>strictest (smallest)</strong> valid bound; Shannon entropy is
+      <li>Rank the entry on the <strong>strictest (smallest)</strong> valid bound. Shannon entropy is
          one of those bounds, on equal footing with the rest.</li>
       <li>Keep the looser figures as secondary derivations on the entry page, reachable through the
          score selector.</li>

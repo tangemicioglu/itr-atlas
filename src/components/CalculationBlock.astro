@@ -2,23 +2,27 @@
 import ProvenancePill from "./ProvenancePill.astro";
 import DerivationSteps from "./DerivationSteps.astro";
 import { formatBitsPerSecond } from "../lib/itr/math";
+import { scoreTypeLabel } from "../lib/itr/scoring";
+import type { ScoreType } from "../lib/itr/scoring";
 import type { DerivationStep } from "../lib/itr/types";
 
 interface Props {
   method: string;
   kind: string;
+  scoreType?: ScoreType;
   provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
   resultBitsPerSecond: number;
   steps: DerivationStep[];
   isReference?: boolean;
 }
-const { method, kind, provenance, resultBitsPerSecond, steps, isReference = false } = Astro.props;
+const { method, kind, scoreType, provenance, resultBitsPerSecond, steps, isReference = false } = Astro.props;
 ---
 <section class={`calc ${isReference ? "reference" : ""}`}>
   <header>
     <div class="left">
       <div class="badges">
         {isReference && <span class="ref-badge">Strictest</span>}
+        {scoreType && <span class="cat-badge">{scoreTypeLabel(scoreType)}</span>}
         <ProvenancePill provenance={provenance} />
       </div>
       <div class="name">{method}</div>
@@ -36,6 +40,9 @@ const { method, kind, provenance, resultBitsPerSecond, steps, isReference = fals
   .badges { display: flex; gap: 8px; margin-bottom: 7px; }
   .ref-badge { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
     background: var(--accent); color: #fff; padding: 3px 8px; border-radius: 6px; }
+  .cat-badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.3px;
+    background: var(--photo); color: var(--ink); padding: 3px 8px; border-radius: 6px;
+    border: 1px solid var(--hairline); }
   .name { font-weight: 700; font-size: 15px; }
   .kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); margin-top: 3px; }
   .value { font-size: 24px; font-weight: 800; white-space: nowrap; }

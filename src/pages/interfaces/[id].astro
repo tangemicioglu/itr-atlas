@@ -110,6 +110,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   <CalculationBlock
     method={reference.calc.method}
     kind={reference.calc.kind}
+    scoreType={reference.calc.scoreType}
     provenance={reference.calc.provenance}
     resultBitsPerSecond={reference.result.resultBitsPerSecond}
     steps={reference.result.steps}
@@ -140,10 +141,13 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
 
   {additional.length > 0 && (
     <>
-      <h2>Additional derivations</h2>
+      <h2>Other bounds</h2>
+      <p class="seclbl">Also valid upper bounds for this entry — considered for the rank, but looser
+        than the strictest above. Pick any of these in the home-page score selector.</p>
       {additional.map((r) => (
         <CalculationBlock
-          method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
+          method={r.calc.method} kind={r.calc.kind} scoreType={r.calc.scoreType}
+          provenance={r.calc.provenance}
           resultBitsPerSecond={r.result.resultBitsPerSecond} steps={r.result.steps} />
       ))}
     </>
@@ -151,11 +155,13 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
 
   {supplementary.length > 0 && (
     <>
-      <h2>Supplementary calculations</h2>
-      <p class="seclbl">Shown for transparency, not used for ranking.</p>
+      <h2>Not comparable</h2>
+      <p class="seclbl">Excluded from ranking because they are not comparable upper bounds for this
+        entry — ceilings, alternate task conditions, or raw operating points. Kept for transparency.</p>
       {supplementary.map((r) => (
         <CalculationBlock
-          method={r.calc.method} kind={r.calc.kind} provenance={r.calc.provenance}
+          method={r.calc.method} kind={r.calc.kind} scoreType={r.calc.scoreType}
+          provenance={r.calc.provenance}
           resultBitsPerSecond={r.result.resultBitsPerSecond} steps={r.result.steps} />
       ))}
     </>
