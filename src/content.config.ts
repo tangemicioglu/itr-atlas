@@ -39,18 +39,17 @@ const provenance = z.enum([
 // STRICTEST (smallest) available bound per entry as the headline, and lets the
 // reader switch the displayed number to any single scoreType. Shannon is just
 // another bound — usually but not always strictest for text (cf. moses on wolpaw).
-//   fitts        - Fitts' law throughput (index of difficulty per movement)
-//   wolpaw       - Wolpaw mutual-information bitrate over N targets
-//   nuyujukian   - sustained achieved bitrate / grid BPS (Webgrid, Augmental, log2(N) achieved)
+// Listed by how often entries use each type.
 //   shannon      - English-text entropy throughput (per-char and per-word are the same
 //                  calculation in different units, so they share one type)
-//   self-reported- authors' headline number with no clean method re-derivation
+//   wolpaw       - Wolpaw mutual-information bitrate over N targets
+//   fitts        - Fitts' law throughput (index of difficulty per movement)
+//   nuyujukian   - sustained achieved bitrate / grid BPS (Webgrid, Augmental, log2(N) achieved)
 const scoreType = z.enum([
-  'fitts',
-  'wolpaw',
-  'nuyujukian',
   'shannon',
-  'self-reported',
+  'wolpaw',
+  'fitts',
+  'nuyujukian',
 ]);
 
 // The set of distinguishable actions available at each selection and how they

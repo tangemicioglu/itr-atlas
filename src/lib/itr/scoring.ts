@@ -11,8 +11,7 @@ export type ScoreType =
   | 'fitts'
   | 'wolpaw'
   | 'nuyujukian'
-  | 'shannon'
-  | 'self-reported';
+  | 'shannon';
 
 export interface ScoreTypeDef {
   key: ScoreType;
@@ -21,13 +20,13 @@ export interface ScoreTypeDef {
   blurb: string;
 }
 
-// Display order for the selector. "Strictest" is handled separately as the default.
+// Display order for the selector, ordered by how often entries use each type.
+// "Strictest" is handled separately as the default.
 export const SCORE_TYPES: ScoreTypeDef[] = [
-  { key: 'fitts', label: "Fitts' law", blurb: 'Index of difficulty per movement (continuous pointing).' },
-  { key: 'wolpaw', label: 'Wolpaw', blurb: 'Mutual-information bitrate over N targets, discounted by accuracy.' },
-  { key: 'nuyujukian', label: 'Nuyujukian', blurb: 'Sustained achieved bitrate on a grid task: log2(N-1) bits per correct selection × net rate (e.g. Webgrid BPS).' },
   { key: 'shannon', label: 'Shannon (text)', blurb: 'Information delivered as English text, under one ~1 bit/char predictor.' },
-  { key: 'self-reported', label: 'Self-reported', blurb: "The authors' headline number, taken as published." },
+  { key: 'wolpaw', label: 'Wolpaw', blurb: 'Mutual-information bitrate over N targets, discounted by accuracy.' },
+  { key: 'fitts', label: "Fitts' law", blurb: 'Index of difficulty per movement (continuous pointing).' },
+  { key: 'nuyujukian', label: 'Nuyujukian', blurb: 'Sustained achieved bitrate on a grid task: log2(N-1) bits per correct selection × net rate (e.g. Webgrid BPS).' },
 ];
 
 export const scoreTypeLabel = (k: ScoreType): string =>

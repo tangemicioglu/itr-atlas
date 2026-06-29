@@ -15,7 +15,7 @@ describe('strictest', () => {
   });
 
   it('ignores calcs flagged notUsedForRanking even if they are smaller', () => {
-    const r = strictest([c('wolpaw', 5.1), c('self-reported', 1.0, true)]);
+    const r = strictest([c('wolpaw', 5.1), c('shannon', 1.0, true)]);
     expect(r).toEqual({ bitsPerSecond: 5.1, scoreType: 'wolpaw' });
   });
 
@@ -81,7 +81,7 @@ describe('valueForType', () => {
 describe('availableTypes', () => {
   it('lists present types in canonical order, deduped', () => {
     const types = availableTypes([c('wolpaw', 5), c('fitts', 3), c('wolpaw', 4)]);
-    expect(types).toEqual(['fitts', 'wolpaw']);
+    expect(types).toEqual(['wolpaw', 'fitts']);
   });
 
   it('ignores calcs without a scoreType', () => {
