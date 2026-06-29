@@ -35,7 +35,7 @@ calculations:
     scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerSecond: 0.133
+    resultBitsPerSecond: 0.127
     steps:
       - title: "Correct characters per minute"
         math: "≈ 7.6 char/min (best demonstrated; across-subject range 2.3–7.6)"
@@ -43,20 +43,20 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 0.133 bits/s"
+        math: "7.6 char/min × 1.0 bit/char ÷ 60 s/min = 0.127 bits/s"
   - id: wolpaw
     method: "Uniform-prior comparison over the ~30-letter alphabet"
     scoreType: nuyujukian
     kind: "Uniform 1-of-30 selection metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerSecond: 0.617
+    resultBitsPerSecond: 0.62
     steps:
       - title: "Bits per letter at perfect accuracy"
         math: "log2(30) ≈ 4.91 bits/letter (each letter reached by a two-step hexagon selection)"
         note: "The paper gives the net letter rate but not a per-command accuracy, so this is shown at perfect accuracy as a uniform-prior comparison rather than a Wolpaw recomputation."
       - title: "Information transfer rate"
-        math: "ITR = 0.617 bits/s"
+        math: "7.6 letter/min × 4.91 bits/letter ÷ 60 s/min = 0.62 bits/s"
         note: "Uses log2(N) per letter, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries."
 referenceCalculationId: comm
 ---

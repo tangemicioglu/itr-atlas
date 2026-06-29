@@ -38,6 +38,6 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 2.08 bits/s"
+        math: "125 char/min × 1.0 bit/char ÷ 60 s/min = 2.08 bits/s"
 referenceCalculationId: entropy
 ---

@@ -45,7 +45,5 @@ calculations:
         note: "Effective width discounts fixations that landed off-target, so throughput is net of the user's real gaze precision."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 812 ms → TP = 2.127 bits/s for eye gaze (head 2.472, mouse 3.239 in the same study)"
-      - title: "Use bits per second"
-        math: "ITR = 2.13 bits/s"
 referenceCalculationId: fitts
 ---

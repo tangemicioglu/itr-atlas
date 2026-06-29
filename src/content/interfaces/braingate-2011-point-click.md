@@ -48,7 +48,7 @@ calculations:
     scoreType: fitts
     kind: "2D pointing channel"
     provenance: recomputed-omitted
-    resultBitsPerSecond: 0.367
+    resultBitsPerSecond: 0.374
     steps:
       - title: "Compute the radial-task index of difficulty"
         math: "ID = log2(A/W + 1) = log2(278/48 + 1) = 2.76 bits"
@@ -59,15 +59,13 @@ calculations:
       - title: "Discount for incomplete runs"
         math: "TP_net = 0.384 bits/s x 0.974 = 0.374 bits/s"
         note: "S3 missed 2.6% of runs by timeout and made no false target selections, so completion rate is applied as a simple net-throughput discount."
-      - title: "Use bits per second"
-        math: "ITR = 0.367 bits/s"
   - id: wolpaw-radial
     method: "Wolpaw bitrate over N = 8 radial targets"
     scoreType: wolpaw
     kind: "Discrete-selection radial-target benchmark"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerSecond: 0.383
+    resultBitsPerSecond: 0.382
     steps:
       - title: "Per-selection information with errors"
         math: "B = log2(8) + 0.974 log2(0.974) + 0.026 log2(0.026 / 7) = 2.75 bits/selection"
@@ -76,17 +74,6 @@ calculations:
         math: "60 / 7.20 = 8.33 selections/min"
         note: "Uses the same S3 four-session average successful-run movement time as the Fitts reference calculation."
       - title: "Information transfer rate"
-        math: "ITR = 0.383 bits/s"
-  - id: best-session-check
-    method: "Fitts' law best-session check"
-    scoreType: fitts
-    kind: "2D pointing channel"
-    provenance: recomputed-omitted
-    resultBitsPerSecond: 0.433
-    notUsedForRanking: true
-    steps:
-      - title: "Apply the same calculation to S3 day 303"
-        math: "ITR = 0.433 bits/s"
-        note: "This reproduces the old 0.43 bits/s scale from raw task values rather than accepting a standalone throughput number. The reference remains the S3 four-session average."
+        math: "2.75 bits/sel × 8.33 sel/min ÷ 60 s/min = 0.382 bits/s"
 referenceCalculationId: fitts
 ---

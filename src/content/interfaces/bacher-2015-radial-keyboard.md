@@ -46,7 +46,7 @@ calculations:
     scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerSecond: 0.167
+    resultBitsPerSecond: 0.173
     steps:
       - title: "Correct characters per minute"
         math: "10.4 correct char/min"
@@ -54,20 +54,20 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ~= 1.0 bit/char"
       - title: "Information transfer rate"
-        math: "ITR = 0.167 bits/s"
+        math: "10.4 char/min × 1.0 bit/char ÷ 60 s/min = 0.173 bits/s"
   - id: chat
     method: "QWERTY internet chat demonstration"
     scoreType: shannon
     kind: "Real-time native-app communication"
     provenance: author-reported-verified
     notUsedForRanking: true
-    resultBitsPerSecond: 0.133
+    resultBitsPerSecond: 0.135
     steps:
       - title: "Reported chat typing rate"
         math: "8.1 correct char/min at 100% accuracy"
         note: "The participant used BrainGate2 Desktop with Google Chat from her residence. This is a native-application demonstration, not the fastest copy-spelling condition."
       - title: "Information transfer rate"
-        math: "ITR = 0.133 bits/s"
+        math: "8.1 char/min × 1.0 bit/char ÷ 60 s/min = 0.135 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw key set"
     scoreType: wolpaw

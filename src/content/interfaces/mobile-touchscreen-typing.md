@@ -50,7 +50,7 @@ calculations:
       - title: "Characters per minute"
         math: "35.3 × 5 chars/word = 176.7 chars/min"
       - title: "Information transfer rate"
-        math: "ITR = 2.95 bits/s"
+        math: "176.7 char/min × 1.0 bit/char ÷ 60 s/min = 2.95 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw key set"
     scoreType: wolpaw

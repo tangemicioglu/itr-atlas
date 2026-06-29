@@ -42,7 +42,7 @@ calculations:
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
       - title: "Information transfer rate"
-        math: "ITR = 8.03 bits/s"
+        math: "96.4 word/min × 5.0 bits/word ÷ 60 s/min = 8.03 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 67 words (closed-vocabulary condition)"
     scoreType: wolpaw

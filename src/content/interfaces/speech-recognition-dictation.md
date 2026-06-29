@@ -37,6 +37,6 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
         note: "Recognition WER was 4.37% uncorrected (Deep Speech 2, English). The entry rate already includes error-correction time and participants corrected to near-perfect final text, so net throughput ≈ entry rate; the WER is documented here, not re-applied."
       - title: "Information transfer rate"
-        math: "ITR = 12.7 bits/s"
+        math: "764 char/min × 1.0 bit/char ÷ 60 s/min = 12.7 bits/s"
 referenceCalculationId: transcription
 ---

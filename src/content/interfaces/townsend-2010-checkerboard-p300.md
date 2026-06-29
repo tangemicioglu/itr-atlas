@@ -51,7 +51,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 0.067 bits/s"
+        math: "4.0 char/min × 1.0 bit/char ÷ 60 s/min = 0.067 bits/s"
   - id: reported
     method: "Wolpaw bitrate over N = 72 targets (authors' reported ITR)"
     scoreType: wolpaw

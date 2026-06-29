@@ -38,7 +38,5 @@ calculations:
         note: "Effective width is computed from where the cursor actually landed, so throughput is net of the user's spatial error, with no separate error term needed."
       - title: "Throughput = information ÷ movement time"
         math: "TP = IDe/MT = 1.67 ± 0.37 bits/s for the tongue  (same task, same subjects: mouse 3.99, keypad 2.17 bits/s)"
-      - title: "Use bits per second"
-        math: "ITR = 1.67 bits/s"
 referenceCalculationId: fitts
 ---

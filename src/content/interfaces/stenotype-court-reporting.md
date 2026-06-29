@@ -52,7 +52,7 @@ calculations:
         math: "1125 × 0.95 = 1069 correct chars/min"
         note: "Using the 95% certification accuracy threshold."
       - title: "Information transfer rate"
-        math: "ITR = 17.8 bits/s"
+        math: "1069 char/min × 1.0 bit/char ÷ 60 s/min = 17.8 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw character set"
     scoreType: wolpaw
