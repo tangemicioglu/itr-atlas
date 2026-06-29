@@ -1,0 +1,38 @@
+name: Data correction
+description: Report a wrong figure, derivation step, or source in an existing entry
+title: "[Correction] <entry name>"
+labels: ["correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Found a number that doesn't tie out, a misread source, or a wrong derivation step? This is
+        the place. Point at the specific value and what it should be, with a source if you have one.
+  - type: input
+    id: entry
+    attributes:
+      label: Which entry
+      description: Entry name or the file under src/content/interfaces/.
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Which value / step
+      description: e.g. "the Wolpaw final step", "resultBitsPerSecond", "the N input".
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's wrong, and what it should be
+      description: The current value, the corrected value, and the arithmetic or source that supports it.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Supporting source
+      description: DOI / link / section reference, if the fix depends on the paper.
+    validations:
+      required: false

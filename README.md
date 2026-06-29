@@ -15,11 +15,10 @@ lets you compare any one method across entries.
 
 ## Status
 
-✅ **Built and deployed.** ~45 entries across BCI (intracortical, ECoG, endovascular), spellers
+✅ **Built and deployed.** 47 entries across BCI (intracortical, ECoG, endovascular), spellers
 (SSVEP, P300, eye, QWERTY), silent speech (sEMG, electropalatography, lip-reading), pointing
-devices, and chord keyboards. Each entry has sourced, re-derived figures and is ranked on the
-strictest valid one. A few early seed entries still use placeholder figures until they are
-re-derived from the papers.
+devices, and chord keyboards. Every entry is sourced and re-derived from its paper, with the full
+arithmetic shown, and is ranked on the strictest valid bound.
 
 ## What each entry shows
 
@@ -45,10 +44,20 @@ at a different path, change `base` there. No link edits needed.
 
 ## Contributing an interface
 
-Submissions go through a **Google Form** (link TBD). Responses are reviewed and curated into entry
-files by a maintainer. There is no open write access. To propose an interface, include the source
-paper or DOI, the reported accuracy and timing, and the number of targets, or the relevant
-modality-specific inputs.
+Ways to propose an interface:
+
+- **Submission form** — a short reviewed form (link added once it's live). Best if you're not on
+  GitHub.
+- **GitHub issue** — three [templates](.github/ISSUE_TEMPLATE/): propose a new interface, request a
+  calculation (add a score type to an existing entry, or change how one is derived), or report a
+  data correction (a wrong figure or step).
+- **Pull request** — add a Markdown file under `src/content/interfaces/`; front-matter is validated
+  against `src/content.config.ts` (standard calculations use a `compute` block, non-standard ones
+  supply authored `steps`). See [PR template](.github/PULL_REQUEST_TEMPLATE.md).
+
+Either way include the source paper or DOI, the reported accuracy and timing, and the number of
+targets (or the relevant modality-specific inputs). Entries are reviewed and curated by a
+maintainer; there is no open write access to `main`.
 
 ## Local development
 

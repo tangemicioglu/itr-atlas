@@ -1,18 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-// TODO: replace with the real Google Form URL once created.
-const FORM_URL = "";
+const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeZrmsHarnxvNoe5bOWe7Ji8CNNBAy8SO5upeG3vQ4qSCwDhQ/viewform";
 ---
 <BaseLayout title="Submit an interface | ITR Atlas">
   <article class="prose">
-    <h1>Submit an interface</h1>
-    <p>Know an interface we're missing? Propose it through the form below. Submissions are reviewed
-       and curated by hand, so there's no open write access.</p>
-    <p>You'll need: the source paper or DOI, the reported accuracy and timing, and the number of
-       targets (or the relevant modality-specific inputs).</p>
+    <h1>Submit to the atlas</h1>
+    <p>Know an interface we're missing, think an entry should carry another calculation, or spotted a
+       number that's off? Propose it below. Submissions are reviewed and re-derived by hand from the
+       primary source, so there's no open write access.</p>
+    <p>Have the inputs ready: the source paper or DOI, the reported accuracy and timing, and the
+       number of targets (or the relevant modality-specific inputs). The reported ITR is only a
+       cross-check — every figure is re-derived from those inputs.</p>
     {FORM_URL
-      ? <p><a class="cta" href={FORM_URL}>Open the submission form →</a></p>
+      ? <p><a class="cta" href={FORM_URL} target="_blank" rel="noopener">Open the submission form →</a></p>
       : <p class="pending">The submission form is being set up. Check back soon.</p>}
+    <p class="alt">On GitHub? You can also <a href="https://github.com/tangemicioglu/itr-atlas/issues/new/choose">open an issue</a>
+       — new interface, calculation request, or data correction — or send a
+       <a href="https://github.com/tangemicioglu/itr-atlas/blob/main/.github/PULL_REQUEST_TEMPLATE.md">pull request</a>.</p>
   </article>
 </BaseLayout>
 
@@ -22,4 +26,6 @@ const FORM_URL = "";
   .cta { display: inline-block; margin-top: 12px; background: var(--accent); color: #fff;
     padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 14px; }
   .pending { color: var(--muted); }
+  .alt { font-size: 13px; color: var(--muted); margin-top: 16px; }
+  .alt a { text-decoration: underline; }
 </style>

@@ -1,0 +1,71 @@
+name: Calculation request
+description: Add a calculation to an existing entry, or change how one is derived
+title: "[Calc] <entry name>"
+labels: ["calculation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For an *existing* entry: propose an additional score type (e.g. a Wolpaw bound it doesn't yet
+        have), or argue that one of its calculations should be derived differently. This is about
+        method and coverage, not fixing a typo'd number — for a wrong value, use **Data correction**.
+  - type: input
+    id: entry
+    attributes:
+      label: Which entry
+      description: Entry name or the file under src/content/interfaces/.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Request type
+      options:
+        - Add a new calculation / score type to this entry
+        - Change the method or inputs of an existing calculation
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: scoretype
+    attributes:
+      label: Score type involved
+      description: "wolpaw = the Wolpaw MI formula; nuyujukian = log2(N) × achieved rate; fitts; shannon."
+      options:
+        - shannon
+        - wolpaw
+        - nuyujukian
+        - fitts
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed calculation
+      description: >-
+        The inputs and the derivation you have in mind. Reach the bits/s through a shown operation;
+        the reported ITR is a cross-check, never the input.
+      value: |
+        - Number of targets / alphabet size (N):
+        - Accuracy / error rate:
+        - Rate or per-selection timing:
+        - Steps (input → operation → bits/s):
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why this applies
+      description: >-
+        Why the entry is eligible for this method, or why the existing derivation should change.
+        Note whether this would become the strictest (headline) bound or a looser secondary one.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Supporting source
+      description: DOI / link / section reference, if the inputs come from the paper.
+    validations:
+      required: false
