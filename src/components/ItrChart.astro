@@ -43,20 +43,23 @@ const ypx = (itr: number) =>
   mt + (1 - (Math.log10(Math.min(yMax, Math.max(yMin, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
 
 const xticks = niceTicks(xMin, xMax);
-const yticks = [0.01, 0.1, 1, 10];
+const yticks = [0.01, 0.1, 1, 10, 20]; // 20 = ceiling; labelled so the frame top isn't a bare partial decade
 const plotted = points
   .map((p) => ({ ...p, cx: xpx(p.year), cy: ypx(p.itr) }))
   .sort((a, b) => b.itr - a.itr); // draw big values first so small ones sit on top
 ---
 <figure id="itrchart" class="chart">
   <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Information transfer rate by year; color is the input system, symbol is the input technique" preserveAspectRatio="xMidYMid meet" data-ml={ml} data-plotw={plotW} data-mt={mt} data-ploth={plotH}>
-    <!-- y gridlines + labels -->
-    {yticks.map((v) => (
-      <g>
-        <line x1={ml} x2={W - mr} y1={ypx(v)} y2={ypx(v)} class="grid" />
-        <text x={ml - 8} y={ypx(v)} class="ylab" text-anchor="end" dominant-baseline="middle">{v}</text>
-      </g>
-    ))}
+    <!-- y gridlines + labels (rebuilt client-side when the score selector pushes
+         values past the default ceiling and the y-domain expands) -->
+    <g class="yaxis">
+      {yticks.map((v) => (
+        <g>
+          <line x1={ml} x2={W - mr} y1={ypx(v)} y2={ypx(v)} class="grid" />
+          <text x={ml - 8} y={ypx(v)} class="ylab" text-anchor="end" dominant-baseline="middle">{v}</text>
+        </g>
+      ))}
+    </g>
     <!-- x gridlines + labels (rebuilt client-side when the visible categories change) -->
     <g class="xaxis">
       {xticks.map((v) => (
@@ -200,13 +203,62 @@ const plotted = points
     const ml = +svg.dataset.ml!, plotW = +svg.dataset.plotw!;
     const mt = +svg.dataset.mt!, plotH = +svg.dataset.ploth!;
     const NS = "http://www.w3.org/2000/svg";
+    const yaxis = svg.querySelector<SVGGElement>(".yaxis")!;
 
-    // Fixed log y-domain (mirrors the frontmatter ypx) so points can be re-plotted
-    // client-side when the score selector swaps the value.
-    const yMin = 0.01, yMax = 20;
-    const yMinL = Math.log10(yMin), yMaxL = Math.log10(yMax);
+    // Log y-domain. The floor is fixed; the ceiling adapts: the default headline
+    // (strictest bound) sits under 20 bits/s, but the Wolpaw selector surfaces
+    // raw-key bounds that run far higher, so the ceiling steps up to whichever
+    // tier covers the visible data instead of clamping points onto the frame.
+    const yMin = 0.01, yMinL = Math.log10(yMin);
+    const Y_TIERS = [20, 100, 1000];
+    let yMax = 20, yMaxL = Math.log10(yMax);
     const ypx = (itr: number) =>
       mt + (1 - (Math.log10(Math.min(yMax, Math.max(yMin, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
+
+    // Decade ticks from the floor up, plus the ceiling itself so the top of the
+    // frame is always a labelled value (e.g. 0.01 … 10, 20) rather than an
+    // unlabelled partial decade.
+    function yTicksFor(max: number): number[] {
+      const ticks: number[] = [];
+      for (let e = -2; Math.pow(10, e) < max - 1e-9; e++) ticks.push(Math.pow(10, e));
+      ticks.push(max);
+      return ticks;
+    }
+    function rebuildYAxis() {
+      const w = window.innerWidth;
+      const labSize = w <= 420 ? "19px" : w <= 640 ? "17px" : "13px";
+      yaxis.replaceChildren();
+      for (const v of yTicksFor(yMax)) {
+        const y = ypx(v);
+        const line = document.createElementNS(NS, "line");
+        line.setAttribute("x1", String(ml)); line.setAttribute("x2", String(svg.viewBox.baseVal.width - 16));
+        line.setAttribute("y1", String(y)); line.setAttribute("y2", String(y));
+        line.setAttribute("class", "grid");
+        line.setAttribute("stroke", "var(--hairline)");
+        line.setAttribute("stroke-width", "1");
+        const text = document.createElementNS(NS, "text");
+        text.setAttribute("x", String(ml - 8)); text.setAttribute("y", String(y));
+        text.setAttribute("class", "ylab"); text.setAttribute("text-anchor", "end");
+        text.setAttribute("dominant-baseline", "middle");
+        text.setAttribute("fill", "var(--muted)");
+        text.setAttribute("font-size", labSize);
+        text.setAttribute("font-family", "var(--font-mono, monospace)");
+        text.textContent = String(v);
+        yaxis.append(line, text);
+      }
+    }
+    // Pick the smallest tier that covers the visible data; re-plot y and rebuild
+    // the gridlines if the ceiling moved. Returns true when the domain changed.
+    function fitY(): boolean {
+      const vis = pts.filter(shown);
+      const top = vis.length ? Math.max(...vis.map((el) => +el.dataset.itr!)) : 0;
+      const tier = Y_TIERS.find((t) => top <= t) ?? Y_TIERS[Y_TIERS.length - 1];
+      if (tier === yMax) return false;
+      yMax = tier; yMaxL = Math.log10(yMax);
+      for (const el of pts) el.dataset.cy = String(ypx(+el.dataset.itr!));
+      rebuildYAxis();
+      return true;
+    }
 
     const stopNativeSelection = (e: Event) => e.preventDefault();
     root.addEventListener("selectstart", stopNativeSelection);
@@ -233,6 +285,7 @@ const plotted = points
     function relayout() {
       const vis = pts.filter(shown);
       if (!vis.length) return;
+      fitY(); // re-fit the y-ceiling to the visible data before repositioning
       const ys = vis.map((el) => +el.dataset.year!);
       const [xMin, xMax] = padDomain(Math.min(...ys), Math.max(...ys));
       const xpx = (yr: number) => ml + ((yr - xMin) / (xMax - xMin)) * plotW;
