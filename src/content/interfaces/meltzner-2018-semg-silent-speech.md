@@ -43,7 +43,7 @@ calculations:
         math: "H ≈ 5.0 bits/word"
         note: "Independent of vocabulary size, so the 2,200-word vocabulary does not raise this figure the way it raises the Wolpaw comparison metric."
       - title: "Information transfer rate"
-        math: "ITR = 7.6 bits/s"
+        math: "91.1 word/min × 5.0 bits/word ÷ 60 s/min = 7.6 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 2,200 words"
     scoreType: wolpaw

@@ -53,7 +53,7 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
         note: "English is highly redundant, so raw keystroke count would overstate information."
       - title: "Information transfer rate"
-        math: "ITR = 4.25 bits/s"
+        math: "254.8 char/min × 1.0 bit/char ÷ 60 s/min = 4.25 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw key set"
     scoreType: wolpaw

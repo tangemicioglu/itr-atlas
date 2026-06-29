@@ -52,7 +52,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 0.583 bits/s"
+        math: "35 char/min × 1.0 bit/char ÷ 60 s/min = 0.583 bits/s"
   - id: utility
     method: "Authors' utility rate (log2(N) per selection over the speller alphabet)"
     scoreType: nuyujukian

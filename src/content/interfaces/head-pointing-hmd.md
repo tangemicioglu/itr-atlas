@@ -49,7 +49,5 @@ calculations:
         note: "The head pointer had lower click-condition error than eye gaze in this study (0.26% vs 1.53%), and the effective-width correction is already reflected in the reported throughput."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 850 ms → TP = 2.472 bits/s for head pointing (gaze 2.127, mouse 3.239 in the same study)"
-      - title: "Use bits per second"
-        math: "ITR = 2.47 bits/s"
 referenceCalculationId: fitts
 ---

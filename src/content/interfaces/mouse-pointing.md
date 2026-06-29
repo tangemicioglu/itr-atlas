@@ -41,7 +41,5 @@ calculations:
         note: "The effective-width correction discounts movements whose endpoints scattered wider than the target, the pointing analogue of subtracting wrong selections, so the bits are net of the user's real hit precision."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 674 ms → IP = 4.5 bits/s (Fitts regression over the ID conditions)"
-      - title: "Use bits per second"
-        math: "ITR = 4.5 bits/s"
 referenceCalculationId: fitts
 ---

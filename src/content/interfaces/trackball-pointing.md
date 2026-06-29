@@ -39,7 +39,5 @@ calculations:
         note: "Effective width discounts movements that overshot, so throughput is net of real precision."
       - title: "Throughput = information ÷ movement time"
         math: "mean MT = 1101 ms → IP = 3.3 bits/s (Fitts regression; the slowest of the three devices, dragged down by movement time)"
-      - title: "Use bits per second"
-        math: "ITR = 3.3 bits/s"
 referenceCalculationId: fitts
 ---

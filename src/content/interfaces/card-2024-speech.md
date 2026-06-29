@@ -43,7 +43,7 @@ calculations:
         math: "H ≈ 5.0 bits/word"
         note: "Credits only the information in the English produced, independent of vocabulary size."
       - title: "Information transfer rate"
-        math: "ITR = 2.6 bits/s"
+        math: "31.1 word/min × 5.0 bits/word ÷ 60 s/min = 2.6 bits/s"
   - id: wolpaw
     method: "Wolpaw mutual information over N = 125,000 words"
     scoreType: wolpaw

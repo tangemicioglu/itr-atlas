@@ -36,7 +36,7 @@ calculations:
     scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
-    resultBitsPerSecond: 0.233
+    resultBitsPerSecond: 0.23
     steps:
       - title: "Characters per minute"
         math: "13.81 correct char/min (Participant 1, predictive text disabled; P2 reached 20.10 cpm)"
@@ -44,7 +44,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 0.233 bits/s"
+        math: "13.81 char/min × 1.0 bit/char ÷ 60 s/min = 0.23 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 28 keyboard targets"
     scoreType: wolpaw

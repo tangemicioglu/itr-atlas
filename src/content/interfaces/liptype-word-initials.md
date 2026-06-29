@@ -45,7 +45,7 @@ calculations:
         math: "P = 1 - ((2.64% + 2.74%) / 2) = 0.973; 41.6 x 0.973 = 40.5 net word/min"
         note: "This uses final uncorrected WER from the text-entry study, not the raw pre-correction VSR output."
       - title: "Information transfer rate"
-        math: "ITR = 3.37 bits/s"
+        math: "40.5 word/min × 5.0 bits/word ÷ 60 s/min ≈ 3.37 bits/s"
         note: "Raw recognizer WER before correction was much higher (18.89%), so this should be read as a complete text-entry interface, not bare lip-reading throughput."
 referenceCalculationId: comm
 ---

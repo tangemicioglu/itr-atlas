@@ -48,7 +48,7 @@ calculations:
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
-        math: "ITR = 3.92 bits/s"
+        math: "235 char/min × 1.0 bit/char ÷ 60 s/min = 3.92 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw character set"
     scoreType: wolpaw

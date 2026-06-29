@@ -38,7 +38,7 @@ calculations:
     scoreType: shannon
     kind: "Effective bits transmitted as English text"
     provenance: recomputed-omitted
-    resultBitsPerSecond: 1.42
+    resultBitsPerSecond: 1.41
     steps:
       - title: "Error-corrected characters per minute"
         math: "(1 − CER) × rate = 0.941 × 90 = 84.7 net char/min"
@@ -46,7 +46,7 @@ calculations:
         math: "H ≈ 1.0 bit/char"
         note: "English letters are redundant, so the atlas-ranked figure uses 1 bit/char for consistency with the typing entries rather than the raw 31-symbol alphabet size."
       - title: "Information transfer rate"
-        math: "ITR = 1.42 bits/s"
+        math: "84.7 char/min × 1.0 bit/char ÷ 60 s/min = 1.41 bits/s"
   - id: raw-word-entropy
     method: "Word-entropy throughput from raw WER"
     scoreType: shannon
@@ -64,7 +64,7 @@ calculations:
       - title: "Shannon per-word entropy of English"
         math: "H ≈ 5.0 bits/word"
       - title: "Information transfer rate"
-        math: "ITR = 1.12 bits/s"
+        math: "13.5 word/min × 5.0 bits/word ÷ 60 s/min ≈ 1.12 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 31 characters"
     scoreType: wolpaw
