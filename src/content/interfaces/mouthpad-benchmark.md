@@ -42,14 +42,11 @@ calculations:
     resultBitsPerSecond: 3.53
     steps:
       - title: "Grid geometry -> movement difficulty"
-        math: "30x30 grid: cell width W = S/30; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 15.6;  ID = log2(A/W + 1) = log2(16.6) ~= 4.05 bits/movement"
-        note: "Same grid correction used for Neuralink Webgrid and the ReFIT/Card grids: a cued target is a pointing movement, so the information is the Fitts index of difficulty, not log2(900)."
-      - title: "Selection rate (inferred from the headline BPS)"
-        math: "headline 8.51 BPS / log2(899) = 8.51 / 9.81 ~= 0.87 net-correct selections/s"
-        note: "The 60 s run reports only the BPS scores at 100% success, so the selection rate is inferred from the headline BPS."
-      - title: "Fitts throughput"
-        math: "4.05 bits x 0.87 /s ~= 3.5 bits/s"
-        note: "This re-credit reproduces the benchmark's own on-screen 'BPS (Fitts)' = 3.53, confirming the Fitts correction matches Augmental's separately displayed Fitts value (the same method Neuralink's Webgrid needs but lacks a displayed Fitts to check against). ITR = 3.53 bits/s."
+        math: "30x30 grid: W = S/30; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 15.6.  ID = log2(A/W + 1) = log2(16.6) ~= 4.05 bits/movement."
+        note: "Same grid correction used for Neuralink Webgrid and the ReFIT/Card grids: a cued target is a pointing movement, so the information is the Fitts index of difficulty (~4.05 bits), not the log2(900) the full-grid score credits."
+      - title: "Augmental's displayed Fitts value, cross-checked against the headline BPS"
+        math: "Benchmark shows 'BPS (Fitts)' = 3.53 directly.  Cross-check by re-crediting the headline 8.51 BPS: 8.51 × 4.05 / log2(899) = 8.51 × 4.05 / 9.81 ~= 3.5 bits/s, matching."
+        note: "Unlike Neuralink's Webgrid, Augmental displays its own Fitts value, so 3.53 is taken from the benchmark and the re-credit of the headline score confirms it rather than standing in for it. ITR = 3.53 bits/s."
   - id: reported
     method: "Full-grid benchmark BPS reported by Augmental"
     scoreType: nuyujukian
@@ -58,13 +55,10 @@ calculations:
     notUsedForRanking: true
     resultBitsPerSecond: 8.51
     steps:
-      - title: "Authors' reported full-grid benchmark score"
-        math: "BPS = 8.51 bits/s on the 30x30 grid (the description also notes a 9.98 BPS personal best, not the run shown)"
-        note: "Webgrid-style achieved bitrate: log2(t^2 - 1) = log2(899) ~= 9.81 bits per net-correct cued selection."
-      - title: "Implied selection rate (inferred from BPS)"
-        math: "8.51 / 9.81 ~= 0.87 net-correct selections/s"
-        note: "Inferred from the headline BPS; the Fitts reference above re-credits this same rate with the movement's index of difficulty (~4.05 bits) instead of log2(899)."
-      - title: "Use bits per second"
-        math: "ITR = 8.51 bits/s"
+      - title: "Achieved-bitrate metric"
+        math: "30x30 grid -> N = 900 cells; the Webgrid-style score credits log2(N - 1) = log2(899) ~= 9.81 bits per net-correct cued selection."
+      - title: "Augmental's reported full-grid score (taken as reported)"
+        math: "BPS = 8.51 bits/s on the 30x30 grid (the description also notes a 9.98 BPS personal best, not the run shown)."
+        note: "Reported on-screen from a 60 s run at 100% success; the benchmark gives only the BPS scores, not a separate selections/s, so this is taken as reported. Dividing by the 9.81-bit credit implies ~0.87 selections/s, a consequence of the score rather than an independent measurement."
 referenceCalculationId: fitts
 ---

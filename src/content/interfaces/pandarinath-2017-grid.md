@@ -35,15 +35,11 @@ calculations:
     resultBitsPerSecond: 1.48
     steps:
       - title: "Grid geometry → movement difficulty"
-        math: "6×6 board: cell width W = S/6; random targets → mean amplitude A ≈ 0.52·S, so A/W ≈ 3.1"
-        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so the user supplies a pointing movement, not a 1-of-36 choice; the information that movement carries is the Fitts index of difficulty, not log2(N)."
-      - title: "Information per movement (Fitts index of difficulty)"
-        math: "ID = log2(A/W + 1) = log2(4.1) ≈ 2.05 bits/movement   (vs the log2(35) ≈ 5.13 bits the achieved-bitrate metric credits)"
-      - title: "Selection rate"
-        math: "≈ 0.72 net correct selections/s   (from the as-reported block below: 3.7 b/s ÷ 5.13 bits)"
-      - title: "Fitts throughput"
-        math: "ITR = 1.48 bits/s"
-        note: "The same correction applied to Neuralink's Webgrid; it puts both intracortical cursor BCIs on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s), so the chart compares like for like."
+        math: "6×6 board: cell width W = S/6; random targets → mean amplitude A ≈ 0.52·S, so A/W ≈ 3.1.  ID = log2(A/W + 1) = log2(4.1) ≈ 2.05 bits/movement."
+        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so each correct selection is a pointing movement carrying the Fitts index of difficulty (≈2.05 bits), not the log2(35) ≈ 5.13 bits the achieved-bitrate metric credits."
+      - title: "Re-credit the reported achieved bitrate onto the Fitts basis"
+        math: "ITR = B × ID / log2(N − 1) = 3.7 × 2.05 / 5.13 = 1.48 bits/s"
+        note: "The paper reports only the achieved bitrate B = 3.7 bits/s (T5) and no independent selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of log2(N−1) — a unit re-crediting of the reported score, not an independent measurement. Same correction applied to Neuralink Webgrid and the Card 2026 grid, putting all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
     scoreType: nuyujukian
@@ -52,13 +48,10 @@ calculations:
     notUsedForRanking: true
     resultBitsPerSecond: 3.7
     steps:
-      - title: "Authors' reported achieved bitrate"
-        math: "B = 3.7 ± 0.4 bits/s  (T5, 6×6 grid; T6 2.2, T7 1.4; T5 reached 4.16 on a dense 9×9 grid)"
-        note: "Reported directly in Results. The paper's bitrate convention credits log2(N − 1) bits per net-correct selection — its own worked example is an 8-target task at 1 net selection/s = log2(7) ≈ 2.8 bits/s (Nuyujukian et al. 2015)."
-      - title: "Implied selection rate"
-        math: "N = 36 → log2(N − 1) = log2(35) ≈ 5.13 bits/selection;  3.7 ÷ 5.13 ≈ 0.72 net-correct selections/s"
-        note: "The paper does not separately report selections/s or acquisition time, so this rate is inferred from the reported bitrate, not measured independently. The Fitts reference above re-credits this same ≈ 0.72 sel/s with the movement's index of difficulty instead of log2(N − 1)."
-      - title: "Use bits per second"
-        math: "ITR = 3.7 bits/s"
+      - title: "Achieved-bitrate metric"
+        math: "6×6 grid → N = 36 targets; the achieved-bitrate convention credits log2(N − 1) = log2(35) ≈ 5.13 bits per net-correct cued selection (Nuyujukian et al. 2015; its worked example is an 8-target task at 1 net selection/s = log2(7) ≈ 2.8 bits/s)."
+      - title: "Authors' reported score (taken as reported, not re-derived)"
+        math: "B = 3.7 ± 0.4 bits/s  (T5, 6×6 grid; T6 2.2, T7 1.4; T5 reached 4.16 on a dense 9×9 grid)."
+        note: "Reported directly in Results. The paper gives only the bitrate — no separate selections/s or acquisition time — so there is no more-primary quantity to derive it from: it is author-reported. Dividing by the 5.13-bit credit implies ~0.72 selections/s, but that rate is a consequence of the score, not an independent measurement."
 referenceCalculationId: fitts
 ---

@@ -46,7 +46,7 @@ calculations:
         math: "ITR = 0.133 bits/s"
   - id: wolpaw
     method: "Uniform-prior comparison over the ~30-letter alphabet"
-    scoreType: wolpaw
+    scoreType: nuyujukian
     kind: "Uniform 1-of-30 selection metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

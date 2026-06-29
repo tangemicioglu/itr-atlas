@@ -37,17 +37,11 @@ calculations:
     resultBitsPerSecond: 1.17
     steps:
       - title: "Grid geometry -> movement difficulty"
-        math: "14x14 grid, 0.77-inch tiles: cell width W = S/14; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 0.52*14 = 7.28"
-        note: "S = board span; 0.52 is the mean distance between two random points on a unit square. Grid dimensions are taken directly from the paper's Methods (the headline 2.90 bits/s is the neural cursor on this 14x14 board)."
-      - title: "Information per movement (Fitts index of difficulty)"
-        math: "ID = log2(A/W + 1) = log2(8.28) ~= 3.05 bits/movement   (vs log2(195) ~= 7.61 bits the achieved-bitrate credits)"
-        note: "The target is cued before the movement, so the user supplies a pointing movement, not a 1-of-196 choice. The discount ratio ID/log2(N-1) is 0.401 here, 0.398 at 6x6 and 0.414 at 30x30, so it is nearly grid-size independent."
-      - title: "Selection rate (inferred from the reported bitrate)"
-        math: "B / log2(N-1) = 2.90 / 7.61 ~= 0.381 net correct selections/s"
-        note: "The paper reports the grid result in bits/s, not a separate selections/s for the grid task, so the rate is inferred from B rather than measured independently."
-      - title: "Fitts throughput"
-        math: "ITR = 1.17 bits/s"
-        note: "Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
+        math: "14x14 grid, 0.77-inch tiles: W = S/14; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 7.28.  ID = log2(A/W + 1) = log2(8.28) ~= 3.05 bits/movement."
+        note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so each correct selection is a pointing movement carrying the Fitts index of difficulty (~3.05 bits), not the log2(195) ~= 7.61 bits the achieved-bitrate metric credits. The discount ratio ID/log2(N-1) is 0.401 here, 0.398 at 6x6 and 0.414 at 30x30, so it is nearly grid-size independent."
+      - title: "Re-credit the reported achieved bitrate onto the Fitts basis"
+        math: "ITR = B * ID / log2(N-1) = 2.90 * 3.05 / 7.61 = 1.17 bits/s"
+        note: "The paper reports only the achieved bitrate B = 2.90 bits/s and no independent grid selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of log2(N-1) -- a unit re-crediting of the reported score, not an independent measurement. Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
     scoreType: nuyujukian
@@ -56,13 +50,10 @@ calculations:
     notUsedForRanking: true
     resultBitsPerSecond: 2.9
     steps:
-      - title: "Authors' reported grid-task throughput"
-        math: "B = 2.90 +/- 0.16 bits/s on the 14x14 grid (0.77 in tiles); peak 3.16"
-        note: "Reported in the cursor results. The grid task credits log2(N-1) bits per net-correct cued selection (Nuyujukian-style; the paper's refs 9,18,34-37). On the same task, gaze control reached 0.80 bits/s; a coarser 6x6 grid (1.79 in tiles) gave 1.67 bits/s neural and 2.59 bits/s gaze."
-      - title: "Implied selection rate"
-        math: "N = 196 -> log2(N-1) = log2(195) ~= 7.61 bits/selection;  2.90 / 7.61 ~= 0.381 net-correct selections/s"
-        note: "Inferred from B; the paper does not separately report grid selections/s. The Fitts reference above re-credits this same rate with the movement's index of difficulty instead of log2(N-1)."
-      - title: "Use bits per second"
-        math: "ITR = 2.9 bits/s"
+      - title: "Achieved-bitrate metric"
+        math: "14x14 grid -> N = 196 targets; the achieved-bitrate convention credits log2(N-1) = log2(195) ~= 7.61 bits per net-correct cued selection (Nuyujukian et al. 2015; the paper's grid-task refs 9,18,34-37)."
+      - title: "Authors' reported score (taken as reported, not re-derived)"
+        math: "B = 2.90 +/- 0.16 bits/s on the 14x14 grid (0.77 in tiles); peak 3.16."
+        note: "Reported in the cursor results (on the same task gaze control reached 0.80 bits/s; a coarser 6x6 grid gave 1.67 bits/s neural and 2.59 bits/s gaze). The paper gives only the bitrate, no separate grid selections/s, so there is no more-primary quantity to derive it from: it is author-reported. Dividing by the 7.61-bit credit implies ~0.381 selections/s, but that rate is a consequence of the score, not an independent measurement."
 referenceCalculationId: fitts
 ---

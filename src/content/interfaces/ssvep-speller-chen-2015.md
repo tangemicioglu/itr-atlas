@@ -48,9 +48,9 @@ calculations:
     steps:
       - title: "Bits per selection (Wolpaw, N = 40 at 89.83%)"
         math: "B = log2(40) + 0.8983·log2(0.8983) + 0.1017·log2(0.1017/39) ≈ 4.31 bits/selection"
-        note: "Online accuracy averaged 89.83%. Perfect-accuracy ceiling is log2(40) = 5.32 bits, approached by the best subject (peak 5.32 bits/s)."
-      - title: "Information transfer rate"
-        math: "ITR = 4.45 bits/s"
-        note: "This counts log2(N) per selection. The atlas-ranked text figure instead uses the same 1 bit/char English-output convention as the other text entries."
+        note: "Forward from the online accuracy (89.83%) over the 40 targets. Perfect-accuracy ceiling is log2(40) = 5.32 bits, approached by the best subject."
+      - title: "Authors' reported online ITR (includes the gaze-shift time)"
+        math: "ITR = 4.45 bits/s  (mean across subjects; 0.5 s flicker + 0.5 s gaze shift ≈ 1 selection/s)"
+        note: "Author-reported and verified: B ≈ 4.31 bits/selection at ≈1 selection/s reproduces it. This counts log2(N) per selection — the classifier metric — not the 1 bit/char the atlas-ranked text figure holds every text entry to."
 referenceCalculationId: comm
 ---
