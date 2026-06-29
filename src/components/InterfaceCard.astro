@@ -2,7 +2,13 @@
 import Tag from "./Tag.astro";
 import ProvenancePill from "./ProvenancePill.astro";
 import { formatBitsPerSecond } from "../lib/itr/math";
+import { scoreTypeLabel } from "../lib/itr/scoring";
+import type { ScoreType } from "../lib/itr/scoring";
 import { url } from "../lib/url";
+
+type Provenance = "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
+/** One displayable score: its value, how it was derived, and (for strictest) which family won. */
+interface ScoreOption { v: number; prov: Provenance; type?: ScoreType; }
 
 interface Props {
   id: string;
@@ -10,23 +16,26 @@ interface Props {
   image?: string;
   modalityTags: string[];
   invasiveness: "non-invasive" | "partially-invasive" | "invasive";
-  referenceBitsPerSecond: number;
-  referenceMethod: string;
   miniStat: string;
-  provenance: "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
+  // { strictest: ScoreOption | null, [scoreType]: ScoreOption } — the number shown
+  // is the strictest by default and swaps client-side when the score selector changes.
+  scores: Record<string, ScoreOption | null>;
   rankable?: boolean;
   system?: string;
   technique?: string;
   year?: number;
 }
-const { id, name, image, modalityTags, invasiveness, referenceBitsPerSecond, referenceMethod, miniStat, provenance, rankable = true, system, technique, year } = Astro.props;
+const { id, name, image, modalityTags, invasiveness, miniStat, scores, rankable = true, system, technique, year } = Astro.props;
 const invasive = invasiveness !== "non-invasive";
+const def = scores.strictest;
+const defMethod = def?.type ? scoreTypeLabel(def.type) : "";
 ---
 <a class="card"
    href={url(`/interfaces/${id}`)}
    data-name={name.toLowerCase()}
    data-modality={[...modalityTags, invasiveness].join(" ").toLowerCase()}
-   data-itr={referenceBitsPerSecond}
+   data-itr={def?.v ?? ""}
+   data-scores={JSON.stringify(scores)}
    data-rankable={String(rankable)}
    data-system={system}
    data-technique={technique}
@@ -39,12 +48,10 @@ const invasive = invasiveness !== "non-invasive";
       {invasive && <Tag label={invasiveness} variant="invasive" />}
     </div>
     <div class="statrow">
-      {rankable
-        ? <div class="itr">{formatBitsPerSecond(referenceBitsPerSecond)}<small> bits/s</small></div>
-        : <div class="itr ceiling">≤{formatBitsPerSecond(referenceBitsPerSecond)}<small> ceiling · no measured rate</small></div>}
-      <div class="mini">{miniStat}<br /><b>{referenceMethod}</b></div>
+      <div class="itr"><span class="itr-val">{def ? formatBitsPerSecond(def.v) : "—"}</span><small> bits/s</small></div>
+      <div class="mini">{miniStat}<br /><b class="method">{defMethod}</b></div>
     </div>
-    <ProvenancePill provenance={provenance} />
+    {def && <ProvenancePill provenance={def.prov} />}
   </div>
 </a>
 <style>
@@ -62,8 +69,11 @@ const invasive = invasiveness !== "non-invasive";
     border-top: 1px solid var(--hairline); padding-top: 11px; }
   .itr { font-size: 26px; font-weight: 800; line-height: 1; }
   .itr small { font-size: 11px; font-weight: 500; color: var(--muted); }
-  .itr.ceiling { font-size: 19px; font-weight: 700; color: var(--muted); }
   .mini { text-align: right; font-size: 11px; color: var(--muted); }
   .mini b { color: var(--ink); }
   .body :global(.pill) { margin-top: 9px; }
+  /* Greyed when the selected score type has no value for this entry. */
+  .card.noscore { opacity: 0.5; }
+  .card.noscore .itr { color: var(--muted); font-weight: 700; }
+  .card.noscore :global(.pill) { visibility: hidden; }
 </style>

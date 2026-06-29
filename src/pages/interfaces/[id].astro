@@ -5,6 +5,7 @@ import Tag from "../../components/Tag.astro";
 import SourceList from "../../components/SourceList.astro";
 import CalculationBlock from "../../components/CalculationBlock.astro";
 import { resolveCalculation } from "../../lib/itr/resolve";
+import { strictestCalc } from "../../lib/itr/scoring";
 import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
@@ -16,8 +17,18 @@ const { entry } = Astro.props;
 const data = entry.data;
 
 const resolved = data.calculations.map((c) => ({ calc: c, result: resolveCalculation(c) }));
-const reference = resolved.find((r) => r.calc.id === data.referenceCalculationId) ?? resolved[0];
-// When the designated calc is itself a ceiling, the entry has no ranked rate.
+// Headline = strictest (smallest) eligible upper bound, matching the home chart and
+// cards. Falls back to the designated reference calc only if nothing is rankable.
+const strict = strictestCalc(
+  resolved.map((r) => ({
+    scoreType: r.calc.scoreType,
+    notUsedForRanking: r.calc.notUsedForRanking,
+    resultBitsPerSecond: r.result.resultBitsPerSecond,
+    r,
+  })),
+);
+const reference = strict?.r ?? resolved.find((r) => r.calc.id === data.referenceCalculationId) ?? resolved[0];
+// When nothing is rankable (no eligible scored calc), the entry has no ranked rate.
 const rankable = !reference.calc.notUsedForRanking;
 const additional = resolved.filter((r) => r !== reference && !r.calc.notUsedForRanking);
 const supplementary = resolved.filter((r) => r !== reference && r.calc.notUsedForRanking);
@@ -34,12 +45,11 @@ const PRIOR_LABEL: Record<typeof as.prior, string> = {
   "non-uniform": "Non-uniform: some actions more likely than others",
   "context-conditioned": "Context-conditioned: likelihoods depend on prior actions",
 };
-// Comparability is governed by the realized-output rule, not Wolpaw's uniform-prior
-// assumption (which the methodology now deliberately violates by baking in the
-// language prior). Entries are commensurable when they share an estimator and a
-// predictor: continuous control ranks on Fitts; closed non-language command sets on
-// log2(N)/Wolpaw; everything else on the shared ~1 bit/char language predictor;
-// ceiling-only entries are not ranked at all.
+// The headline is the strictest upper bound among the entry's methods (Shannon
+// realized-text throughput participates in the same min). The class below names the
+// family of whichever method won, to frame what the figure is directly comparable
+// to: continuous control tends to win on Fitts; closed non-language command sets on
+// Wolpaw/log2(N); text entries on the shared ~1 bit/char Shannon predictor.
 const rankedOnRawSelection =
   reference.calc.compute?.method === "wolpaw" ||
   reference.calc.compute?.method === "confusion-mi";
@@ -56,13 +66,13 @@ const COMPARABILITY: Record<string, string> = {
   ceiling:
     "The figure above is a ceiling, not a measured throughput (a raw-channel capacity or an assumed-rate estimate), so it is not ranked. Compare it only to other ceilings, and weigh the derivation rather than the headline.",
   pointing:
-    "Ranked on Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the language entries (keyboards, spellers, speech) it crosses estimators: both report bits/s, but one measures movement difficulty and the other text information, so compare within the family first.",
+    "The strictest bound here is Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the text entries (keyboards, spellers, speech) it crosses methods: both report bits/s, but one measures movement difficulty and the other text information, so compare within the family first.",
   "pointing-selection":
-    "Ranked on a Wolpaw-style target-acquisition estimate over cued endpoints. This is a continuous cursor task, so compare it carefully with the Fitts-ranked pointing entries: the number reflects the published target set and completion rate, not a full Fitts effective-width throughput.",
+    "The strictest bound here is a Wolpaw-style target-acquisition estimate over cued endpoints. This is a continuous cursor task, so compare it carefully with the Fitts-bounded pointing entries: the number reflects the published target set and completion rate, not a full Fitts effective-width throughput.",
   selection:
-    "Ranked on the raw selection rate: log₂(N) over the real action set, discounted by accuracy. This is the right measure here because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
+    "The strictest bound here is the Wolpaw selection rate: log₂(N) over the real action set, discounted by accuracy. This fits because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
   language:
-    "Ranked on the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor is what makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of each entry's prior or vocabulary size. Any raw-channel figure shown below (Wolpaw or log₂(N)) is a ceiling, not this rank.",
+    "The strictest figure here is the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). For text entries that realized-throughput figure is usually tighter than the raw-channel bounds, and the shared predictor makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of prior or vocabulary size. Any Fitts, Wolpaw or log₂(N) figure shown below is a looser upper bound on the same channel — switch the home-page score selector to compare one of those across entries.",
 };
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
@@ -93,9 +103,9 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
     ))}
   </dl>
 
-  <h2>{rankable ? "Reference ITR" : "Headline ceiling (not ranked)"}</h2>
+  <h2>{rankable ? "Strictest ITR" : "Headline ceiling (not ranked)"}</h2>
   <p class="seclbl">{rankable
-    ? "One designated method per entry: the number used for cross-comparison."
+    ? "Most methods here are upper bounds on the channel, so the headline is the strictest (smallest) one for this entry. Use the score selector on the home page to view any single method across entries."
     : "This entry has no measured communication rate, so it is not ranked. The figure below is a ceiling computed from an assumed rate, kept for documentation only."}</p>
   <CalculationBlock
     method={reference.calc.method}

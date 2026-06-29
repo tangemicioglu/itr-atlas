@@ -34,6 +34,7 @@ references:
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Net of English redundancy and transcription errors"
     provenance: recomputed-omitted
     resultBitsPerSecond: 17.8

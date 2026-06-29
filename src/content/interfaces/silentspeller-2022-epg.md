@@ -32,6 +32,7 @@ references:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
+    scoreType: shannon
     kind: "Effective bits as English (measured rate)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 2.68
@@ -45,6 +46,7 @@ calculations:
         math: "ITR = 2.68 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 1,164 words"
+    scoreType: wolpaw
     kind: "Uniform-prior comparison metric (measured rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true

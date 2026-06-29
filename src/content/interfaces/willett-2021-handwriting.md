@@ -35,6 +35,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Effective bits transmitted as English text"
     provenance: recomputed-omitted
     resultBitsPerSecond: 1.42
@@ -48,6 +49,7 @@ calculations:
         math: "ITR = 1.42 bits/s"
   - id: raw-word-entropy
     method: "Word-entropy throughput from raw WER"
+    scoreType: shannon
     kind: "Effective bits transmitted as English words, using the stricter raw word-level error rate"
     provenance: recomputed-omitted
     notUsedForRanking: true
@@ -65,6 +67,7 @@ calculations:
         math: "ITR = 1.12 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 31 characters"
+    scoreType: wolpaw
     kind: "Uniform-prior character metric (raw decoder)"
     provenance: recomputed-omitted
     notUsedForRanking: true

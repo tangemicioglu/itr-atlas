@@ -5,13 +5,34 @@ import InterfaceCard from "../components/InterfaceCard.astro";
 import ItrChart from "../components/ItrChart.astro";
 import { resolveCalculation } from "../lib/itr/resolve";
 import { systemOf, techniqueOf } from "../lib/itr/taxonomy";
+import { strictestCalc, pickForType, availableTypes, SCORE_TYPES } from "../lib/itr/scoring";
+import type { ScoreType } from "../lib/itr/scoring";
 
 const entries = (await getCollection("interfaces")).filter((e) => !e.data.hidden);
 
+type Provenance = "author-reported-verified" | "author-reported-unverified" | "recomputed-omitted";
+type ScoreOption = { v: number; prov: Provenance; type?: ScoreType };
+
 const cards = entries.map((entry) => {
   const data = entry.data;
-  const refCalc = data.calculations.find((c) => c.id === data.referenceCalculationId) ?? data.calculations[0];
-  const { resultBitsPerSecond } = resolveCalculation(refCalc);
+  // Resolve every calculation to a value while keeping its scoring metadata.
+  const scorables = data.calculations.map((c) => ({
+    scoreType: c.scoreType,
+    notUsedForRanking: c.notUsedForRanking,
+    provenance: c.provenance,
+    resultBitsPerSecond: resolveCalculation(c).resultBitsPerSecond,
+  }));
+  // Headline = strictest (smallest) eligible upper bound. Each present scoreType
+  // also gets a value so the reader can switch the displayed number.
+  const strict = strictestCalc(scorables);
+  const scores: Record<string, ScoreOption | null> = {
+    strictest: strict ? { v: strict.resultBitsPerSecond, prov: strict.provenance, type: strict.scoreType } : null,
+  };
+  for (const t of availableTypes(scorables)) {
+    const c = pickForType(scorables, t)!;
+    scores[t] = { v: c.resultBitsPerSecond, prov: c.provenance };
+  }
+
   const firstInput = data.inputs[0];
   const miniStat = firstInput ? `${firstInput.symbol}=${firstInput.value}` : "";
   return {
@@ -20,34 +41,47 @@ const cards = entries.map((entry) => {
     image: data.image,
     modalityTags: data.modalityTags,
     invasiveness: data.invasiveness,
-    sensingModality: data.sensingModality,
-    referenceBitsPerSecond: resultBitsPerSecond,
-    referenceMethod: refCalc.method.startsWith("Fitts'") ? "Fitts' law" : refCalc.method.split(" ")[0],
     miniStat,
-    provenance: refCalc.provenance,
     year: data.year ?? data.source.year,
     system: systemOf(data.sensingModality),
     technique: techniqueOf(data.modalityTags),
-    // Ceiling-only entries (every calc is notUsedForRanking) have no measured
-    // realized rate, so they drop off the chart and sink below ranked cards.
-    rankable: !refCalc.notUsedForRanking,
+    scores,
+    rankable: !!scores.strictest,
   };
-}).sort((a, b) =>
-  a.rankable === b.rankable
-    ? b.referenceBitsPerSecond - a.referenceBitsPerSecond
-    : a.rankable ? -1 : 1,
-);
+}).sort((a, b) => {
+  // Ranked (has a strictest value) first, then by that value descending.
+  const av = a.scores.strictest, bv = b.scores.strictest;
+  if (!!av !== !!bv) return av ? -1 : 1;
+  return (bv?.v ?? 0) - (av?.v ?? 0);
+});
 
-const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
-  id: c.id, name: c.name, year: c.year, itr: c.referenceBitsPerSecond,
-  system: c.system, technique: c.technique,
-}));
+// Selector options: Strictest + every scoreType present anywhere, in canonical order.
+const presentTypes = SCORE_TYPES.filter((s) => cards.some((c) => c.scores[s.key]));
 
+// The chart plots ranked entries and carries the numeric score map for re-plotting.
+const chartPoints = cards.filter((c) => c.scores.strictest).map((c) => {
+  const scoreMap: Record<string, number> = { strictest: c.scores.strictest!.v };
+  for (const s of presentTypes) if (c.scores[s.key]) scoreMap[s.key] = c.scores[s.key]!.v;
+  return {
+    id: c.id, name: c.name, year: c.year,
+    system: c.system, technique: c.technique,
+    itr: c.scores.strictest!.v, scores: scoreMap,
+  };
+});
 ---
 <BaseLayout title="ITR Atlas: Information Transfer Rate across interfaces">
   <section class="top">
     <h1>Information Transfer Rate Atlas</h1>
   </section>
+
+  <div class="score-controls">
+    <label for="scoretype">Score</label>
+    <select id="scoretype" class="scoretype">
+      <option value="strictest">Strictest upper bound</option>
+      {presentTypes.map((s) => <option value={s.key}>{s.label}</option>)}
+    </select>
+    <span class="score-hint">Most methods are upper bounds; the default shows the strictest (smallest) per entry. Switch to compare one method across entries — entries without it are greyed out.</span>
+  </div>
 
   <ItrChart points={chartPoints} />
 
@@ -69,7 +103,12 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
 </BaseLayout>
 
 <style>
-  .top h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 24px 0 18px; }
+  .top h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin: 24px 0 14px; }
+  .score-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 2px 14px; }
+  .score-controls label { font-size: 11px; letter-spacing: 0.4px; text-transform: uppercase; color: var(--muted); }
+  .scoretype { border: 1px solid var(--hairline); background: var(--card); border-radius: 8px;
+    padding: 7px 10px; font-size: 13px; font-weight: 600; }
+  .score-hint { flex: 1; min-width: 200px; font-size: 11.5px; color: var(--muted); line-height: 1.4; }
   .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 22px; }
   .search { flex: 1; min-width: 180px; border: 1px solid var(--hairline); background: var(--card);
     border-radius: 8px; padding: 9px 12px; font-size: 13px; }
@@ -82,16 +121,61 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
 </style>
 
 <script>
+  import { formatBitsPerSecond } from "../lib/itr/math";
+  import { scoreTypeLabel } from "../lib/itr/scoring";
+
   const search = document.getElementById("search") as HTMLInputElement;
   const sort = document.getElementById("sort") as HTMLSelectElement;
+  const scoretype = document.getElementById("scoretype") as HTMLSelectElement;
   const grid = document.getElementById("grid") as HTMLElement;
   const empty = document.getElementById("empty") as HTMLElement;
   // Mirrors the chart legend's two-axis filter state, broadcast by ItrChart.
   let hiddenSystem = new Set<string>();
   let hiddenTechnique = new Set<string>();
+  // Currently selected scoring family ("strictest" or a scoreType key).
+  let currentScore = "strictest";
 
+  // Mirrors ProvenancePill's labels/classes for client-side re-rendering.
+  const PROV: Record<string, [string, string]> = {
+    "author-reported-verified": ["Author-reported · reproduced", "auth"],
+    "author-reported-unverified": ["Author-reported · not reproduced", "auth"],
+    "recomputed-omitted": ["Recomputed", "recomp"],
+  };
+
+  type Opt = { v: number; prov: string; type?: string };
   function cards(): HTMLElement[] {
     return Array.from(grid.querySelectorAll<HTMLElement>(".card"));
+  }
+  function optFor(card: HTMLElement): Opt | null {
+    const s = JSON.parse(card.dataset.scores || "{}") as Record<string, Opt | null>;
+    return currentScore === "strictest" ? s.strictest : (s[currentScore] ?? null);
+  }
+
+  // Repaint one card for the active score type (number, method label, provenance,
+  // and the greyed "no value under this score" state).
+  function render(card: HTMLElement) {
+    const opt = optFor(card);
+    const valEl = card.querySelector<HTMLElement>(".itr-val");
+    const methodEl = card.querySelector<HTMLElement>(".method");
+    const pill = card.querySelector<HTMLElement>(".pill");
+    if (!opt) {
+      card.classList.add("noscore");
+      card.dataset.itr = "";
+      if (valEl) valEl.textContent = "—";
+      if (methodEl) methodEl.textContent = "—";
+      return;
+    }
+    card.classList.remove("noscore");
+    card.dataset.itr = String(opt.v);
+    if (valEl) valEl.textContent = formatBitsPerSecond(opt.v);
+    const type = currentScore === "strictest" ? opt.type : currentScore;
+    if (methodEl) methodEl.textContent = type ? scoreTypeLabel(type as any) : "";
+    if (pill) {
+      const [label, cls] = PROV[opt.prov] ?? ["", "auth"];
+      pill.textContent = label;
+      pill.classList.remove("auth", "recomp");
+      pill.classList.add(cls);
+    }
   }
 
   function apply() {
@@ -111,9 +195,9 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
     empty.hidden = visible > 0;
 
     const sorted = cards().sort((a, b) => {
-      // Ceiling-only entries (no measured rate) always sink below ranked ones.
-      const ar = a.dataset.rankable !== "false", br = b.dataset.rankable !== "false";
-      if (ar !== br) return ar ? -1 : 1;
+      // Entries with no value under the active score sink to the bottom.
+      const aa = !a.classList.contains("noscore"), ba = !b.classList.contains("noscore");
+      if (aa !== ba) return aa ? -1 : 1;
       const ai = Number(a.dataset.itr), bi = Number(b.dataset.itr);
       const ay = Number(a.dataset.year), by = Number(b.dataset.year);
       if (sort.value === "itr-asc") return ai - bi;
@@ -135,5 +219,12 @@ const chartPoints = cards.filter((c) => c.rankable).map((c) => ({
   });
   search.addEventListener("input", apply);
   sort.addEventListener("change", apply);
+  scoretype.addEventListener("change", () => {
+    currentScore = scoretype.value;
+    for (const c of cards()) render(c);
+    // Tell the chart to re-plot under the same score type.
+    document.dispatchEvent(new CustomEvent("itr-scoretype", { detail: { type: currentScore } }));
+    apply();
+  });
   apply();
 </script>

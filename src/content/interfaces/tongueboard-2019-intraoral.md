@@ -32,6 +32,7 @@ actionSpace:
 calculations:
   - id: reported
     method: "Wolpaw bitrate over the 17-choice calculator set (authors' reported ITR)"
+    scoreType: wolpaw
     kind: "Command-and-control selection: non-language output, so log2(N) over the real action set is the realized measure"
     provenance: author-reported-verified
     compute:

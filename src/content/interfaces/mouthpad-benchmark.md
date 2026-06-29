@@ -36,6 +36,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput from Augmental's benchmark"
+    scoreType: fitts
     kind: "2D pointing channel"
     provenance: author-reported-unverified
     resultBitsPerSecond: 3.53
@@ -49,6 +50,7 @@ calculations:
         note: "For Neuralink, the public headline BPS had to be reduced to an estimated Fitts throughput. Here Augmental's benchmark itself reports the Fitts measure, so the reference entry follows Augmental's own metric rather than applying a separate correction."
   - id: reported
     method: "Full-grid benchmark BPS reported by Augmental"
+    scoreType: nuyujukian
     kind: "30x30 grid choice-entropy score, shown for transparency, not used for ranking"
     provenance: author-reported-unverified
     notUsedForRanking: true

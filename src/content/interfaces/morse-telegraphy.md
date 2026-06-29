@@ -29,6 +29,7 @@ references:
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 2.08

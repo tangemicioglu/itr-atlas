@@ -6,6 +6,9 @@ import {
 interface Point {
   id: string; name: string; year: number; itr: number;
   system: string; technique: string;
+  // { strictest, <scoreType>: bits/s } — lets the client re-plot when the score
+  // selector changes. `itr` is the strictest value (the SSR default).
+  scores: Record<string, number>;
 }
 const { points } = Astro.props as { points: Point[] };
 
@@ -81,6 +84,7 @@ const plotted = points
         data-technique={p.technique}
         data-systemlabel={systemLabel(p.system)}
         data-techlabel={techniqueLabel(p.technique)}
+        data-scores={JSON.stringify(p.scores)}
       >
         <Fragment set:html={markSvg(p.technique, systemColor(p.system))} />
         <title>{p.name} ({p.year}): {p.itr} bits/s</title>
@@ -185,14 +189,24 @@ const plotted = points
     const xaxis = svg.querySelector<SVGGElement>(".xaxis")!;
     const pts = Array.from(root.querySelectorAll<SVGGElement>(".pt"));
     // Two independent filter axes; a point is hidden if either its system or its
-    // technique is toggled off.
+    // technique is toggled off. A point is also dropped when the active score type
+    // has no value for it (noScore).
     const hidden = { system: new Set<string>(), technique: new Set<string>() };
+    const noScore = new Set<SVGGElement>();
     const isHidden = (el: SVGGElement) =>
       hidden.system.has(el.dataset.system!) || hidden.technique.has(el.dataset.technique!);
+    const shown = (el: SVGGElement) => !isHidden(el) && !noScore.has(el);
 
     const ml = +svg.dataset.ml!, plotW = +svg.dataset.plotw!;
     const mt = +svg.dataset.mt!, plotH = +svg.dataset.ploth!;
     const NS = "http://www.w3.org/2000/svg";
+
+    // Fixed log y-domain (mirrors the frontmatter ypx) so points can be re-plotted
+    // client-side when the score selector swaps the value.
+    const yMin = 0.01, yMax = 20;
+    const yMinL = Math.log10(yMin), yMaxL = Math.log10(yMax);
+    const ypx = (itr: number) =>
+      mt + (1 - (Math.log10(Math.min(yMax, Math.max(yMin, itr))) - yMinL) / (yMaxL - yMinL)) * plotH;
 
     const stopNativeSelection = (e: Event) => e.preventDefault();
     root.addEventListener("selectstart", stopNativeSelection);
@@ -217,7 +231,7 @@ const plotted = points
 
     // Re-fit the x-axis to whichever categories are currently visible.
     function relayout() {
-      const vis = pts.filter((el) => !isHidden(el));
+      const vis = pts.filter(shown);
       if (!vis.length) return;
       const ys = vis.map((el) => +el.dataset.year!);
       const [xMin, xMax] = padDomain(Math.min(...ys), Math.max(...ys));
@@ -411,6 +425,36 @@ const plotted = points
     }
 
 
+    // Re-plot every point for the selected score type. Points with no value under
+    // that type drop out (noScore) and the axes re-fit; open labels and tooltips
+    // pick up the new number. Driven by the page-level "itr-scoretype" event.
+    const scoreMap = (el: SVGGElement): Record<string, number> =>
+      JSON.parse(el.dataset.scores || "{}");
+    function applyScore(type: string) {
+      for (const el of pts) {
+        const v = scoreMap(el)[type];
+        if (typeof v !== "number") {
+          noScore.add(el);
+          if (el.classList.contains("sel")) {
+            el.classList.remove("sel");
+            el.querySelectorAll(".pin").forEach((n) => n.remove());
+          }
+          continue;
+        }
+        noScore.delete(el);
+        el.dataset.itr = String(v);
+        el.dataset.cy = String(ypx(v));
+        const valEl = el.querySelector<SVGElement>(".ptlabel-val");
+        if (valEl) valEl.textContent = `${v.toLocaleString()} bits/s`;
+        const titleEl = el.querySelector("title");
+        if (titleEl) titleEl.textContent = `${el.dataset.name} (${el.dataset.year}): ${v.toLocaleString()} bits/s`;
+      }
+      for (const el of pts) el.style.display = shown(el) ? "" : "none";
+      relayout();
+    }
+    document.addEventListener("itr-scoretype", (e) =>
+      applyScore((e as CustomEvent).detail.type as string));
+
     for (const item of Array.from(root.querySelectorAll<HTMLElement>(".leg"))) {
       item.addEventListener("click", () => {
         const axis = item.dataset.axis as "system" | "technique";
@@ -418,7 +462,7 @@ const plotted = points
         const set = hidden[axis];
         if (set.has(key)) { set.delete(key); item.classList.remove("off"); }
         else { set.add(key); item.classList.add("off"); }
-        for (const el of pts) el.style.display = isHidden(el) ? "none" : "";
+        for (const el of pts) el.style.display = shown(el) ? "" : "none";
         relayout();
         // Broadcast so the card grid mirrors the same two-axis filter.
         document.dispatchEvent(new CustomEvent("itr-filter", {

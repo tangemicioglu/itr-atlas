@@ -27,6 +27,7 @@ actionSpace:
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Early ASR, corrected transcription"
     provenance: recomputed-omitted
     resultBitsPerSecond: 2.08

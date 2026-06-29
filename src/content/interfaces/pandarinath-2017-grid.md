@@ -29,6 +29,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput on the grid task"
+    scoreType: fitts
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 1.48
@@ -45,6 +46,7 @@ calculations:
         note: "The same correction applied to Neuralink's Webgrid; it puts both intracortical cursor BCIs on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s), so the chart compares like for like."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate task metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

@@ -29,6 +29,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
+    scoreType: shannon
     kind: "Assumed-rate estimate, not ranked"
     provenance: recomputed-omitted
     notUsedForRanking: true
@@ -43,6 +44,7 @@ calculations:
         math: "ITR = 5.85 bits/s"
   - id: wolpaw
     method: "Wolpaw bitrate over N = 100 words"
+    scoreType: wolpaw
     kind: "Uniform-prior comparison metric (assumed rate)"
     provenance: recomputed-omitted
     notUsedForRanking: true

@@ -36,6 +36,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput (estimated from the task conditions)"
+    scoreType: fitts
     kind: "2D cursor channel (apples-to-apples with the mouse and the cursor BCIs)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 1
@@ -52,6 +53,7 @@ calculations:
         math: "ITR = 1 bits/s"
   - id: wolpaw
     method: "Wolpaw / achieved-bitrate over the 8 cued targets"
+    scoreType: wolpaw
     kind: "Discrete-selection figure, UNDER-counts the continuous cursor (only 8 targets)"
     provenance: recomputed-omitted
     compute:

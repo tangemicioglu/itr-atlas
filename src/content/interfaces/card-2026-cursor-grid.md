@@ -31,6 +31,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput on the grid task"
+    scoreType: fitts
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 1.17
@@ -48,6 +49,7 @@ calculations:
         note: "Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
     method: "Achieved bitrate (log2 N), as reported by the authors"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate task metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

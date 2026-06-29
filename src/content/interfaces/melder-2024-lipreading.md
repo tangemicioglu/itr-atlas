@@ -30,6 +30,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput (measured end-to-end rate)"
+    scoreType: shannon
     kind: "Net of English redundancy, at the measured lip-reading rate"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.367

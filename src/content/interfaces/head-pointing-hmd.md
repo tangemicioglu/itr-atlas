@@ -36,6 +36,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput, re-derived from the task conditions"
+    scoreType: fitts
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: author-reported-verified
     resultBitsPerSecond: 2.47

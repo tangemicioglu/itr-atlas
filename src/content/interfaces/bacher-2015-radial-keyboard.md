@@ -36,6 +36,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.167
@@ -49,6 +50,7 @@ calculations:
         math: "ITR = 0.167 bits/s"
   - id: chat
     method: "QWERTY internet chat demonstration"
+    scoreType: shannon
     kind: "Real-time native-app communication"
     provenance: author-reported-verified
     notUsedForRanking: true

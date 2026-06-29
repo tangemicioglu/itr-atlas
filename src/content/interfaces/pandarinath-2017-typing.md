@@ -30,6 +30,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.65

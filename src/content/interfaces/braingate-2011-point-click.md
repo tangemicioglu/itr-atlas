@@ -45,6 +45,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput on the radial point-and-click task"
+    scoreType: fitts
     kind: "2D pointing channel"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.367
@@ -62,6 +63,7 @@ calculations:
         math: "ITR = 0.367 bits/s"
   - id: wolpaw-radial
     method: "Wolpaw bitrate over N = 8 radial targets"
+    scoreType: wolpaw
     kind: "Discrete-selection radial-target benchmark"
     provenance: recomputed-omitted
     notUsedForRanking: true
@@ -77,6 +79,7 @@ calculations:
         math: "ITR = 0.383 bits/s"
   - id: best-session-check
     method: "Fitts' law best-session check"
+    scoreType: fitts
     kind: "2D pointing channel"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.433

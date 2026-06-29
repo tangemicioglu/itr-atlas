@@ -26,6 +26,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.9
@@ -39,6 +40,7 @@ calculations:
         math: "ITR = 0.9 bits/s"
   - id: reported
     method: "Wolpaw bitrate over N = 40 targets (authors' reported ITR)"
+    scoreType: wolpaw
     kind: "Uniform 1-of-40 classifier metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

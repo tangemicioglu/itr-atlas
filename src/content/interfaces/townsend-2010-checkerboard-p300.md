@@ -40,6 +40,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.067
@@ -53,6 +54,7 @@ calculations:
         math: "ITR = 0.067 bits/s"
   - id: reported
     method: "Wolpaw bitrate over N = 72 targets (authors' reported ITR)"
+    scoreType: wolpaw
     kind: "Uniform 1-of-72 classifier metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

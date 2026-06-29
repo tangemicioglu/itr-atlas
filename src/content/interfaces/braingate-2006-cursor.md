@@ -40,6 +40,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput on the 16-target grid task"
+    scoreType: fitts
     kind: "2D cursor channel (estimated from grid density)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.183
@@ -57,6 +58,7 @@ calculations:
         math: "ITR = 0.183 bits/s"
   - id: wolpaw-grid
     method: "Wolpaw bitrate over N = 16 targets"
+    scoreType: wolpaw
     kind: "Discrete-selection grid benchmark"
     provenance: recomputed-omitted
     notUsedForRanking: true

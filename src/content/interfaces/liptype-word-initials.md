@@ -18,9 +18,6 @@ inputs:
   - symbol: "P"
     value: "0.973"
     sourceNote: "1 - 2.69% final uncorrected WER, averaging the reported LipType values: 2.64% two-handed and 2.74% one-handed."
-  - symbol: "rawWER"
-    value: "0.1889"
-    sourceNote: "Raw LipType silent-speech recognizer WER before correction, reported separately in the speech-speed analysis. Speech-only raw WER was 12.23%; the ranked value uses final text-entry WER because the WPM includes correction and candidate interaction."
   - symbol: "H"
     value: "5.0"
     unit: "bits/word"
@@ -36,6 +33,7 @@ references:
 calculations:
   - id: comm
     method: "Word-entropy throughput from measured LipType text entry"
+    scoreType: shannon
     kind: "Effective English text throughput, measured end-to-end"
     provenance: recomputed-omitted
     resultBitsPerSecond: 3.37
@@ -49,18 +47,5 @@ calculations:
       - title: "Information transfer rate"
         math: "ITR = 3.37 bits/s"
         note: "Raw recognizer WER before correction was much higher (18.89%), so this should be read as a complete text-entry interface, not bare lip-reading throughput."
-  - id: raw-vsr-context
-    method: "Raw silent-speech recognizer context"
-    kind: "Pre-correction recognizer-only context, not ranked"
-    provenance: author-reported-verified
-    notUsedForRanking: true
-    resultBitsPerSecond: 2.82
-    steps:
-      - title: "Use the same speech-entry rate with raw recognizer WER"
-        math: "41.6 x (1 - 0.1889) = 33.7 net word/min"
-        note: "The paper reports raw LipType WER before correction as 18.89% +/- 10.60%."
-      - title: "Information transfer rate"
-        math: "ITR = 2.82 bits/s"
-        note: "Kept to show the pre-correction recognizer operating point separately from the full text-entry interface."
 referenceCalculationId: comm
 ---

@@ -29,6 +29,7 @@ actionSpace:
 calculations:
   - id: fitts
     method: "Fitts' law throughput on Neuralink's own Webgrid grid"
+    scoreType: fitts
     kind: "2D pointing channel (apples-to-apples with the mouse)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 3.32
@@ -45,6 +46,7 @@ calculations:
         note: "Validation: the able-bodied ~10 BPS on this same 30×30 board reduces by the identical method to ~4.1 bits/s Fitts, matching MacKenzie's independently-measured mouse throughput (4.5 bits/s). The correction is self-consistent, and it places the BCI cursor just below an able-bodied mouse, not above it."
   - id: reported
     method: "Wolpaw bitrate over the 899-cell grid (Neuralink's Webgrid BPS)"
+    scoreType: nuyujukian
     kind: "Webgrid full-grid score, a secondary task metric, not atlas-ranked pointing throughput"
     provenance: author-reported-unverified
     notUsedForRanking: true

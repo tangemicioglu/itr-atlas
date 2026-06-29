@@ -37,6 +37,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.583
@@ -50,6 +51,7 @@ calculations:
         math: "ITR = 0.583 bits/s"
   - id: utility
     method: "Authors' utility rate (log2(N) per selection over the speller alphabet)"
+    scoreType: nuyujukian
     kind: "Alphabet-level utility metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true
@@ -60,6 +62,7 @@ calculations:
         note: "Uses ~5 bits/char from the speller alphabet. The atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries."
   - id: passive
     method: "Raw channel discrimination (passive ITR)"
+    scoreType: wolpaw
     kind: "Passive signal-discrimination metric, shown for comparison"
     provenance: author-reported-unverified
     notUsedForRanking: true

@@ -29,6 +29,7 @@ actionSpace:
 calculations:
   - id: comm
     method: "Word-entropy throughput"
+    scoreType: shannon
     kind: "Effective bits actually transmitted as English"
     provenance: recomputed-omitted
     resultBitsPerSecond: 4.88
@@ -42,6 +43,7 @@ calculations:
         math: "ITR = 4.88 bits/s"
   - id: wolpaw
     method: "Wolpaw mutual information over N = 1,024 words"
+    scoreType: wolpaw
     kind: "Per-word mutual information under uniform-prior Wolpaw assumptions"
     provenance: recomputed-omitted
     notUsedForRanking: true

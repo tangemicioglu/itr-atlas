@@ -28,6 +28,7 @@ references:
 calculations:
   - id: fitts
     method: "Fitts' law throughput, re-derived from the task conditions"
+    scoreType: fitts
     kind: "2D pointing channel"
     provenance: author-reported-verified
     resultBitsPerSecond: 4.5

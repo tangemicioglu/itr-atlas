@@ -32,6 +32,7 @@ references:
 calculations:
   - id: comm
     method: "Character-entropy throughput (realized text entry)"
+    scoreType: shannon
     kind: "Net of English redundancy"
     provenance: recomputed-omitted
     resultBitsPerSecond: 0.133
@@ -45,6 +46,7 @@ calculations:
         math: "ITR = 0.133 bits/s"
   - id: wolpaw
     method: "Uniform-prior comparison over the ~30-letter alphabet"
+    scoreType: nuyujukian
     kind: "Uniform 1-of-30 selection metric, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

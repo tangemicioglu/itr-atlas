@@ -30,6 +30,7 @@ actionSpace:
 calculations:
   - id: entropy
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Net of English redundancy and dwell errors"
     provenance: recomputed-omitted
     resultBitsPerSecond: 1.65

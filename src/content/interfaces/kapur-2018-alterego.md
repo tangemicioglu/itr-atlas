@@ -33,6 +33,7 @@ references:
 calculations:
   - id: wolpaw
     method: "Wolpaw bitrate over N = 20 words"
+    scoreType: wolpaw
     kind: "Per-word continuous silent-speech throughput"
     provenance: author-reported-verified
     compute:

@@ -26,6 +26,7 @@ actionSpace:
 calculations:
   - id: transcription
     method: "Character-entropy throughput"
+    scoreType: shannon
     kind: "Modern ASR, transcription task (Ruan et al. 2016)"
     provenance: recomputed-omitted
     resultBitsPerSecond: 12.7
