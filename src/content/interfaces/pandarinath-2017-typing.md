@@ -19,6 +19,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon); participants copy-typed English sentences, so the same ~1 bit/char standard used for QWERTY, eye-typing and Morse applies."
+  - symbol: "N"
+    value: "28"
+    sourceNote: "Keys on the OPTI-II onscreen keyboard, for the raw-key Wolpaw ceiling (uniform prior over the alphabet). This bounds the keyboard selection itself; the underlying cursor channel is the separate ReFIT grid entry."
+  - symbol: "T_key"
+    value: "1.531"
+    unit: "s/key"
+    sourceNote: "Key-selection interval for the Wolpaw ceiling: 60 / 39.2 char/min = 1.531 s. Accuracy is not reported separately (the 39.2 is correct char/min), so the bound is taken at perfect copy (P=1) as a strict ceiling."
 actionSpace:
   kind: fixed-set
   size: 28
@@ -42,5 +49,15 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
         math: "ITR = 0.65 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw key set"
+    scoreType: wolpaw
+    kind: "Uniform-prior, perfect-copy ceiling on the key channel"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 28
+      accuracy: 1
+      secondsPerSelection: 1.531
 referenceCalculationId: comm
 ---

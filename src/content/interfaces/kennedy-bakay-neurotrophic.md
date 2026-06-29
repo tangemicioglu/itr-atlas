@@ -19,6 +19,13 @@ inputs:
     value: "1.0"
     unit: "bits/char"
     sourceNote: "English-text entropy (Shannon); the same ~1 bit/char standard used for QWERTY, eye-typing, Synchron and the ReFIT typing entry."
+  - symbol: "N"
+    value: "28"
+    sourceNote: "≈ alphabet size of the virtual keyboard JR pointed at, for the raw-key Wolpaw ceiling (uniform prior). Approximate; the source documents the rate, not an exact key count."
+  - symbol: "T_key"
+    value: "20"
+    unit: "s/key"
+    sourceNote: "Key-selection interval for the Wolpaw ceiling: 60 / 3 char/min = 20 s. No per-selection accuracy is reported, so the bound is taken at perfect copy (P=1) as a strict ceiling."
   - symbol: "signals"
     value: "3"
     sourceNote: "Three neural signals mapped to cursor x, cursor y, and a binary select (Kennedy & Bakay 1998; Kennedy et al. 2000)."
@@ -47,5 +54,15 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
         math: "ITR = 0.05 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw key set"
+    scoreType: wolpaw
+    kind: "Uniform-prior, perfect-copy ceiling on the key channel"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 28
+      accuracy: 1
+      secondsPerSelection: 20
 referenceCalculationId: comm
 ---

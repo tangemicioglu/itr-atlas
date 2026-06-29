@@ -23,6 +23,13 @@ inputs:
     value: "91.4"
     unit: "%"
     sourceNote: "Radial Keyboard accuracy in the 'quick fox' task was 91.4 +/- 5.8% correct; errors had to be corrected to complete the task."
+  - symbol: "N"
+    value: "28"
+    sourceNote: "Keys on the Radial Keyboard layout, for the raw-key Wolpaw bound (uniform prior over the alphabet). The headline Shannon figure uses English entropy instead."
+  - symbol: "T_key"
+    value: "5.27"
+    unit: "s/key"
+    sourceNote: "Gross key-selection interval for the Wolpaw bound: 60 / (10.4 correct cpm / 0.914 accuracy) = 5.27 s. Gross (errors included) because Wolpaw's accuracy term P handles them separately."
 actionSpace:
   kind: fixed-set
   size: 28
@@ -61,5 +68,15 @@ calculations:
         note: "The participant used BrainGate2 Desktop with Google Chat from her residence. This is a native-application demonstration, not the fastest copy-spelling condition."
       - title: "Information transfer rate"
         math: "ITR = 0.133 bits/s"
+  - id: wolpaw-raw
+    method: "Wolpaw bitrate over the raw key set"
+    scoreType: wolpaw
+    kind: "Uniform-prior ceiling on the key channel, before English redundancy"
+    provenance: recomputed-omitted
+    compute:
+      method: wolpaw
+      targets: 28
+      accuracy: 0.914
+      secondsPerSelection: 5.27
 referenceCalculationId: comm
 ---
