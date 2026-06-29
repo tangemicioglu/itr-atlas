@@ -69,66 +69,63 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        entries.</p>
 
     <h2>What we rank on: the strictest upper bound</h2>
-    <p>Most of these measures are <strong>upper bounds</strong> on what a channel can carry: Fitts'
-       index of difficulty, the Wolpaw bits-per-selection, log₂(N), and the Nuyujukian achieved
-       bitrate each cap the rate under their own idealizing assumptions. The one exception is the
-       Shannon realized-text figure, which counts the information the output actually delivers as
-       English under a fixed predictor. Because one entry can admit several of these, we report the
+    <p>Every measure in the atlas is an <strong>upper bound</strong> on the information a channel
+       delivers — each caps the rate under its own idealizing assumptions, and none is privileged.
+       Fitts' index of difficulty, the Wolpaw bits-per-selection, log₂(N), the Nuyujukian achieved
+       bitrate, and the Shannon entropy of the realized text all bound the same quantity from
+       different directions. Because one entry usually admits several, we report the
        <strong>strictest (smallest)</strong> of them as the headline — the best-supported estimate of
-       what the interface really achieves — and a score selector on the home page lets you view any
-       single method across entries instead. These are the methods an entry can be scored by:</p>
+       what the interface really achieves — and a score selector on the home page re-ranks the whole
+       atlas by any single method instead. The methods, and how each is computed:</p>
     <ul>
-      <li><strong>The output is language</strong> → character-entropy throughput
-         (characters/min × ~1 bit/char), the same full-context Shannon predictor used for QWERTY
-         everywhere. This covers keyboards, Morse, eye-typing, and the BCI spellers (P300, SSVEP,
-         c-VEP), because all of them emit English text.</li>
-      <li><strong>The channel is continuous cursor motion</strong> → Fitts throughput,
-         <strong>log₂(A/W + 1)</strong> per movement divided by movement time, computed from the
-         interface's own geometry. This covers the mouse, trackball, stylus, tongue drive, gaze
-         pointing, and the cursor BCIs. Accuracy is folded in the way Fitts handles it: via
-         the <em>effective</em> width W<sub>e</sub> = 4.133·SD of the movement endpoints (ISO 9241-9),
-         which discounts the information per movement to the precision actually achieved, so there is
-         no separate error term and you cannot game it by moving fast and missing. Where a source
-         publishes no endpoint scatter (e.g. the sensorimotor-rhythm cursor), we say so and fall back
-         to a plain completion-rate discount.</li>
-      <li><strong>The output is a closed, non-language command set</strong> → Wolpaw/log₂(N) over the
-         real action set, discounted by accuracy. There is no language predictor to apply, so the
-         target set itself is the output.</li>
+      <li><strong>Shannon entropy of the output text</strong> — characters/min × ~1 bit/char (or the
+         equivalent 5 bits/word), under the full-context predictor held constant across every text
+         entry (see above). Applies wherever the interface emits English: keyboards, Morse,
+         eye-typing, and the BCI spellers (P300, SSVEP, c-VEP). It bounds the rate at the information
+         the text carries, not at the raw selections the decoder happened to make.</li>
+      <li><strong>Fitts throughput</strong> — <strong>log₂(A/W + 1)</strong> per movement ÷ movement
+         time, from the interface's own geometry, for continuous cursor motion (mouse, trackball,
+         stylus, tongue drive, gaze pointing, cursor BCIs). Accuracy enters through the
+         <em>effective</em> width W<sub>e</sub> = 4.133·SD of the endpoints (ISO 9241-9), so the bound
+         tracks the precision actually achieved and cannot be gamed by moving fast and missing. Where a
+         source publishes no endpoint scatter (e.g. the sensorimotor-rhythm cursor), we say so and fall
+         back to a plain completion-rate discount.</li>
+      <li><strong>Wolpaw / log₂(N)</strong> — bits per selection over the real action set, discounted
+         by accuracy, for a closed command set with no language model to apply. (No current speller is
+         such a set; every speller here types English.)</li>
+      <li><strong>Nuyujukian achieved bitrate</strong> — log₂(N−1) per correct selection × net correct
+         rate, the sustained grid metric papers report as Webgrid BPS and the like.</li>
     </ul>
-    <p>The strictest-bound rule settles cursor tasks that can be read more than one way. Fitts is
-       usually lower because it measures the movement the user actually made. A Wolpaw-style
-       target-acquisition estimate can be lower when the task has only a small set of cued endpoints;
-       then it wins the strictest-min and the Fitts derivation is kept as a check. The
-       sensorimotor-rhythm cursor is the current example: eight cued targets give a Wolpaw estimate
-       below the geometry-based Fitts estimate.</p>
-    <p>Raw-channel counts — Wolpaw, log₂(N), achieved-bitrate, Webgrid BPS, c-VEP discrimination —
-       are upper bounds on task-specific channels and sit alongside the others as selectable methods.
-       They rarely win the strictest-min, by design: log₂(N) over a decoder alphabet whose size is a
-       knob inflates without limit. Neuralink's Webgrid carves a continuous cursor into 900 cells
-       (~9.8 bits/selection); make the grid denser and the number rises while the control is
-       unchanged. EEG2Code shows the same at a larger scale: it discriminates <strong>500,000</strong>
-       random codes at ~100% from 2 s of EEG, log₂(500,000) ≈ 19 bits per selection, 11.7 bits/s, and
-       the authors themselves flag a "ceiling effect" where those bits are not all usable as control
-       commands (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). A
-       speller that emits English but is credited log₂(40) per letter is being evaluated with a
-       different predictor than QWERTY held to 1 bit/char — a loose bound the strictest-min discards
-       in favor of the realized-text figure. That is the same apples-to-oranges mismatch we reject for
-       speech.</p>
-    <p>This ranking rule also keeps the taxonomy from doing too much work. A cursor traversing space
-       (Fitts), a frequency or code classifier (SSVEP, c-VEP), and covert attention with no movement
-       at all (P300) can carry different secondary metric labels without changing the ranked measure. We
-       therefore do not have to decide whether covert attention "really" obeys Fitts' law. As a
-       check on the Fitts side, the able-bodied ~10 BPS reported on Webgrid reduces by this method to
-       ~4.1 bits/s, close to the independently measured throughput of a physical mouse (~4.5 bits/s).</p>
-    <p>None of the current speller entries are closed non-language command sets; every speller here
-       types English.</p>
+    <p>Taking the strictest settles the cases that read more than one way, without privileging any
+       method. A speller that emits English admits both a Shannon bound (~1 bit/char) and a
+       raw-selection bound (log₂(40) per letter); the latter is loose — enlarge the alphabet and it
+       rises while the typing is unchanged — so the minimum discards it for the text figure. Grid
+       cursors are the mirror image: Neuralink's Webgrid credits log₂(900) ≈ 9.8 bits per cell, but the
+       Fitts bound on the very same movement is ~4.1 bits/s, and the tighter figure wins. (As a check,
+       the able-bodied ~10 BPS on Webgrid reduces by this method to ~4.1 bits/s, close to a physical
+       mouse's independently measured ~4.5 bits/s.) It cuts the other way just as readily: the
+       sensorimotor-rhythm cursor's eight cued targets give a Wolpaw estimate below its Fitts estimate,
+       and Moses et al.'s 50-word ECoG speech ranks on its Wolpaw bound (0.86 bits/s) rather than its
+       Shannon figure (0.95) — Shannon is not a floor, just one bound among several.</p>
+    <p>Some raw-channel bounds are so loose they essentially never win, and that is exactly why they
+       are not headlines. EEG2Code discriminates <strong>500,000</strong> random codes at ~100% from
+       2 s of EEG — log₂(500,000) ≈ 19 bits per selection, 11.7 bits/s — yet the authors themselves
+       flag a "ceiling effect" where those bits are not usable as control
+       (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). It stays
+       in the atlas as a selectable secondary figure, never the rank. This is the same inflation we
+       reject for speech, where a syllable-level estimator reports ~39 bps against the ~13 bps a
+       full-context predictor gives.</p>
+    <p>Ranking on the strictest bound also keeps the taxonomy from doing too much work: a cursor
+       traversing space (Fitts), a code classifier (SSVEP, c-VEP), and covert attention with no
+       movement (P300) can carry different method labels without our having to decide whether covert
+       attention "really" obeys Fitts' law — the smallest valid bound is the headline regardless.</p>
 
     <h2>How we pick the headline number</h2>
     <ol>
       <li>Compute every applicable method from the paper's inputs — the paper's own calculation where
          it exists and is sound, otherwise a modality-appropriate recomputation.</li>
-      <li>Rank the entry on the <strong>strictest (smallest)</strong> of the figures that are valid
-         for its task; the Shannon realized-text figure competes on equal footing with the bounds.</li>
+      <li>Rank the entry on the <strong>strictest (smallest)</strong> valid bound; Shannon entropy is
+         one of those bounds, on equal footing with the rest.</li>
       <li>Keep the looser figures as secondary derivations on the entry page, reachable through the
          score selector.</li>
     </ol>

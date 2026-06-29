@@ -65,20 +65,20 @@ applicable methods (Wolpaw, confusion-matrix mutual information, character/word 
 throughput, Nuyujukian achieved bitrate) follow from the action space and source model, not from the
 modality label.
 
-**The strictest-bound rule.** Every method **except** the Shannon realized-text figure is an *upper
-bound* on the channel — it caps the rate under its own idealizing assumptions. So no single method is
-"correct"; the best-supported estimate is the **strictest (smallest)** of the bounds that validly
-apply to an entry, and that is the headline number. Shannon realized-text throughput participates in
-the same minimum on equal footing (it tends to win for text entries, where it is tighter than the
-raw-channel bounds). Each calculation carries a **`scoreType`** (`fitts`, `wolpaw`, `nuyujukian`,
-`shannon`, `self-reported`) so the home page can re-rank the whole atlas by any single method via a
-selector; entries lacking the selected method are greyed out.
+**The strictest-bound rule.** Every method is an *upper bound* on the channel — Fitts, Wolpaw,
+log₂(N), the Nuyujukian achieved bitrate, and the Shannon character/word entropy each cap the rate
+under their own idealizing assumptions, and none is privileged. So no single method is "correct"; the
+best-supported estimate is the **strictest (smallest)** of the bounds that validly apply to an entry,
+and that is the headline number. Shannon entropy is one of those bounds, not a separate "realized"
+quantity: it is usually but not always strictest for text (a small-vocabulary Wolpaw bound can be
+tighter — moses ranks on Wolpaw). Each calculation carries a **`scoreType`** (`fitts`, `wolpaw`,
+`nuyujukian`, `shannon`, `self-reported`) so the home page can re-rank the whole atlas by any single
+method via a selector; entries lacking the selected method are greyed out.
 
 **Comparability caveat.** Because the "bit" is defined by the action space, a raw-selection bound
 over a knob-sized alphabet inflates without limit (log₂(N) rises as you split the space finer), so
-such bounds are loose and the strictest-min discards them in favor of the realized-text figure. An
-entry's number must still be read against its action space (see §3.4); the site surfaces this per
-entry.
+such bounds are loose and the strictest-min discards them in favor of the tighter ones. An entry's
+number must still be read against its action space (see §3.4); the site surfaces this per entry.
 
 Calculations excluded from the strictest-min (ceilings, slower demo conditions, raw pre-correction
 operating points, hypotheticals) are flagged **`notUsedForRanking`** and shown as supplementary.

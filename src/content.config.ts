@@ -34,11 +34,11 @@ const provenance = z.enum([
   'recomputed-omitted',
 ]);
 
-// The scoring method a calculation belongs to. Every method except the Shannon
-// language estimates is an upper bound on channel information transfer; the atlas
-// reports the STRICTEST (smallest) available bound per entry as the headline, and
-// lets the reader switch the displayed number to any single scoreType. Shannon is
-// treated identically — it participates in the strictest-min like the rest.
+// The scoring method a calculation belongs to. Every method is an upper bound on
+// channel information transfer, so none is privileged: the atlas reports the
+// STRICTEST (smallest) available bound per entry as the headline, and lets the
+// reader switch the displayed number to any single scoreType. Shannon is just
+// another bound — usually but not always strictest for text (cf. moses on wolpaw).
 //   fitts        - Fitts' law throughput (index of difficulty per movement)
 //   wolpaw       - Wolpaw mutual-information bitrate over N targets
 //   nuyujukian   - sustained achieved bitrate / grid BPS (Webgrid, Augmental, log2(N) achieved)

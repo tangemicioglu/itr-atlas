@@ -45,11 +45,11 @@ const PRIOR_LABEL: Record<typeof as.prior, string> = {
   "non-uniform": "Non-uniform: some actions more likely than others",
   "context-conditioned": "Context-conditioned: likelihoods depend on prior actions",
 };
-// The headline is the strictest upper bound among the entry's methods (Shannon
-// realized-text throughput participates in the same min). The class below names the
-// family of whichever method won, to frame what the figure is directly comparable
-// to: continuous control tends to win on Fitts; closed non-language command sets on
-// Wolpaw/log2(N); text entries on the shared ~1 bit/char Shannon predictor.
+// The headline is the strictest upper bound among the entry's methods; every method
+// (Fitts, Wolpaw, Nuyujukian, Shannon entropy) is a bound and competes equally. The
+// class below names the family of whichever bound won, to frame what the figure is
+// directly comparable to: continuous control tends to win on Fitts, closed command
+// sets on Wolpaw/log2(N), text on the shared ~1 bit/char Shannon entropy.
 const rankedOnRawSelection =
   reference.calc.compute?.method === "wolpaw" ||
   reference.calc.compute?.method === "confusion-mi";
@@ -72,7 +72,7 @@ const COMPARABILITY: Record<string, string> = {
   selection:
     "The strictest bound here is the Wolpaw selection rate: log₂(N) over the real action set, discounted by accuracy. This fits because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
   language:
-    "The strictest figure here is the information the output actually delivers as English, under one predictor held constant across the whole atlas (≈1 bit per character). For text entries that realized-throughput figure is usually tighter than the raw-channel bounds, and the shared predictor makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of prior or vocabulary size. Any Fitts, Wolpaw or log₂(N) figure shown below is a looser upper bound on the same channel — switch the home-page score selector to compare one of those across entries.",
+    "The strictest bound here is the Shannon entropy of the output text, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of prior or vocabulary size. For most text interfaces it comes out tighter than the raw-selection bounds, but not always — where a small vocabulary makes Wolpaw tighter, that wins instead. Any Fitts, Wolpaw or log₂(N) figure shown below is another bound on the same channel; switch the home-page score selector to compare one across entries.",
 };
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
@@ -105,7 +105,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
 
   <h2>{rankable ? "Strictest ITR" : "Headline ceiling (not ranked)"}</h2>
   <p class="seclbl">{rankable
-    ? "Most methods here are upper bounds on the channel, so the headline is the strictest (smallest) one for this entry. Use the score selector on the home page to view any single method across entries."
+    ? "Each scoring method is an upper bound on the channel, so the headline is the strictest (smallest) one for this entry. Use the score selector on the home page to view any single method across entries."
     : "This entry has no measured communication rate, so it is not ranked. The figure below is a ceiling computed from an assumed rate, kept for documentation only."}</p>
   <CalculationBlock
     method={reference.calc.method}

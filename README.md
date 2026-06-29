@@ -5,9 +5,9 @@ human→machine input modalities: brain–computer interfaces, eye-tracking, spe
 
 Most ITR comparisons quietly misapply the math — Wolpaw's assumptions rarely hold in real
 interfaces. This project makes the rigor visible: **every number is sourced and re-derived, step by
-step**. Most scoring methods (Fitts, Wolpaw, Nuyujukian, log₂N) are upper bounds on the channel, so
-each entry is ranked on the **strictest** of the ones that fit it, with every method shown and a
-selector to compare any one across entries.
+step**. Every scoring method (Fitts, Wolpaw, Nuyujukian, Shannon entropy) is an upper bound on the
+channel, so each entry is ranked on the **strictest** of the ones that fit it, with every method
+shown and a selector to compare any one across entries.
 
 > 🌐 **Live: [tangemicioglu.com/itr-atlas](https://tangemicioglu.com/itr-atlas/)**
 > 📐 Full spec & data model: **[SPEC.md](./SPEC.md)** — visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
@@ -24,8 +24,8 @@ their papers.
 
 Each interface gets:
 - **A headline ITR = the strictest upper bound** — the smallest of the scoring methods that fit the
-  entry, since most of them only cap the true rate. A score selector swaps the displayed number to
-  any single method (Fitts / Wolpaw / Nuyujukian / Shannon) across all entries.
+  entry, since each only caps the true rate. A score selector swaps the displayed number to any
+  single method (Fitts / Wolpaw / Nuyujukian / Shannon) across all entries.
 - A **full derivation** — every constant traced to its source (paper section / table), every
   operation shown, for each method.
 - A **provenance badge** — whether the figure is author-reported and verified, or recomputed by us

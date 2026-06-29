@@ -1,12 +1,11 @@
 // Scoring-type model for the atlas.
 //
-// Every scoring method except the Shannon language estimates is an upper bound on
-// channel information transfer, so no single method is "the" rate. The atlas
-// reports the STRICTEST (smallest) available bound per entry as the headline
-// number, and lets the reader switch the displayed value to any one scoreType.
-// Shannon is handled identically to the others — it participates in the
-// strictest-min with no special carve-out (it simply tends to come out stricter
-// for text-entry entries, which is the min doing its job).
+// Every scoring method here is an upper bound on the information a channel
+// delivers, so no single method is "the" rate. The atlas reports the STRICTEST
+// (smallest) available bound per entry as the headline number, and lets the reader
+// switch the displayed value to any one scoreType. Shannon character/word entropy
+// is treated the same as the rest — it often comes out strictest for text entries,
+// but not always (a small-vocabulary Wolpaw bound can be tighter, e.g. moses).
 
 export type ScoreType =
   | 'fitts'
