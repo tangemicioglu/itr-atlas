@@ -1,6 +1,6 @@
 ---
 name: ITR Atlas — Lab Paper
-version: alpha
+version: "1.0"
 description: >-
   Warm "lab paper" visual system for the ITR Atlas. Monochrome
   accent so color carries meaning (modality, invasiveness, provenance) rather

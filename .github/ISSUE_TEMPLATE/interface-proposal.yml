@@ -1,0 +1,62 @@
+name: Interface proposal
+description: Propose a new interface for the ITR Atlas
+title: "[Interface] <name>"
+labels: ["interface-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing an interface. Entries are reviewed and re-derived by hand, so the more
+        of the source numbers you can give, the faster it lands. Everything below is recomputed from
+        primary sources — please don't paste a reported ITR as the answer; give the inputs it came from.
+  - type: input
+    id: name
+    attributes:
+      label: Interface name
+      description: e.g. "High-Speed SSVEP Speller (Chen et al., 2015)"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source paper or DOI
+      description: A DOI, or a direct link to the paper / preprint.
+    validations:
+      required: true
+  - type: dropdown
+    id: modality
+    attributes:
+      label: Input modality
+      options:
+        - BCI — intracortical
+        - BCI — ECoG / endovascular
+        - BCI — EEG (SSVEP / P300 / MI)
+        - Eye / gaze
+        - Speech / silent speech
+        - Typing / chording
+        - Pointing (mouse / stylus / head / tongue)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: inputs
+    attributes:
+      label: Derivation inputs
+      description: >-
+        The primary quantities to compute ITR from — as reported in the paper, with section/table
+        references where you can. Give whatever the source states.
+      value: |
+        - Accuracy / error rate:
+        - Rate or per-selection timing:
+        - Number of targets / alphabet size (N):
+        - Reported ITR, if any (cross-check only, not the input):
+        - Section / table / figure these come from:
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Anything else relevant — task design, vocabulary, caveats, why it's interesting.
+    validations:
+      required: false
