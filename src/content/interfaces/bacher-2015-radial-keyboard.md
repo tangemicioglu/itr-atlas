@@ -59,7 +59,7 @@ calculations:
     method: "QWERTY internet chat demonstration"
     scoreType: shannon
     kind: "Real-time native-app communication"
-    provenance: author-reported-verified
+    provenance: recomputed-omitted
     notUsedForRanking: true
     resultBitsPerSecond: 0.135
     steps:

@@ -20,6 +20,10 @@ inputs:
     value: "102.4"
     unit: "word/min"
     sourceNote: "Average speech rate for the same 20-word, 200-sentence dataset; the thesis reports 62% of samples at at least 100 WPM"
+  - symbol: "ITR_reported"
+    value: "345.8"
+    unit: "bits/min"
+    sourceNote: "Author's reported Wolpaw bit-rate for the CNN+CTC model on the 20-word, 200-sentence dataset (10.7% WER, 102.4 WPM, N=20): 345.8 bits/min ≈ 5.76 bits/s. The compute below reproduces this figure."
 actionSpace:
   kind: fixed-set
   size: 20
@@ -32,7 +36,7 @@ references:
     url: "https://dspace.mit.edu/handle/1721.1/123121"
 calculations:
   - id: wolpaw
-    method: "Wolpaw bitrate over N = 20 words"
+    method: "Wolpaw bitrate over N = 20 words (author's reported ITR)"
     scoreType: wolpaw
     kind: "Per-word continuous silent-speech throughput"
     provenance: author-reported-verified
