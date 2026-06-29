@@ -50,10 +50,15 @@ calculations:
     kind: "Webgrid full-grid score, a secondary task metric, not atlas-ranked pointing throughput"
     provenance: author-reported-unverified
     notUsedForRanking: true
-    compute:
-      method: wolpaw
-      targets: 899
-      accuracy: 1.0
-      secondsPerSelection: 1.2245
+    resultBitsPerSecond: 8.01
+    steps:
+      - title: "Authors' reported Webgrid record"
+        math: "BPS = 8.01 bits/s on the 30x30 board (first-ever session 4.6 BPS; the often-quoted ~10 BPS is the able-bodied mouse reference, not a participant result)"
+        note: "Webgrid credits log2(t^2 - 1) = log2(899) ~= 9.81 bits per net-correct cued selection (Nuyujukian-style achieved bitrate)."
+      - title: "Implied selection rate (inferred from BPS)"
+        math: "8.01 / 9.81 ~= 0.82 net-correct selections/s ~= 49 selections/min"
+        note: "The public update gives only the BPS score, not a separate selections/s, so the rate is inferred from it. The Fitts reference above re-credits this same rate with the movement's index of difficulty (~4.06 bits) instead of log2(899)."
+      - title: "Use bits per second"
+        math: "ITR = 8.01 bits/s"
 referenceCalculationId: fitts
 ---

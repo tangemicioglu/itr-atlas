@@ -52,14 +52,12 @@ calculations:
     notUsedForRanking: true
     resultBitsPerSecond: 3.7
     steps:
-      - title: "Information per target acquisition"
-        math: "6×6 grid → N = 36 targets;  log2(N − 1) = log2(35) ≈ 5.13 bits per correct selection"
-        note: "Field-standard BCI achieved-bitrate (Nuyujukian et al. 2015). It uses the grid choice entropy per cued selection, so it is kept here as the author-reported task metric rather than the atlas-ranked Fitts throughput."
-      - title: "Net correct selections over time"
-        math: "(correct − incorrect) selections ÷ total time;  each error offsets one correct selection"
-        note: "Participant T5 (best of three), 29 blocks over 4 days, randomly cued targets. ≈ 0.72 net correct selections/s."
-      - title: "Achieved bitrate"
-        math: "0.72 sel/s × 5.13 bits ≈ 3.7 ± 0.4 bits/s  (T5; T6 2.2, T7 1.4; dense 9×9 grid reached 4.16 bits/s)"
+      - title: "Authors' reported achieved bitrate"
+        math: "B = 3.7 ± 0.4 bits/s  (T5, 6×6 grid; T6 2.2, T7 1.4; T5 reached 4.16 on a dense 9×9 grid)"
+        note: "Reported directly in Results. The paper's bitrate convention credits log2(N − 1) bits per net-correct selection — its own worked example is an 8-target task at 1 net selection/s = log2(7) ≈ 2.8 bits/s (Nuyujukian et al. 2015)."
+      - title: "Implied selection rate"
+        math: "N = 36 → log2(N − 1) = log2(35) ≈ 5.13 bits/selection;  3.7 ÷ 5.13 ≈ 0.72 net-correct selections/s"
+        note: "The paper does not separately report selections/s or acquisition time, so this rate is inferred from the reported bitrate, not measured independently. The Fitts reference above re-credits this same ≈ 0.72 sel/s with the movement's index of difficulty instead of log2(N − 1)."
       - title: "Use bits per second"
         math: "ITR = 3.7 bits/s"
 referenceCalculationId: fitts
