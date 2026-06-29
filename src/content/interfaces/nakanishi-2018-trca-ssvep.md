@@ -62,11 +62,11 @@ calculations:
     steps:
       - title: "Bits per selection (Wolpaw, N = 40 at 89.83%)"
         math: "B = log2(40) + 0.8983·log2(0.8983) + 0.1017·log2(0.1017/39) ≈ 4.31 bits/selection"
-        note: "Online cue-guided accuracy 89.83%. This counts log2(N) per selection — the classifier metric — not the 1 bit/char the atlas-ranked text figure holds every text entry to."
+        note: "Online cue-guided accuracy 89.83%. This counts log2(N) per selection, the classifier metric, not the 1 bit/char the atlas-ranked text figure holds every text entry to."
       - title: "Selections per second"
         math: "0.3 s flicker + 0.5 s gaze shift = 0.8 s/selection → 1.25 selections/s"
       - title: "Information transfer rate"
         math: "ITR = 4.31 × 1.25 ≈ 5.39 bits/s"
-        note: "Reproduces the authors' reported online cue-guided ITR (325.33 bit/min ≈ 5.42 bits/s, the small gap being rounding) — the record EEG-BCI ITR at publication."
+        note: "Reproduces the authors' reported online cue-guided ITR (325.33 bit/min ≈ 5.42 bits/s, the small gap being rounding). This was the record EEG-BCI ITR at publication."
 referenceCalculationId: comm
 ---

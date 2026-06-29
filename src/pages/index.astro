@@ -80,7 +80,7 @@ const chartPoints = cards.filter((c) => c.scores.strictest).map((c) => {
       <option value="strictest">Strictest upper bound</option>
       {presentTypes.map((s) => <option value={s.key}>{s.label}</option>)}
     </select>
-    <span class="score-hint">Most methods are upper bounds; the default shows the strictest (smallest) per entry. Switch to compare one method across entries — entries without it are greyed out.</span>
+    <span class="score-hint">Most methods are upper bounds. The default shows the strictest (smallest) per entry. Switch to compare one method across entries. Entries without it are greyed out.</span>
   </div>
 
   <ItrChart points={chartPoints} />
@@ -161,8 +161,8 @@ const chartPoints = cards.filter((c) => c.scores.strictest).map((c) => {
     if (!opt) {
       card.classList.add("noscore");
       card.dataset.itr = "";
-      if (valEl) valEl.textContent = "—";
-      if (methodEl) methodEl.textContent = "—";
+      if (valEl) valEl.textContent = "N/A";
+      if (methodEl) methodEl.textContent = "N/A";
       return;
     }
     card.classList.remove("noscore");

@@ -11,7 +11,7 @@ ranked on the **strictest** valid bound. The looser methods are still shown, and
 lets you compare any one method across entries.
 
 > 🌐 **Live: [tangemicioglu.com/itr-atlas](https://tangemicioglu.com/itr-atlas/)**
-> 📐 Full spec & data model: **[SPEC.md](./SPEC.md)** — visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
+> 📐 Full spec & data model: **[SPEC.md](./SPEC.md)**. Visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
 
 ## Status
 
@@ -46,18 +46,18 @@ at a different path, change `base` there. No link edits needed.
 
 Ways to propose an interface:
 
-- **Submission form** — a short reviewed form (link added once it's live). Best if you're not on
+- **Submission form**: a short reviewed form (link added once it's live). Best if you're not on
   GitHub.
-- **GitHub issue** — three [templates](.github/ISSUE_TEMPLATE/): propose a new interface, request a
+- **GitHub issue**: three [templates](.github/ISSUE_TEMPLATE/): propose a new interface, request a
   calculation (add a score type to an existing entry, or change how one is derived), or report a
   data correction (a wrong figure or step).
-- **Pull request** — add a Markdown file under `src/content/interfaces/`; front-matter is validated
+- **Pull request**: add a Markdown file under `src/content/interfaces/`. Front-matter is validated
   against `src/content.config.ts` (standard calculations use a `compute` block, non-standard ones
   supply authored `steps`). See [PR template](.github/PULL_REQUEST_TEMPLATE.md).
 
 Either way include the source paper or DOI, the reported accuracy and timing, and the number of
 targets (or the relevant modality-specific inputs). Entries are reviewed and curated by a
-maintainer; there is no open write access to `main`.
+maintainer. There is no open write access to `main`.
 
 ## Local development
 

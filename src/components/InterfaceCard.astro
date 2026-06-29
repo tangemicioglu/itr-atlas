@@ -17,7 +17,7 @@ interface Props {
   modalityTags: string[];
   invasiveness: "non-invasive" | "partially-invasive" | "invasive";
   miniStat: string;
-  // { strictest: ScoreOption | null, [scoreType]: ScoreOption } — the number shown
+  // { strictest: ScoreOption | null, [scoreType]: ScoreOption }. The number shown
   // is the strictest by default and swaps client-side when the score selector changes.
   scores: Record<string, ScoreOption | null>;
   rankable?: boolean;
@@ -48,7 +48,10 @@ const defMethod = def?.type ? scoreTypeLabel(def.type) : "";
       {invasive && <Tag label={invasiveness} variant="invasive" />}
     </div>
     <div class="statrow">
-      <div class="itr"><span class="itr-val">{def ? formatBitsPerSecond(def.v) : "—"}</span><small> bits/s</small></div>
+      <div class="itr">
+        <span class="itr-val">{def ? formatBitsPerSecond(def.v) : "N/A"}</span>
+        {def && <small> bits/s</small>}
+      </div>
       <div class="mini">{miniStat}<br /><b class="method">{defMethod}</b></div>
     </div>
     {def && <ProvenancePill provenance={def.prov} />}

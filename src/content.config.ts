@@ -38,7 +38,7 @@ const provenance = z.enum([
 // channel information transfer, so none is privileged: the atlas reports the
 // STRICTEST (smallest) available bound per entry as the headline, and lets the
 // reader switch the displayed number to any single scoreType. Shannon is just
-// another bound — usually but not always strictest for text (cf. moses on wolpaw).
+// another bound. It is usually, but not always, strictest for text (cf. moses on wolpaw).
 // Listed by how often entries use each type.
 //   shannon      - English-text entropy throughput (per-char and per-word are the same
 //                  calculation in different units, so they share one type)

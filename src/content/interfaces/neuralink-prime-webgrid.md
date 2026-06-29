@@ -39,7 +39,7 @@ calculations:
         note: "S = board span; 0.52 is the mean distance between two random points on a square. The target is cued, so each correct selection is a pointing movement carrying the Fitts index of difficulty (≈4.06 bits), not the log2(899) ≈ 9.81 bits the Webgrid metric credits as a 1-of-900 choice."
       - title: "Re-credit the reported achieved bitrate onto the Fitts basis"
         math: "ITR = B × ID / log2(N − 1) = 8.01 × 4.06 / 9.81 = 3.32 bits/s"
-        note: "Neuralink publishes only the achieved bitrate B = 8.01 bits/s and no independent selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of the full grid entropy — a unit re-crediting of the reported score, not an independent measurement. Validation: the able-bodied ~10 BPS on this board re-credits to ~4.1 bits/s, matching MacKenzie's measured mouse throughput (4.5 bits/s), so the cursor lands just below an able-bodied mouse."
+        note: "Neuralink publishes only the achieved bitrate B = 8.01 bits/s and no independent selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of the full grid entropy. This is a unit re-crediting of the reported score, not an independent measurement. Validation: the able-bodied ~10 BPS on this board re-credits to ~4.1 bits/s, matching MacKenzie's measured mouse throughput (4.5 bits/s), so the cursor lands just below an able-bodied mouse."
   - id: reported
     method: "Wolpaw bitrate over the 899-cell grid (Neuralink's Webgrid BPS)"
     scoreType: nuyujukian
@@ -51,7 +51,7 @@ calculations:
       - title: "Webgrid achieved-bitrate metric"
         math: "30×30 board → N = 900 cells. The Webgrid score credits log2(N − 1) = log2(899) ≈ 9.81 bits per net-correct cued selection (Nuyujukian-style achieved bitrate)."
       - title: "Authors' reported score (taken as reported, not re-derived)"
-        math: "B = 8.01 bits/s — Noland Arbaugh's Webgrid record, reported directly by Neuralink (first session 4.6 BPS; the often-quoted ~10 BPS is the able-bodied-mouse reference on this board, not a participant result)."
-        note: "Neuralink publishes only the BPS score — no net-correct selection rate or per-trial timing — so there is no more-primary quantity to derive this from: it is an author-reported figure. Dividing out the per-selection credit implies ~8.01/9.81 ≈ 0.82 selections/s (~49/min), but that rate is a consequence of the score, not an independent measurement, so this is not a forward calculation."
+        math: "B = 8.01 bits/s. Noland Arbaugh's Webgrid record, reported directly by Neuralink (first session 4.6 BPS; the often-quoted ~10 BPS is the able-bodied-mouse reference on this board, not a participant result)."
+        note: "Neuralink publishes only the BPS score, with no net-correct selection rate or per-trial timing. There is no more-primary quantity to derive this from: it is an author-reported figure. Dividing out the per-selection credit implies ~8.01/9.81 ≈ 0.82 selections/s (~49/min), but that rate is a consequence of the score, not an independent measurement, so this is not a forward calculation."
 referenceCalculationId: fitts
 ---

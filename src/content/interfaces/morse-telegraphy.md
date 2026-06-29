@@ -24,7 +24,7 @@ inputs:
   - symbol: "T_char"
     value: "0.48"
     unit: "s/char"
-    sourceNote: "Gross character interval for the Wolpaw ceiling: 60 / (25 wpm × 5) = 0.48 s. Skilled-operator copy error is not reported, so accuracy is taken as perfect (P=1) — a strict upper bound."
+    sourceNote: "Gross character interval for the Wolpaw ceiling: 60 / (25 wpm × 5) = 0.48 s. Skilled-operator copy error is not reported, so accuracy is taken as perfect (P=1). This is a strict upper bound."
 actionSpace:
   kind: fixed-set
   size: 36

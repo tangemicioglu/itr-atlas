@@ -10,12 +10,12 @@ const FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeZrmsHarnxvNoe5bOWe7
        primary source, so there's no open write access.</p>
     <p>Have the inputs ready: the source paper or DOI, the reported accuracy and timing, and the
        number of targets (or the relevant modality-specific inputs). The reported ITR is only a
-       cross-check — every figure is re-derived from those inputs.</p>
+       cross-check. Every figure is re-derived from those inputs.</p>
     {FORM_URL
       ? <p><a class="cta" href={FORM_URL} target="_blank" rel="noopener">Open the submission form →</a></p>
       : <p class="pending">The submission form is being set up. Check back soon.</p>}
     <p class="alt">On GitHub? You can also <a href="https://github.com/tangemicioglu/itr-atlas/issues/new/choose">open an issue</a>
-       — new interface, calculation request, or data correction — or send a
+       for a new interface, calculation request, or data correction, or send a
        <a href="https://github.com/tangemicioglu/itr-atlas/blob/main/.github/PULL_REQUEST_TEMPLATE.md">pull request</a>.</p>
   </article>
 </BaseLayout>

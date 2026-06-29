@@ -30,7 +30,7 @@ describe('strictest', () => {
   });
 
   it('treats Shannon like any other type (no carve-out)', () => {
-    // Shannon being smaller means Shannon wins — exactly the intended behavior.
+    // Shannon being smaller means Shannon wins. Exactly the intended behavior.
     const r = strictest([c('shannon', 1.8), c('wolpaw', 4.0), c('fitts', 3.1)]);
     expect(r?.scoreType).toBe('shannon');
   });

@@ -6,7 +6,7 @@ import {
 interface Point {
   id: string; name: string; year: number; itr: number;
   system: string; technique: string;
-  // { strictest, <scoreType>: bits/s } — lets the client re-plot when the score
+  // { strictest, <scoreType>: bits/s }. Lets the client re-plot when the score
   // selector changes. `itr` is the strictest value (the SSR default).
   scores: Record<string, number>;
 }
@@ -113,7 +113,7 @@ const plotted = points
       ))}
     </div>
   </div>
-  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, <strong>symbol</strong> is the input technique; toggle either row to filter. Tap a point to show or hide its label; tap the label to open the entry, or drag it to reposition. Log scale; not all entries are directly comparable (see each entry's action space).</figcaption>
+  <figcaption>Each point is one entry, positioned by the year the interface appeared (for mature interfaces this predates the cited measurement). <strong>Color</strong> is the input system, and <strong>symbol</strong> is the input technique. Toggle either row to filter. Tap a point to show or hide its label. Tap the label to open the entry, or drag it to reposition. Log scale. Not all entries are directly comparable. See each entry's action space.</figcaption>
 </figure>
 
 <style>

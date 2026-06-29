@@ -64,7 +64,7 @@ const comparabilityClass = reference.calc.notUsedForRanking
       : "language";
 const COMPARABILITY: Record<string, string> = {
   ceiling:
-    "The figure above is a ceiling rather than a measured throughput (a raw-channel capacity or an assumed-rate estimate), so it is held out of the default strictest-bound headline — the home-page selector still ranks this entry on it under its score type. Compare it to other figures of the same type, and weigh the derivation rather than the headline.",
+    "The figure above is a ceiling rather than a measured throughput (a raw-channel capacity or an assumed-rate estimate), so it is held out of the default strictest-bound headline. The home-page selector still ranks this entry on it under its score type. Compare it to other figures of the same type, and weigh the derivation rather than the headline.",
   pointing:
     "The strictest bound here is Fitts throughput: the index of difficulty, log₂(A/W + 1), per movement. Directly comparable to the other continuous-pointing entries (mouse, trackball, stylus, gaze and the cursor BCIs). Set against the text entries (keyboards, spellers, speech) it crosses methods: both report bits/s, but one measures movement difficulty and the other text information, so compare within the family first.",
   "pointing-selection":
@@ -72,7 +72,7 @@ const COMPARABILITY: Record<string, string> = {
   selection:
     "The strictest bound here is the Wolpaw selection rate: log₂(N) over the real action set, discounted by accuracy. This fits because the output is a closed command set, not free English, so no language predictor applies. Comparable to the other command-and-control entries; against the text entries it reads high per selection, since a few large choices carry more raw bits than the ~1 bit/character of natural language.",
   language:
-    "The strictest bound here is the Shannon entropy of the output text, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of prior or vocabulary size. For most text interfaces it comes out tighter than the raw-selection bounds, but not always — where a small vocabulary makes Wolpaw tighter, that wins instead. Any Fitts, Wolpaw or log₂(N) figure shown below is another bound on the same channel; switch the home-page score selector to compare one across entries.",
+    "The strictest bound here is the Shannon entropy of the output text, under one predictor held constant across the whole atlas (≈1 bit per character). That shared predictor makes it directly comparable to every other text entry (keyboards, spellers, silent speech and speech BCIs) regardless of prior or vocabulary size. For most text interfaces it comes out tighter than the raw-selection bounds, but not always. Where a small vocabulary makes Wolpaw tighter, that wins instead. Any Fitts, Wolpaw or log₂(N) figure shown below is another bound on the same channel. Switch the home-page score selector to compare one across entries.",
 };
 const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distinguishable actions`;
 ---
@@ -142,7 +142,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   {additional.length > 0 && (
     <>
       <h2>Other bounds considered for the headline</h2>
-      <p class="seclbl">Also valid upper bounds for this entry and eligible to be the headline — they just
+      <p class="seclbl">Also valid upper bounds for this entry and eligible to be the headline. They just
         came out looser than the strictest above. Pick any of these in the home-page score selector.</p>
       {additional.map((r) => (
         <CalculationBlock
@@ -156,7 +156,7 @@ const sizeLabel = as.size === "continuous" ? "Continuous" : `${as.size} distingu
   {supplementary.length > 0 && (
     <>
       <h2>Other score types</h2>
-      <p class="seclbl">Bounds the atlas keeps out of the default <i>strictest</i> headline — as-reported
+      <p class="seclbl">Bounds the atlas keeps out of the default <i>strictest</i> headline: as-reported
         figures, alternate task conditions, or raw-channel ceilings that shouldn't win the headline by
         default. Each still carries a score type, so the home-page selector ranks this entry on it when you
         choose that type. Read its derivation before comparing across entries.</p>

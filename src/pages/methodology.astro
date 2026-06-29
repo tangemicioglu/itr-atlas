@@ -19,11 +19,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        cost no correction time. Under those assumptions, the formula above is exact. Real interfaces
        rarely satisfy all of them, so the number is better read as an <strong>upper bound</strong>.
        The overestimate grows with accuracy and with the number of symbols
-       (<a href="https://doi.org/10.1371/journal.pone.0078432">Speier, Arnold &amp; Pouratian 2013</a>;
+       (<a href="https://doi.org/10.1371/journal.pone.0078432">Speier, Arnold &amp; Pouratian 2013</a>,
        <a href="https://pubmed.ncbi.nlm.nih.gov/23448963/">Yuan et al. 2013</a>).</p>
     <p>Different estimators relax different assumptions. Confusion-matrix mutual information removes
        the symmetric-error assumption
-       (<a href="https://www.yumpu.com/en/document/view/33702582/statistical-modelling-issues-for-the-adaptive-brain-interface">Nykopp 2001</a>;
+       (<a href="https://www.yumpu.com/en/document/view/33702582/statistical-modelling-issues-for-the-adaptive-brain-interface">Nykopp 2001</a>,
        <a href="https://archive-ouverte.unige.ch/unige:47811">Kronegg et al. 2005</a>). A language
        model removes the uniform-prior assumption (Speier and colleagues, above). A continuous
        control channel needs a throughput model instead of a discrete-selection count. Most entries
@@ -130,7 +130,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <ul>
       <li><strong>Author-reported · reproduced</strong>: we recomputed the number from the paper's stated inputs and matched it.</li>
       <li><strong>Author-reported · not reproduced</strong>: the paper gives a number but doesn't expose enough to recompute it.</li>
-      <li><strong>Recomputed</strong>: no comparable ITR in the paper; we computed one from its inputs.</li>
+      <li><strong>Recomputed</strong>: no comparable ITR in the paper. We computed one from its inputs.</li>
     </ul>
   </article>
 </BaseLayout>

@@ -13,7 +13,7 @@ inputs:
   - symbol: "TP"
     value: "3.53"
     unit: "bits/s"
-    sourceNote: "On-screen MouthPad^ Benchmark value labeled BPS (Fitts) — the benchmark's own Fitts throughput for the run. The reference calculation re-derives this from the grid geometry and the headline BPS and reproduces it (~3.5 bits/s), so Augmental's displayed Fitts value serves as a cross-check rather than a face-value input."
+    sourceNote: "On-screen MouthPad^ Benchmark value labeled BPS (Fitts), the benchmark's own Fitts throughput for the run. The reference calculation re-derives this from the grid geometry and the headline BPS and reproduces it (~3.5 bits/s), so Augmental's displayed Fitts value serves as a cross-check rather than a face-value input."
   - symbol: "B"
     value: "8.51"
     unit: "bits/s"

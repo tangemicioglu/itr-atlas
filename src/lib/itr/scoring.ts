@@ -4,7 +4,7 @@
 // delivers, so no single method is "the" rate. The atlas reports the STRICTEST
 // (smallest) available bound per entry as the headline number, and lets the reader
 // switch the displayed value to any one scoreType. Shannon character/word entropy
-// is treated the same as the rest — it often comes out strictest for text entries,
+// is treated the same as the rest. It often comes out strictest for text entries,
 // but not always (a small-vocabulary Wolpaw bound can be tighter, e.g. moses).
 
 export type ScoreType =
@@ -48,7 +48,7 @@ export interface StrictestResult {
 /**
  * The calc that defines the headline: the smallest upper bound among calcs that
  * (a) carry a scoreType and (b) are eligible (not flagged notUsedForRanking).
- * Returns null when no eligible scored calc exists — the entry has no ranked rate.
+ * Returns null when no eligible scored calc exists. The entry has no ranked rate.
  * Generic so callers can read the winning calc's other fields (provenance, etc.).
  */
 export function strictestCalc<T extends ScorableCalc>(calcs: T[]): T | null {

@@ -51,6 +51,6 @@ calculations:
         note: "Forward from the online accuracy (89.83%) over the 40 targets. Perfect-accuracy ceiling is log2(40) = 5.32 bits, approached by the best subject."
       - title: "Authors' reported online ITR (includes the gaze-shift time)"
         math: "ITR = 4.45 bits/s  (mean across subjects; 0.5 s flicker + 0.5 s gaze shift ≈ 1 selection/s)"
-        note: "Author-reported and verified: B ≈ 4.31 bits/selection at ≈1 selection/s reproduces it. This counts log2(N) per selection — the classifier metric — not the 1 bit/char the atlas-ranked text figure holds every text entry to."
+        note: "Author-reported and verified: B ≈ 4.31 bits/selection at ≈1 selection/s reproduces it. This counts log2(N) per selection, the classifier metric, not the 1 bit/char the atlas-ranked text figure holds every text entry to."
 referenceCalculationId: comm
 ---

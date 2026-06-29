@@ -76,7 +76,7 @@ calculations:
     resultBitsPerSecond: 11.68
     steps:
       - title: "Binary bit channel (EEG2Code)"
-        math: "N = 2 — the decoder predicts each stimulation bit (black/white) from a 250 ms EEG window"
+        math: "N = 2. The decoder predicts each stimulation bit (black/white) from a 250 ms EEG window"
         note: "EEG2Code classifies the binary stimulation code, not 1-of-many targets, so the raw channel is a stream of per-bit predictions."
       - title: "Wolpaw ITR on the bit channel (authors' Eq. 2)"
         math: "ITR = [log2(N) + P·log2(P) + (1−P)·log2((1−P)/(N−1))] / T,  N = 2"
