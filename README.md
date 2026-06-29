@@ -1,4 +1,4 @@
-# Information Transfer Rate — Atlas
+# Information Transfer Rate Atlas
 
 A curated atlas comparing **information transfer rate (ITR, bits/s)** across human→machine input
 modalities: brain–computer interfaces, eye-tracking, speech, typing, and more.
