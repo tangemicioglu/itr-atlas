@@ -68,10 +68,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
        difference, not a modality difference, which is why this atlas keeps one predictor across
        entries.</p>
 
-    <h2>What we rank on: realized output, not raw channel bits</h2>
-    <p>Every entry is ranked on the information the interface <em>actually delivers to its
-       application</em>, measured under one predictor held constant across the whole atlas. Three
-       cases cover the entries:</p>
+    <h2>What we rank on: the strictest upper bound</h2>
+    <p>Most of these measures are <strong>upper bounds</strong> on what a channel can carry: Fitts'
+       index of difficulty, the Wolpaw bits-per-selection, log₂(N), and the Nuyujukian achieved
+       bitrate each cap the rate under their own idealizing assumptions. The one exception is the
+       Shannon realized-text figure, which counts the information the output actually delivers as
+       English under a fixed predictor. Because one entry can admit several of these, we report the
+       <strong>strictest (smallest)</strong> of them as the headline — the best-supported estimate of
+       what the interface really achieves — and a score selector on the home page lets you view any
+       single method across entries instead. These are the methods an entry can be scored by:</p>
     <ul>
       <li><strong>The output is language</strong> → character-entropy throughput
          (characters/min × ~1 bit/char), the same full-context Shannon predictor used for QWERTY
@@ -90,24 +95,25 @@ import BaseLayout from "../layouts/BaseLayout.astro";
          real action set, discounted by accuracy. There is no language predictor to apply, so the
          target set itself is the output.</li>
     </ul>
-    <p>For cursor tasks that can be read both ways, we use the tighter bound. Fitts is usually lower
-       because it measures the movement the user actually made. A Wolpaw-style target-acquisition
-       estimate can be lower when the task has only a small set of cued endpoints; in that case the
-       Wolpaw estimate becomes the reference and the Fitts derivation is kept as a check. The
+    <p>The strictest-bound rule settles cursor tasks that can be read more than one way. Fitts is
+       usually lower because it measures the movement the user actually made. A Wolpaw-style
+       target-acquisition estimate can be lower when the task has only a small set of cued endpoints;
+       then it wins the strictest-min and the Fitts derivation is kept as a check. The
        sensorimotor-rhythm cursor is the current example: eight cued targets give a Wolpaw estimate
        below the geometry-based Fitts estimate.</p>
-    <p>Raw-channel counts, including Wolpaw, log₂(N), achieved-bitrate, Webgrid BPS, and c-VEP
-       discrimination rate, are otherwise treated as capacities of task-specific channels. We keep them
-       as secondary <strong>comparison figures</strong>, not ranked numbers. Log₂(N) cannot be the rank when it
-       scores a decoder alphabet whose size is a knob. Neuralink's Webgrid carves a
-       continuous cursor into 900 cells (~9.8 bits/selection). Make the grid denser and the number
-       rises while the control is unchanged. EEG2Code shows the same problem at a larger scale: it
-       discriminates <strong>500,000</strong> random codes at ~100% from 2 s of EEG, log₂(500,000) ≈ 19 bits per
-       selection, 11.7 bits/s, and the authors themselves flag a "ceiling effect" where those bits
-       are not all usable as control commands
-       (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). A speller
-       that emits English but is credited log₂(40) per letter is being evaluated with a different predictor than
-       QWERTY is held to 1 bit/char. That is the same apples-to-oranges mismatch we reject for speech.</p>
+    <p>Raw-channel counts — Wolpaw, log₂(N), achieved-bitrate, Webgrid BPS, c-VEP discrimination —
+       are upper bounds on task-specific channels and sit alongside the others as selectable methods.
+       They rarely win the strictest-min, by design: log₂(N) over a decoder alphabet whose size is a
+       knob inflates without limit. Neuralink's Webgrid carves a continuous cursor into 900 cells
+       (~9.8 bits/selection); make the grid denser and the number rises while the control is
+       unchanged. EEG2Code shows the same at a larger scale: it discriminates <strong>500,000</strong>
+       random codes at ~100% from 2 s of EEG, log₂(500,000) ≈ 19 bits per selection, 11.7 bits/s, and
+       the authors themselves flag a "ceiling effect" where those bits are not all usable as control
+       commands (<a href="https://doi.org/10.1371/journal.pone.0221909">Nagel &amp; Spüler 2019</a>). A
+       speller that emits English but is credited log₂(40) per letter is being evaluated with a
+       different predictor than QWERTY held to 1 bit/char — a loose bound the strictest-min discards
+       in favor of the realized-text figure. That is the same apples-to-oranges mismatch we reject for
+       speech.</p>
     <p>This ranking rule also keeps the taxonomy from doing too much work. A cursor traversing space
        (Fitts), a frequency or code classifier (SSVEP, c-VEP), and covert attention with no movement
        at all (P300) can carry different secondary metric labels without changing the ranked measure. We
@@ -117,19 +123,21 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <p>None of the current speller entries are closed non-language command sets; every speller here
        types English.</p>
 
-    <h2>How we pick the reference number</h2>
+    <h2>How we pick the headline number</h2>
     <ol>
-      <li>Use the original paper's own calculation when it exists and is sound.</li>
-      <li>If the paper omits ITR, we compute one with a modality-appropriate method.</li>
-      <li>If the paper's reported metric is not comparable under this atlas convention, we recompute and show <strong>both</strong> derivations.</li>
+      <li>Compute every applicable method from the paper's inputs — the paper's own calculation where
+         it exists and is sound, otherwise a modality-appropriate recomputation.</li>
+      <li>Rank the entry on the <strong>strictest (smallest)</strong> of the figures that are valid
+         for its task; the Shannon realized-text figure competes on equal footing with the bounds.</li>
+      <li>Keep the looser figures as secondary derivations on the entry page, reachable through the
+         score selector.</li>
     </ol>
 
     <h2>Provenance labels</h2>
     <ul>
       <li><strong>Author-reported · reproduced</strong>: we recomputed the number from the paper's stated inputs and matched it.</li>
       <li><strong>Author-reported · not reproduced</strong>: the paper gives a number but doesn't expose enough to recompute it.</li>
-      <li><strong>Recomputed · paper omitted</strong>: no ITR in the paper; we computed one.</li>
-      <li><strong>Recomputed · not atlas-comparable</strong>: the paper reports a valid task metric, but the atlas ranks a different quantity for cross-entry comparison.</li>
+      <li><strong>Recomputed</strong>: no comparable ITR in the paper; we computed one from its inputs.</li>
     </ul>
   </article>
 </BaseLayout>

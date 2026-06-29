@@ -1,11 +1,13 @@
 # Information Transfer Rate — Atlas
 
-A curated, shareable atlas comparing **information transfer rate (ITR, bits/min)** across all
+A curated, shareable atlas comparing **information transfer rate (ITR, bits/s)** across all
 human→machine input modalities: brain–computer interfaces, eye-tracking, speech, typing, and more.
 
 Most ITR comparisons quietly misapply the math — Wolpaw's assumptions rarely hold in real
 interfaces. This project makes the rigor visible: **every number is sourced and re-derived, step by
-step**, and each entry shows exactly which method was used and why.
+step**. Most scoring methods (Fitts, Wolpaw, Nuyujukian, log₂N) are upper bounds on the channel, so
+each entry is ranked on the **strictest** of the ones that fit it, with every method shown and a
+selector to compare any one across entries.
 
 > 🌐 **Live: [tangemicioglu.com/itr-atlas](https://tangemicioglu.com/itr-atlas/)**
 > 📐 Full spec & data model: **[SPEC.md](./SPEC.md)** — visual design system (tokens): **[DESIGN.md](./DESIGN.md)** (Google `design.md` format)
@@ -14,18 +16,21 @@ step**, and each entry shows exactly which method was used and why.
 
 ✅ **Built and deployed.** ~45 entries across BCI (intracortical, ECoG, endovascular), spellers
 (SSVEP, P300, eye, QWERTY), silent speech (sEMG, electropalatography, lip-reading), pointing
-devices, and chord keyboards. Each entry has a sourced, re-derived reference figure. A few early
-seed entries still use placeholder figures pending re-derivation from their papers.
+devices, and chord keyboards. Each entry has sourced, re-derived figures and is ranked on the
+strictest of them. A few early seed entries still use placeholder figures pending re-derivation from
+their papers.
 
 ## What makes an entry honest
 
 Each interface gets:
-- **One reference ITR** — the single number used for comparison, chosen to fit the modality.
+- **A headline ITR = the strictest upper bound** — the smallest of the scoring methods that fit the
+  entry, since most of them only cap the true rate. A score selector swaps the displayed number to
+  any single method (Fitts / Wolpaw / Nuyujukian / Shannon) across all entries.
 - A **full derivation** — every constant traced to its source (paper section / table), every
-  operation shown.
+  operation shown, for each method.
 - A **provenance badge** — whether the figure is author-reported and verified, or recomputed by us
-  (because the paper omitted it, or its method was flawed).
-- Optional **supplementary calculations**, clearly marked as *not used for ranking*.
+  because the paper omitted a comparable number.
+- Other applicable methods kept as **secondary derivations** on the entry page.
 
 ## Stack
 
