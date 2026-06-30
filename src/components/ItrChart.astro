@@ -196,6 +196,9 @@ const plotted = points
     // has no value for it (noScore).
     const hidden = { system: new Set<string>(), technique: new Set<string>() };
     const noScore = new Set<SVGGElement>();
+    // Pinned points → a fn that nudges their label back into the viewport. Called
+    // after every relayout so a label travelling with its point stays on-screen.
+    const pinClamps = new Map<SVGGElement, () => void>();
     const isHidden = (el: SVGGElement) =>
       hidden.system.has(el.dataset.system!) || hidden.technique.has(el.dataset.technique!);
     const shown = (el: SVGGElement) => !isHidden(el) && !noScore.has(el);
@@ -315,6 +318,9 @@ const plotted = points
         text.textContent = String(v);
         xaxis.append(line, text);
       }
+      // Points (and their pinned labels) just moved; pull any that drifted toward
+      // an edge back into view.
+      for (const [el, clamp] of pinClamps) if (shown(el)) clamp();
     }
 
     function show(el: SVGGElement, e: MouseEvent) {
@@ -339,10 +345,13 @@ const plotted = points
     // a figure); a tap without dragging removes just that pin.
     function pinLabel(el: SVGGElement) {
       const color = el.querySelector<SVGElement>(".mark")?.getAttribute("fill") || "currentColor";
-      const m = /translate\(([-\d.]+)/.exec(el.getAttribute("transform") || "");
+      const m = /translate\(\s*([-\d.]+)[ ,]+([-\d.]+)/.exec(el.getAttribute("transform") || "");
       const px = m ? +m[1] : 0;
+      const py = m ? +m[2] : 0;
       let dx = px > ml + plotW * 0.6 ? -18 : 18; // default toward the open side
-      let dy = -24;
+      // Above the point by default, but below it when the point sits near the top
+      // of the frame so the label doesn't spawn off the top edge.
+      let dy = py < mt + 48 ? 30 : -24;
 
       const g = document.createElementNS(NS, "g");
       g.setAttribute("class", "pin");
@@ -376,6 +385,30 @@ const plotted = points
         leader.setAttribute("y2", String(dy - 4));
       }
       place();
+
+      // Nudge the label back inside the SVG viewport. getBBox is in the point's
+      // local coords; the point is translated by (ax,ay) read live from its current
+      // transform, so adding that gives the absolute box. Shifting dx/dy translates
+      // the whole label linearly (independent of text-anchor), so a single
+      // correction pass is exact. Run at spawn and again after each relayout, since
+      // the point (and its attached label) can move toward an edge then.
+      function clampIntoView() {
+        let bb: DOMRect;
+        try { bb = t.getBBox(); } catch { return; }
+        const tr = /translate\(\s*([-\d.]+)[ ,]+([-\d.]+)/.exec(el.getAttribute("transform") || "");
+        const ax = tr ? +tr[1] : px, ay = tr ? +tr[2] : py;
+        const vb = svg.viewBox.baseVal, pad = 6;
+        const left = ax + bb.x, right = left + bb.width;
+        const top = ay + bb.y, bottom = top + bb.height;
+        let ddx = 0, ddy = 0;
+        if (right > vb.width - pad) ddx -= right - (vb.width - pad);
+        if (left + ddx < pad) ddx += pad - (left + ddx); // left wins if label is wider than the frame
+        if (bottom > vb.height - pad) ddy -= bottom - (vb.height - pad);
+        if (top + ddy < pad) ddy += pad - (top + ddy); // top wins if taller than the frame
+        if (ddx || ddy) { dx += ddx; dy += ddy; place(); }
+      }
+      clampIntoView();
+      pinClamps.set(el, clampIntoView);
 
       // Drag to reposition; a tap (no real movement) opens this entry.
       let sx = 0, sy = 0, bdx = 0, bdy = 0, moved = false, scale = 1;
@@ -470,6 +503,7 @@ const plotted = points
         if (el.classList.contains("sel")) {
           el.classList.remove("sel");
           el.querySelectorAll(".pin").forEach((n) => n.remove());
+          pinClamps.delete(el);
         } else {
           el.classList.add("sel");
           pinLabel(el);
@@ -491,6 +525,7 @@ const plotted = points
           if (el.classList.contains("sel")) {
             el.classList.remove("sel");
             el.querySelectorAll(".pin").forEach((n) => n.remove());
+            pinClamps.delete(el);
           }
           continue;
         }
