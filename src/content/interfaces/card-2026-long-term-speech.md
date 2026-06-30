@@ -25,7 +25,7 @@ actionSpace:
   kind: context-dependent
   size: 125000
   prior: context-conditioned
-  notes: "The speech channel is a large-vocabulary brain-to-text decoder with a language model over more than 125,000 words. The live word probabilities are context-conditioned, so the 125k vocabulary is a nominal action space rather than a uniform set. The same implanted arrays also drove a 2D neural cursor; that cursor benchmark is split into its own entry, matching the channel-vs-application split used for ReFIT."
+  notes: "The speech channel is a large-vocabulary brain-to-text decoder with a language model over more than 125,000 words. The live word probabilities are context-conditioned, so the 125k vocabulary is a nominal action space rather than a uniform set. The same implanted arrays also drove a 2D neural cursor; that cursor benchmark is split into its own entry, matching the channel-vs-application split used for BrainGate2."
 references:
   - label: "Nature Medicine full text"
     url: "https://www.nature.com/articles/s41591-026-04414-6"

@@ -43,7 +43,7 @@ calculations:
     steps:
       - title: "Grid geometry -> movement difficulty"
         math: "30x30 grid: W = S/30; random targets -> mean amplitude A ~= 0.52*S, so A/W ~= 15.6.  ID = log2(A/W + 1) = log2(16.6) ~= 4.05 bits/movement."
-        note: "Same grid correction used for Neuralink Webgrid and the ReFIT/Card grids: a cued target is a pointing movement, so the information is the Fitts index of difficulty (~4.05 bits), not the log2(900) the full-grid score credits."
+        note: "Same grid correction used for Neuralink Webgrid and the BrainGate2/Card grids: a cued target is a pointing movement, so the information is the Fitts index of difficulty (~4.05 bits), not the log2(900) the full-grid score credits."
       - title: "Augmental's displayed Fitts value, cross-checked against the headline BPS"
         math: "Benchmark shows 'BPS (Fitts)' = 3.53 directly.  Cross-check by re-crediting the headline 8.51 BPS: 8.51 × 4.05 / log2(899) = 8.51 × 4.05 / 9.81 ~= 3.5 bits/s, matching."
         note: "Unlike Neuralink's Webgrid, Augmental displays its own Fitts value, so 3.53 is taken from the benchmark and the re-credit of the headline score confirms it rather than standing in for it. ITR = 3.53 bits/s."

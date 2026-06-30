@@ -16,7 +16,7 @@ inputs:
     sourceNote: "Grid task with 16 square targets, described in the Nature supplementary information."
   - symbol: "grid"
     value: "4x4"
-    sourceNote: "The 16 square targets are treated as a 4x4 square grid for the same Fitts grid correction used on Webgrid and ReFIT grid tasks."
+    sourceNote: "The 16 square targets are treated as a 4x4 square grid for the same Fitts grid correction used on Webgrid and BrainGate2 grid tasks."
   - symbol: "P"
     value: "0.578"
     sourceNote: "MN selected among 16 targets with 57.8 +/- 25.9% accuracy using a 500 ms dwell requirement."
@@ -47,7 +47,7 @@ calculations:
     steps:
       - title: "Grid geometry to movement difficulty"
         math: "4x4 board: cell width W = S/4; random grid targets -> mean amplitude A ~= 0.52 S, so A/W ~= 2.1"
-        note: "Same grid correction used for Neuralink Webgrid and the ReFIT cursor grid entry. The target is cued, so the movement carries the Fitts index of difficulty, not log2(16)."
+        note: "Same grid correction used for Neuralink Webgrid and the BrainGate2 cursor grid entry. The target is cued, so the movement carries the Fitts index of difficulty, not log2(16)."
       - title: "Information per movement"
         math: "ID = log2(A/W + 1) = log2(2.1 + 1) ~= 1.62 bits/movement"
         note: "The public text does not publish effective target width or endpoint scatter, so this uses nominal grid-cell width."

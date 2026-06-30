@@ -1,5 +1,5 @@
 ---
-name: ReFIT Cursor BCI, pointing (Pandarinath et al., 2017)
+name: BrainGate2 Cursor BCI (ReFIT-KF), pointing (Pandarinath et al., 2017)
 year: 2017
 modalityTags: ["Intracortical", "Cursor"]
 sensingModality: Intracortical
@@ -22,7 +22,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A 2D point-and-click cursor; throughput is measured by how fast and accurately it acquires randomly placed grid targets. This is a continuous control channel, not a discrete speller. The authors' headline uses the field-standard achieved-bitrate metric (log2(N) per cued selection), while the atlas pointing convention uses a Fitts-style movement difficulty on the same grid. The reference number here is therefore a Fitts throughput for comparability with mouse, trackball and stylus entries; the log2(N) achieved-bitrate is kept as a secondary, as-reported figure. This entry is the pointing channel; the same system's real-world copy-typing application is a separate entry (ReFIT Cursor BCI, text entry), which is what the participants actually communicated."
+  notes: "A 2D point-and-click cursor from the BrainGate2 pilot clinical trial (BrainGate Neural Interface System), driven by a ReFIT Kalman-filter decoder; throughput is measured by how fast and accurately it acquires randomly placed grid targets. ReFIT is the decoder, not the system. This is a continuous control channel, not a discrete speller. The authors' headline uses the field-standard achieved-bitrate metric (log2(N-1) per net-correct cued selection, Nuyujukian et al. 2015), while the atlas pointing convention uses a Fitts-style movement difficulty on the same grid. The reference number here is therefore a Fitts throughput for comparability with mouse, trackball and stylus entries; the log2(N-1) achieved-bitrate is kept as a secondary, as-reported figure. This entry is the pointing channel; the same system's real-world copy-typing application is a separate entry (BrainGate2 Cursor BCI (ReFIT-KF), text entry), which is what the participants actually communicated."
 references:
   - label: "Open-access full text (eLife)"
     url: "https://elifesciences.org/articles/18554"

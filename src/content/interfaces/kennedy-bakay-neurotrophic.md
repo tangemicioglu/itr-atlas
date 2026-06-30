@@ -18,7 +18,7 @@ inputs:
   - symbol: "H"
     value: "1.0"
     unit: "bits/char"
-    sourceNote: "English-text entropy (Shannon); the same ~1 bit/char standard used for QWERTY, eye-typing, Synchron and the ReFIT typing entry."
+    sourceNote: "English-text entropy (Shannon); the same ~1 bit/char standard used for QWERTY, eye-typing, Synchron and the BrainGate2 typing entry."
   - symbol: "N"
     value: "28"
     sourceNote: "≈ alphabet size of the virtual keyboard JR pointed at, for the raw-key Wolpaw ceiling (uniform prior). Approximate; the source documents the rate, not an exact key count."
@@ -33,7 +33,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: context-conditioned
-  notes: "The first chronic intracortical communication BCI (patient Johnny Ray, locked-in). A low-DOF continuous cursor plus a select signal, used to point at characters on a virtual keyboard, i.e. pointing-to-type, like the ReFIT typing and Synchron entries. The realized output is English text, so the reference uses the character-entropy method (~1 bit/char) on the documented 3 char/min rate rather than a raw cursor bitrate. Independent reviews quote ~0.03-0.05 bits/s for this system, which agrees with the 0.05 bits/s derived here."
+  notes: "The first chronic intracortical communication BCI (patient Johnny Ray, locked-in). A low-DOF continuous cursor plus a select signal, used to point at characters on a virtual keyboard, i.e. pointing-to-type, like the BrainGate2 typing and Synchron entries. The realized output is English text, so the reference uses the character-entropy method (~1 bit/char) on the documented 3 char/min rate rather than a raw cursor bitrate. Independent reviews quote ~0.03-0.05 bits/s for this system, which agrees with the 0.05 bits/s derived here."
 references:
   - label: "Brumberg, Nieto-Castanon, Kennedy & Guenther 2010 (Speech Communication): reports JR produced ~3 characters/min over a virtual keyboard"
     url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC2829990/"

@@ -34,7 +34,7 @@ actionSpace:
   kind: fixed-set
   size: 28
   prior: context-conditioned
-  notes: "An intracortical point-and-click cursor used with the BrainGate Radial Keyboard. The radial layout reduced cursor travel compared with QWERTY and enabled face-to-face text-to-speech and remote chat. Since the realized output is English text, the reference calculation follows the same character-entropy convention as the Kennedy, Synchron and ReFIT text-entry entries."
+  notes: "An intracortical point-and-click cursor used with the BrainGate Radial Keyboard. The radial layout reduced cursor travel compared with QWERTY and enabled face-to-face text-to-speech and remote chat. Since the realized output is English text, the reference calculation follows the same character-entropy convention as the Kennedy, Synchron and BrainGate2 text-entry entries."
 references:
   - label: "SAGE full text"
     url: "https://journals.sagepub.com/doi/10.1177/1545968314554624"
@@ -55,19 +55,6 @@ calculations:
         math: "H(English) ~= 1.0 bit/char"
       - title: "Information transfer rate"
         math: "10.4 char/min × 1.0 bit/char ÷ 60 s/min = 0.173 bits/s"
-  - id: chat
-    method: "QWERTY internet chat demonstration"
-    scoreType: shannon
-    kind: "Real-time native-app communication"
-    provenance: recomputed-omitted
-    notUsedForRanking: true
-    resultBitsPerSecond: 0.135
-    steps:
-      - title: "Reported chat typing rate"
-        math: "8.1 correct char/min at 100% accuracy"
-        note: "The participant used BrainGate2 Desktop with Google Chat from her residence. This is a native-application demonstration, not the fastest copy-spelling condition."
-      - title: "Information transfer rate"
-        math: "8.1 char/min × 1.0 bit/char ÷ 60 s/min = 0.135 bits/s"
   - id: wolpaw-raw
     method: "Wolpaw bitrate over the raw key set"
     scoreType: wolpaw

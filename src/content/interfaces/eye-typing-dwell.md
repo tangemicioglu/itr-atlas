@@ -33,7 +33,7 @@ actionSpace:
   kind: fixed-set
   size: 30
   prior: context-conditioned
-  notes: "An on-screen keyboard selected by gaze dwell. The reference counts the English character stream at Shannon entropy (consistent with the other typing entries); a predictive layout that reorders keys by likelihood would change the per-selection information. The bare eye-gaze pointing channel underneath (Fitts throughput) is a separate entry (Eye-Gaze Pointing); this entry is its realized text output, the same channel-vs-application split as the ReFIT cursor BCI."
+  notes: "An on-screen keyboard selected by gaze dwell. The reference counts the English character stream at Shannon entropy (consistent with the other typing entries); a predictive layout that reorders keys by likelihood would change the per-selection information. The bare eye-gaze pointing channel underneath (Fitts throughput) is a separate entry (Eye-Gaze Pointing); this entry is its realized text output, the same channel-vs-application split as the BrainGate2 cursor BCI."
 calculations:
   - id: entropy
     method: "Character-entropy throughput"

@@ -21,7 +21,7 @@ inputs:
   - symbol: "H"
     value: "1.0"
     unit: "bits/char"
-    sourceNote: "English-text entropy (Shannon); the task produced English text, so the same ~1 bit/char standard used for QWERTY, eye-typing and the ReFIT typing entry applies."
+    sourceNote: "English-text entropy (Shannon); the task produced English text, so the same ~1 bit/char standard used for QWERTY, eye-typing and the BrainGate2 typing entry applies."
   - symbol: "P"
     value: "0.9263"
     sourceNote: "Participant 1 average click-selection accuracy, 92.63% (first-in-human typing task)"
@@ -40,7 +40,7 @@ calculations:
     steps:
       - title: "Characters per minute"
         math: "13.81 correct char/min (Participant 1, predictive text disabled; P2 reached 20.10 cpm)"
-        note: "The eye-tracker supplies the pointing and the endovascular electrode supplies the click; this is the rate of English text actually produced. The same char-entropy method as QWERTY, eye-typing and the ReFIT typing entry."
+        note: "The eye-tracker supplies the pointing and the endovascular electrode supplies the click; this is the rate of English text actually produced. The same char-entropy method as QWERTY, eye-typing and the BrainGate2 typing entry."
       - title: "Bits per character"
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"

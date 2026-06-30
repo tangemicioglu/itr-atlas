@@ -14,7 +14,7 @@ inputs:
   - symbol: "rate"
     value: "35"
     unit: "char/min"
-    sourceNote: "Active online spelling: ~35 error-free letters/min (a 2.92 bits/s 'utility rate') for the proof-of-concept online subject."
+    sourceNote: "Active online spelling: ~35 error-free letters/min for the proof-of-concept online subject."
   - symbol: "H"
     value: "1.0"
     unit: "bits/char"
@@ -53,20 +53,6 @@ calculations:
         math: "H(English) ≈ 1.0 bit/char (Shannon)"
       - title: "Information transfer rate"
         math: "35 char/min × 1.0 bit/char ÷ 60 s/min = 0.583 bits/s"
-  - id: utility
-    method: "Authors' utility rate (log2(N) per selection over the speller alphabet)"
-    scoreType: nuyujukian
-    kind: "Alphabet-level achieved-bitrate metric, shown for comparison"
-    provenance: author-reported-verified
-    notUsedForRanking: true
-    resultBitsPerSecond: 2.92
-    steps:
-      - title: "Information per selection over the speller alphabet"
-        math: "32-target speller → log2(32) = 5 bits per correct selection"
-        note: "The authors' utility rate credits the full alphabet entropy per selection, unlike the atlas-ranked text figure which holds every text entry to 1 bit/char."
-      - title: "Apply the error-free spelling rate"
-        math: "35 error-free letters/min × 5 bits = 175 bit/min ≈ 2.92 bits/s"
-        note: "Matches the authors' reported 175 bit/min utility rate (98.5% mean target accuracy)."
   - id: passive
     method: "Raw channel discrimination (passive ITR)"
     scoreType: wolpaw

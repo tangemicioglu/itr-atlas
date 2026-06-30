@@ -1,5 +1,5 @@
 ---
-name: ReFIT Cursor BCI, text entry (Pandarinath et al., 2017)
+name: BrainGate2 Cursor BCI (ReFIT-KF), text entry (Pandarinath et al., 2017)
 year: 2017
 modalityTags: ["Intracortical", "Keyboard"]
 sensingModality: Intracortical
@@ -21,7 +21,7 @@ inputs:
     sourceNote: "English-text entropy (Shannon); participants copy-typed English sentences, so the same ~1 bit/char standard used for QWERTY, eye-typing and Morse applies."
   - symbol: "N"
     value: "28"
-    sourceNote: "Keys on the OPTI-II onscreen keyboard, for the raw-key Wolpaw ceiling (uniform prior over the alphabet). This bounds the keyboard selection itself; the underlying cursor channel is the separate ReFIT grid entry."
+    sourceNote: "Keys on the OPTI-II onscreen keyboard, for the raw-key Wolpaw ceiling (uniform prior over the alphabet). This bounds the keyboard selection itself; the underlying cursor channel is the separate BrainGate2 grid entry."
   - symbol: "T_key"
     value: "1.531"
     unit: "s/key"
@@ -30,7 +30,7 @@ actionSpace:
   kind: fixed-set
   size: 28
   prior: context-conditioned
-  notes: "A cursor-driven onscreen keyboard (OPTI-II / QWERTY): the intracortical cursor selects keys one at a time to spell English text. The action set is the ~28 keys, but real English is non-uniform, so the realized information is the character-entropy of the text (~1 bit/char), not log2(keys). The underlying continuous-cursor channel, along with the separate 6×6 grid benchmark that measures its peak bitrate, is the companion entry (ReFIT Cursor BCI, pointing). This entry is what the participant actually communicated; that one is the channel benchmark."
+  notes: "A cursor-driven onscreen keyboard (OPTI-II / QWERTY) from the BrainGate2 pilot clinical trial, with a ReFIT Kalman-filter decoder: the intracortical cursor selects keys one at a time to spell English text. The action set is the ~28 keys, but real English is non-uniform, so the realized information is the character-entropy of the text (~1 bit/char), not log2(keys). The underlying continuous-cursor channel, along with the separate 6×6 grid benchmark that measures its peak bitrate, is the companion entry (BrainGate2 Cursor BCI (ReFIT-KF), pointing). This entry is what the participant actually communicated; that one is the channel benchmark."
 references:
   - label: "Open-access full text (eLife)"
     url: "https://elifesciences.org/articles/18554"
