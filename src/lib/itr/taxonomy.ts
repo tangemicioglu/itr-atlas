@@ -41,6 +41,7 @@ const SYSTEM_BY_SENSING: Record<string, string> = {
   ECoG: "invasive-bci",
   Endovascular: "invasive-bci",
   EEG: "noninvasive-bci",
+  MEG: "noninvasive-bci",
   sEMG: "muscle",
   Electropalatography: "muscle",
   // Lip-reading is optical, not muscle-based, but it's folded under the
