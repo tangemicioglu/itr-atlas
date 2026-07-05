@@ -52,5 +52,20 @@ calculations:
       targets: 1024
       accuracy: 0.75
       secondsPerSelection: 0.76923
+  - id: achieved
+    method: "Achieved bitrate over N = 1,024 words"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the vocabulary channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 6.5
+    steps:
+      - title: "Achieved-bitrate credit per net-correct word"
+        math: "N = 1,024 → log2(N − 1) = log2(1023) = 10.0 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+      - title: "Net-correct word rate"
+        math: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.75) − 1 = 0.50 of words. At 78 word/min (0.769 s/word) → 0.50 × 78 / 60 = 0.65 correct/s."
+        note: "Same N (1,024), text-track accuracy (75%) and rate (78 wpm) as the entry's Wolpaw calc. The 1,024-word action set is reweighted each step by a neural language model, so feeding it into log2(N − 1) is a per-word capacity view, not open-vocabulary communication; the ranked figure is the 4.88 bits/s word-entropy Shannon."
+      - title: "Achieved bitrate"
+        math: "10.0 bits × 0.65 correct/s = 6.50 bits/s."
 referenceCalculationId: comm
 ---
