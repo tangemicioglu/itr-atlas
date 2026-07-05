@@ -44,7 +44,8 @@ const provenance = z.enum([
 //                  calculation in different units, so they share one type)
 //   wolpaw       - Wolpaw mutual-information bitrate over N targets
 //   fitts        - Fitts' law throughput (index of difficulty per movement)
-//   nuyujukian   - sustained achieved bitrate / grid BPS (Webgrid, Augmental, log2(N) achieved)
+//   nuyujukian   - sustained achieved bitrate / grid BPS (Webgrid, Augmental, log2(N-1) achieved;
+//                  the field-standard form. The namesake Nuyujukian 2015 used log2(N).)
 const scoreType = z.enum([
   'shannon',
   'wolpaw',

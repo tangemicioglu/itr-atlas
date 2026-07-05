@@ -81,14 +81,14 @@ calculations:
     kind: "Achieved-bitrate view of the radial task, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerSecond: 0.41
+    resultBitsPerSecond: 0.38
     steps:
       - title: "Achieved-bitrate credit per correct acquisition"
-        math: "N = 8 cued targets → log2(8) = 3.0 bits per net-correct selection (Nuyujukian et al. 2015, Eq. 1: log2(N) × max(correct − incorrect, 0) / t)."
+        math: "N = 8 cued targets → log2(N − 1) = log2(7) = 2.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
       - title: "Net-correct acquisition rate"
         math: "S3 made no false target selections (all misses were timeouts), so incorrect = 0 and net-correct = 0.974 of runs at one per 7.20 s → 0.974 / 7.20 = 0.135 correct/s."
-        note: "Uses the same S3 four-session successful movement time (7.20 s) and 97.4% completion as the entry's Fitts and Wolpaw calcs. With no false selections, the achieved bitrate credits log2(8) per successful acquisition."
+        note: "Uses the same S3 four-session successful movement time (7.20 s) and 97.4% completion as the entry's Fitts and Wolpaw calcs. With no false selections, the achieved bitrate credits log2(N − 1) per successful acquisition."
       - title: "Achieved bitrate"
-        math: "3.0 bits × 0.135 correct/s = 0.41 bits/s."
+        math: "2.81 bits × 0.135 correct/s = 0.38 bits/s."
 referenceCalculationId: fitts
 ---

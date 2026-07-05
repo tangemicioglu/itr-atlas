@@ -65,14 +65,14 @@ calculations:
     kind: "Achieved-bitrate view of the center-out task, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true
-    resultBitsPerSecond: 0.89
+    resultBitsPerSecond: 0.84
     steps:
       - title: "Achieved-bitrate credit per correct acquisition"
-        math: "N = 8 cued targets → log2(8) = 3.0 bits per net-correct selection (Nuyujukian et al. 2015, Eq. 1: log2(N) × max(correct − incorrect, 0) / t)."
+        math: "N = 8 cued targets → log2(N − 1) = log2(7) = 2.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
       - title: "Net-correct acquisition rate"
         math: "Misses are 10 s timeouts, not wrong-target selections, so incorrect = 0 and net-correct = 0.82 of attempts at one per 2.75 s → 0.82 / 2.75 = 0.298 correct/s."
-        note: "Same reached-in-time basis (P = 0.82, mean movement time 2.75 s) as the entry's Fitts and Wolpaw calcs. Unlike the Wolpaw figure it credits log2(N) per correct acquisition rather than the mutual information, so it runs looser."
+        note: "Same reached-in-time basis (P = 0.82, mean movement time 2.75 s) as the entry's Fitts and Wolpaw calcs. Unlike the Wolpaw figure it credits log2(N − 1) per correct acquisition rather than the mutual information, so it runs looser."
       - title: "Achieved bitrate"
-        math: "3.0 bits × 0.298 correct/s = 0.89 bits/s."
+        math: "2.81 bits × 0.298 correct/s = 0.84 bits/s."
 referenceCalculationId: wolpaw
 ---
