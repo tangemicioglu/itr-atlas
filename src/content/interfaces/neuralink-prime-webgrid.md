@@ -49,7 +49,7 @@ calculations:
     resultBitsPerSecond: 8.01
     steps:
       - title: "Webgrid achieved-bitrate metric"
-        math: "30×30 board → N = 900 cells. The Webgrid score credits log2(N − 1) = log2(899) ≈ 9.81 bits per net-correct cued selection (Neuralink's own Webgrid formula, a log2(N−1) variant of the achieved-bitrate metric; the namesake Nuyujukian et al. 2015 uses log2(N))."
+        math: "30×30 board → N = 900 cells. The Webgrid score credits log2(N − 1) = log2(899) ≈ 9.81 bits per net-correct cued selection (Neuralink's own Webgrid formula, a log2(N−1) variant of the achieved-bitrate metric; Nuyujukian et al. 2015, which introduced the metric, uses log2(N))."
       - title: "Authors' reported score (taken as reported, not re-derived)"
         math: "B = 8.01 bits/s. Noland Arbaugh's Webgrid record, reported directly by Neuralink (first session 4.6 BPS; the often-quoted ~10 BPS is the able-bodied-mouse reference on this board, not a participant result)."
         note: "Neuralink publishes only the BPS score, with no net-correct selection rate or per-trial timing. There is no more-primary quantity to derive this from: it is an author-reported figure. Dividing out the per-selection credit implies ~8.01/9.81 ≈ 0.82 selections/s (~49/min), but that rate is a consequence of the score, not an independent measurement, so this is not a forward calculation."

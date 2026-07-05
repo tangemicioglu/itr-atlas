@@ -73,10 +73,10 @@ calculations:
     resultBitsPerSecond: 4.38
     steps:
       - title: "Achieved-bitrate credit per net-correct key"
-        math: "N = 29 → log2(N − 1) = log2(28) = 4.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 29 → log2(N − 1) = log2(28) = 4.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct key rate"
-        math: "A decoding error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.68) − 1 = 0.36 of keys. At 0.395 s/key (152 char/min) → 0.36 / 0.395 = 0.911 correct/s."
-        note: "Same N (29), MEG per-character accuracy (68%, i.e. 32% CER) and key interval (0.395 s) as the entry's Wolpaw calc. This is the one entry where the 2P − 1 netting bites hard: achieved (4.38) falls well below the entry's own Wolpaw bound (6.11), because Wolpaw's mutual-information term still credits ~2.4 bits/key at 68% while achieved nets each wrong key one-for-one. Both stay above the 1.72 bits/s Shannon headline, so neither ranks. At the EEG variant's 33% accuracy (67% CER) 2P − 1 goes negative and the achieved bitrate clamps to 0 — the clearest illustration of why this metric is a poor fit below ~55% accuracy and is never used for ranking."
+        math: "net-correct = 2P − 1 = 2(0.68) − 1 = 0.36 of keys. At 0.395 s/key (152 char/min) → 0.36 / 0.395 = 0.911 correct/s."
+        note: "A decoding error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (29), MEG per-character accuracy (68%, i.e. 32% CER) and key interval (0.395 s) as the entry's Wolpaw calc. This is the one entry where the 2P − 1 netting bites hard: achieved (4.38) falls well below the entry's own Wolpaw bound (6.11), because Wolpaw's mutual-information term still credits ~2.4 bits/key at 68% while achieved nets each wrong key one-for-one. Both stay above the 1.72 bits/s Shannon headline, so neither ranks. At the EEG variant's 33% accuracy (67% CER) 2P − 1 goes negative and the achieved bitrate clamps to 0 — the clearest illustration of why this metric is a poor fit below ~55% accuracy and is never used for ranking."
       - title: "Achieved bitrate"
         math: "4.81 bits × 0.911 correct/s = 4.38 bits/s."
 referenceCalculationId: comm

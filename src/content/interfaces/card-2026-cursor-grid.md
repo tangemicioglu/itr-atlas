@@ -17,7 +17,7 @@ inputs:
     sourceNote: "Mean achieved grid-task bitrate (2.90 +/- 0.16 bits/s; peak 3.16) for the neural cursor on the main 14x14 grid (0.77-inch tiles; Methods). It is the field-standard achieved-bitrate metric (log2(N-1) per cued selection). The authors compare it to arrays in hand motor cortex, while T15's arrays were in ventral precentral (speech) cortex. This is not a Fitts throughput. A separate larger-tile 6x6 condition gave 1.67 bits/s with the neural cursor."
   - symbol: "method"
     value: "log2(N-1)/selection, net of errors"
-    sourceNote: "Standard achieved-bitrate for 2D target acquisition, reported directly by the authors and explicitly benchmarked against prior intracortical cursor work. This paper uses log2(N−1) per net-correct selection (grid-task refs 9,18,34-37, in the Nuyujukian et al. 2015 lineage); the 2015 namesake paper's Eq. 1 uses log2(N)."
+    sourceNote: "Standard achieved-bitrate for 2D target acquisition, reported directly by the authors and explicitly benchmarked against prior intracortical cursor work. This paper uses log2(N−1) per net-correct selection (grid-task refs 9,18,34-37, in the Nuyujukian et al. 2015 lineage); the 2015 source paper's Eq. 1 uses log2(N)."
 actionSpace:
   kind: continuous
   size: continuous

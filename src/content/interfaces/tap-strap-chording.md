@@ -76,10 +76,10 @@ calculations:
     resultBitsPerSecond: 7.34
     steps:
       - title: "Achieved-bitrate credit per net-correct character"
-        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct character rate"
-        math: "A chord error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.9102) − 1 = 0.820 of characters. At 0.5428 s/char → 0.820 / 0.5428 = 1.51 correct/s."
-        note: "Same N (30), measured letter accuracy (91.02%) and character interval (0.5428 s) as the entry's raw-character Wolpaw ceiling; netting each wrong chord against a correct one (2P − 1) lands just under the ~7.4 bits/s Wolpaw figure. Both are the uniform-prior character channel, above the 1.68 bits/s Shannon headline."
+        math: "net-correct = 2P − 1 = 2(0.9102) − 1 = 0.820 of characters. At 0.5428 s/char → 0.820 / 0.5428 = 1.51 correct/s."
+        note: "A chord error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (30), measured letter accuracy (91.02%) and character interval (0.5428 s) as the entry's raw-character Wolpaw ceiling; netting each wrong chord against a correct one (2P − 1) lands just under the ~7.4 bits/s Wolpaw figure. Both are the uniform-prior character channel, above the 1.68 bits/s Shannon headline."
       - title: "Achieved bitrate"
         math: "4.86 bits × 1.51 correct/s = 7.34 bits/s."
 referenceCalculationId: entropy

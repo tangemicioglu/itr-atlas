@@ -81,10 +81,10 @@ calculations:
     resultBitsPerSecond: 0.45
     steps:
       - title: "Achieved-bitrate credit per correct acquisition"
-        math: "N = 16 cued targets → log2(N − 1) = log2(15) = 3.91 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 16 cued targets → log2(N − 1) = log2(15) = 3.91 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct acquisition rate"
-        math: "A missed target is a 5 s timeout marked incorrect, not a wrong-target selection (Supplementary Information: 'had 5 seconds to acquire the target, or the trial was marked as incorrect'), so incorrect = 0 and net-correct = 0.578 of trials at one per 5 s → 0.578 / 5 = 0.116 correct/s."
-        note: "Same timeout denominator (5 s) and 57.8% accuracy as the entry's Fitts and Wolpaw calcs. Because misses are timeouts rather than false selections, the achieved bitrate credits log2(N − 1) per successful acquisition; the Wolpaw figure instead spreads the 42.2% error mass over the 15 non-targets, so it runs lower here."
+        math: "incorrect = 0, so net-correct = 0.578 of trials at one per 5 s → 0.578 / 5 = 0.116 correct/s."
+        note: "A missed target is a 5 s timeout marked incorrect, not a wrong-target selection (Supplementary Information: 'had 5 seconds to acquire the target, or the trial was marked as incorrect'), so there are no false selections to net against. Same timeout denominator (5 s) and 57.8% accuracy as the entry's Fitts and Wolpaw calcs. Because misses are timeouts rather than false selections, the achieved bitrate credits log2(N − 1) per successful acquisition; the Wolpaw figure instead spreads the 42.2% error mass over the 15 non-targets, so it runs lower here."
       - title: "Achieved bitrate"
         math: "3.91 bits × 0.116 correct/s = 0.45 bits/s."
 referenceCalculationId: fitts

@@ -72,10 +72,10 @@ calculations:
     resultBitsPerSecond: 82
     steps:
       - title: "Achieved-bitrate credit per net-correct character"
-        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct character rate"
-        math: "A transcription error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.95) − 1 = 0.90 of characters. At 0.05333 s/char (225 wpm) → 0.90 / 0.05333 = 16.88 correct/s."
-        note: "Same N (30), certification accuracy (95%) and character interval (0.05333 s) as the entry's raw-character Wolpaw ceiling, and lands on the same ~82 bits/s. As the entry notes, this per-character key channel loosely over-bounds steno, whose strokes capture whole syllables; the transmitted information is bounded by the 17.8 bits/s Shannon headline on the English text produced."
+        math: "net-correct = 2P − 1 = 2(0.95) − 1 = 0.90 of characters. At 0.05333 s/char (225 wpm) → 0.90 / 0.05333 = 16.88 correct/s."
+        note: "A transcription error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (30), certification accuracy (95%) and character interval (0.05333 s) as the entry's raw-character Wolpaw ceiling, and lands on the same ~82 bits/s. As the entry notes, this per-character key channel loosely over-bounds steno, whose strokes capture whole syllables; the transmitted information is bounded by the 17.8 bits/s Shannon headline on the English text produced."
       - title: "Achieved bitrate"
         math: "4.86 bits × 16.88 correct/s = 82.0 bits/s."
 referenceCalculationId: entropy

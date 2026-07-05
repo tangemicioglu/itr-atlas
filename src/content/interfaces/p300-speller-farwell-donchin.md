@@ -61,10 +61,10 @@ calculations:
     resultBitsPerSecond: 0.2
     steps:
       - title: "Achieved-bitrate credit per net-correct selection"
-        math: "N = 36 → log2(N − 1) = log2(35) = 5.13 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 36 → log2(N − 1) = log2(35) = 5.13 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct selection rate"
-        math: "A speller error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.95) − 1 = 0.90 of selections. At ~2.6 selections/min (23 s each) → 0.90 / 23 = 0.039 correct/s."
-        note: "Same N (36), accuracy (95%) and selection time (23 s) as the entry's Wolpaw calc. Because a wrong selection commits an error rather than merely timing out, the achieved bitrate nets each mistake against a correct selection (2P − 1); at this high accuracy it nearly matches the Wolpaw figure, but it falls faster as accuracy drops."
+        math: "net-correct = 2P − 1 = 2(0.95) − 1 = 0.90 of selections. At ~2.6 selections/min (23 s each) → 0.90 / 23 = 0.039 correct/s."
+        note: "A speller error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (36), accuracy (95%) and selection time (23 s) as the entry's Wolpaw calc. Because a wrong selection commits an error rather than merely timing out, the achieved bitrate nets each mistake against a correct selection (2P − 1); at this high accuracy it nearly matches the Wolpaw figure, but it falls faster as accuracy drops."
       - title: "Achieved bitrate"
         math: "5.13 bits × 0.039 correct/s = 0.20 bits/s."
 referenceCalculationId: comm

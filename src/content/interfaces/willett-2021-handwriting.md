@@ -85,10 +85,10 @@ calculations:
     resultBitsPerSecond: 6.49
     steps:
       - title: "Achieved-bitrate credit per net-correct character"
-        math: "N = 31 → log2(N − 1) = log2(30) = 4.91 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 31 → log2(N − 1) = log2(30) = 4.91 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct character rate"
-        math: "A decoding error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.941) − 1 = 0.882 of characters. At 90 char/min (0.667 s/char) → 0.882 × 90 / 60 = 1.32 correct/s."
-        note: "Same N (31), raw online character accuracy (94.1%, no language model) and character rate (90/min) as the entry's Wolpaw calc; netting each wrong character against a correct one (2P − 1) lands near the ~6.5 bits/s raw-decoder Wolpaw figure. Both are the uniform-prior character channel, above the 1.41 bits/s Shannon headline."
+        math: "net-correct = 2P − 1 = 2(0.941) − 1 = 0.882 of characters. At 90 char/min (0.667 s/char) → 0.882 × 90 / 60 = 1.32 correct/s."
+        note: "A decoding error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (31), raw online character accuracy (94.1%, no language model) and character rate (90/min) as the entry's Wolpaw calc; netting each wrong character against a correct one (2P − 1) lands near the ~6.5 bits/s raw-decoder Wolpaw figure. Both are the uniform-prior character channel, above the 1.41 bits/s Shannon headline."
       - title: "Achieved bitrate"
         math: "4.91 bits × 1.32 correct/s = 6.49 bits/s."
 referenceCalculationId: comm

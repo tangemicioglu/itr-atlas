@@ -17,7 +17,7 @@ inputs:
     sourceNote: "Mean achieved bitrate, best participant (T5), grid target task (Results). T6: 2.2 bits/s; T7: 1.4 bits/s."
   - symbol: "method"
     value: "log2(targets)/selection, net of errors"
-    sourceNote: "Standard achieved-bitrate for 2D target acquisition, reported directly by the authors. This paper credits log2(N−1) per net-correct selection (Methods, citing Nuyujukian et al. 2015); the 2015 namesake paper's own Eq. 1 uses log2(N)."
+    sourceNote: "Standard achieved-bitrate for 2D target acquisition, reported directly by the authors. This paper credits log2(N−1) per net-correct selection (Methods, citing Nuyujukian et al. 2015); the 2015 source paper's own Eq. 1 uses log2(N)."
 actionSpace:
   kind: continuous
   size: continuous
@@ -49,7 +49,7 @@ calculations:
     resultBitsPerSecond: 3.7
     steps:
       - title: "Achieved-bitrate metric"
-        math: "6×6 grid → N = 36 targets; this paper credits log2(N − 1) = log2(35) ≈ 5.13 bits per net-correct cued selection (Pandarinath et al. 2017, Methods, citing Nuyujukian et al. 2015). The 2015 namesake paper's Eq. 1 uses log2(N) instead, so its 8-target radial task scores log2(8) = 3.0 bits per net selection, not log2(7) ≈ 2.8."
+        math: "6×6 grid → N = 36 targets; this paper credits log2(N − 1) = log2(35) ≈ 5.13 bits per net-correct cued selection (Pandarinath et al. 2017, Methods, citing Nuyujukian et al. 2015). The 2015 source paper's Eq. 1 uses log2(N) instead, so its 8-target radial task scores log2(8) = 3.0 bits per net selection, not log2(7) ≈ 2.8."
       - title: "Authors' reported score (taken as reported, not re-derived)"
         math: "B = 3.7 ± 0.4 bits/s  (T5, 6×6 grid; T6 2.2, T7 1.4; T5 reached 4.16 on a dense 9×9 grid)."
         note: "Reported directly in Results. The paper gives only the bitrate, with no separate selections/s or acquisition time. There is no more-primary quantity to derive it from: it is author-reported. Dividing by the 5.13-bit credit implies ~0.72 selections/s, but that rate is a consequence of the score, not an independent measurement."

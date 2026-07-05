@@ -70,10 +70,10 @@ calculations:
     resultBitsPerSecond: 14
     steps:
       - title: "Achieved-bitrate credit per net-correct key"
-        math: "N = 30 keys → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 30 keys → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct key rate"
-        math: "A touch error commits the wrong character rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.9766) − 1 = 0.953 of keys. At 0.3315 s/key → 0.953 / 0.3315 = 2.87 correct/s."
-        note: "Same N (30 keys), uncorrected accuracy (97.66%) and keystroke interval (0.3315 s) as the entry's raw-key Wolpaw ceiling, and lands on the same ~14 bits/s. Both are the uniform-prior key channel before English redundancy, above the 2.95 bits/s Shannon headline."
+        math: "net-correct = 2P − 1 = 2(0.9766) − 1 = 0.953 of keys. At 0.3315 s/key → 0.953 / 0.3315 = 2.87 correct/s."
+        note: "A touch error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (30 keys), uncorrected accuracy (97.66%) and keystroke interval (0.3315 s) as the entry's raw-key Wolpaw ceiling, and lands on the same ~14 bits/s. Both are the uniform-prior key channel before English redundancy, above the 2.95 bits/s Shannon headline."
       - title: "Achieved bitrate"
         math: "4.86 bits × 2.87 correct/s = 14.0 bits/s."
 referenceCalculationId: entropy

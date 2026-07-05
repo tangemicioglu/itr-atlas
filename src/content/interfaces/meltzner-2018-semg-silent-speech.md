@@ -64,10 +64,10 @@ calculations:
     resultBitsPerSecond: 15.2
     steps:
       - title: "Achieved-bitrate credit per net-correct word"
-        math: "N = 2,200 → log2(N − 1) = log2(2199) = 11.10 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 2,200 → log2(N − 1) = log2(2199) = 11.10 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct word rate"
-        math: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.911) − 1 = 0.822 of words. At the assumed 100 word/min (0.6 s/word) → 0.822 × 100 / 60 = 1.37 correct/s."
-        note: "Same N (2,200), word accuracy (91.1%) and assumed 100 wpm rate as the entry's Wolpaw calc. The large vocabulary makes this per-word capacity figure high, but the rate is assumed and the vocabulary language-model-mediated, so it is notUsedForRanking and not a demonstrated communication speed."
+        math: "net-correct = 2P − 1 = 2(0.911) − 1 = 0.822 of words. At the assumed 100 word/min (0.6 s/word) → 0.822 × 100 / 60 = 1.37 correct/s."
+        note: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P. Same N (2,200), word accuracy (91.1%) and assumed 100 wpm rate as the entry's Wolpaw calc. The large vocabulary makes this per-word capacity figure high, but the rate is assumed and the vocabulary language-model-mediated, so it is notUsedForRanking and not a demonstrated communication speed."
       - title: "Achieved bitrate"
         math: "11.10 bits × 1.37 correct/s = 15.2 bits/s."
 referenceCalculationId: comm

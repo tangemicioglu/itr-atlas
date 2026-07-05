@@ -68,7 +68,7 @@ calculations:
     resultBitsPerSecond: 19
     steps:
       - title: "Achieved-bitrate credit per net-correct character"
-        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct character rate"
         math: "Experts left most errors in, so the 47 wpm already reflects them and no separate accuracy is applied: this is a perfect-copy ceiling with net-correct = 47 wpm × 5 = 235 char/min = 3.92 correct/s."
         note: "Same N and character interval (0.2553 s) as the entry's perfect-copy Wolpaw ceiling. With no error term the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land near 19 bits/s: the uniform-prior character channel, above the 3.92 bits/s Shannon headline."

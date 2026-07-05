@@ -67,10 +67,10 @@ calculations:
     resultBitsPerSecond: 8
     steps:
       - title: "Achieved-bitrate credit per net-correct key"
-        math: "N = 30 keys → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 30 keys → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct key rate"
-        math: "A dwell error commits the wrong key rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.9964) − 1 = 0.993 of keys. At 0.603 s/key → 0.993 / 0.603 = 1.65 correct/s."
-        note: "Same N (30 keys), accuracy (99.64%) and key interval (0.603 s) as the entry's raw-key Wolpaw ceiling, and lands on the same ~8 bits/s. Both are the uniform-prior key channel before English redundancy, far above the 1.65 bits/s Shannon headline that holds this entry to the realized text."
+        math: "net-correct = 2P − 1 = 2(0.9964) − 1 = 0.993 of keys. At 0.603 s/key → 0.993 / 0.603 = 1.65 correct/s."
+        note: "A dwell error commits the wrong key rather than timing out, so incorrect = 1 − P. Same N (30 keys), accuracy (99.64%) and key interval (0.603 s) as the entry's raw-key Wolpaw ceiling, and lands on the same ~8 bits/s. Both are the uniform-prior key channel before English redundancy, far above the 1.65 bits/s Shannon headline that holds this entry to the realized text."
       - title: "Achieved bitrate"
         math: "4.86 bits × 1.65 correct/s = 8.0 bits/s."
 referenceCalculationId: entropy

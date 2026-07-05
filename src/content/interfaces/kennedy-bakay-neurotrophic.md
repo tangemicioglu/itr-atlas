@@ -73,7 +73,7 @@ calculations:
     resultBitsPerSecond: 0.24
     steps:
       - title: "Achieved-bitrate credit per net-correct key"
-        math: "N = 28 keys → log2(N − 1) = log2(27) = 4.75 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 28 keys → log2(N − 1) = log2(27) = 4.75 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct key rate"
         math: "No per-selection accuracy is reported, so this is a perfect-copy ceiling: net-correct = the full 3 char/min = 0.05 correct/s (one key per 20 s)."
         note: "Same N and rate as the entry's perfect-copy Wolpaw ceiling. With no error data the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land at ~0.24 bits/s, above the 0.05 bits/s Shannon headline."

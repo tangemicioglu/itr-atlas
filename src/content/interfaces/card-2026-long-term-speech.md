@@ -65,10 +65,10 @@ calculations:
     resultBitsPerSecond: 15.6
     steps:
       - title: "Achieved-bitrate credit per net-correct word"
-        math: "N = 125,000 → log2(N − 1) = log2(124,999) ≈ 16.93 bits per net-correct selection (the namesake Nuyujukian 2015 used log2(N); at this N the difference is negligible)."
+        math: "N = 125,000 → log2(N − 1) = log2(124,999) ≈ 16.93 bits per net-correct selection (Nuyujukian 2015, which introduced the metric, used log2(N); at this N the difference is negligible)."
       - title: "Net-correct word rate"
-        math: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.992) − 1 = 0.984 of words. At 56 word/min (1.071 s/word) → 0.984 × 56 / 60 = 0.919 correct/s."
-        note: "Same N (125,000), word accuracy (99.2%) and rate (56 wpm) as the entry's Wolpaw calc. As that calc's own caveat notes, the 125k-word vocabulary is context-reweighted by the language model each step, so feeding it into log2(N − 1) is a large-vocabulary capacity view (~17 bits/word) — raw channel capacity, not communication, analogous to the nagel code-space figure. The ranked communication rate is the 4.63 bits/s word-entropy Shannon."
+        math: "net-correct = 2P − 1 = 2(0.992) − 1 = 0.984 of words. At 56 word/min (1.071 s/word) → 0.984 × 56 / 60 = 0.919 correct/s."
+        note: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P. Same N (125,000), word accuracy (99.2%) and rate (56 wpm) as the entry's Wolpaw calc. As that calc's own caveat notes, the 125k-word vocabulary is context-reweighted by the language model each step, so feeding it into log2(N − 1) is a large-vocabulary capacity view (~17 bits/word) — raw channel capacity, not communication, analogous to the nagel code-space figure. The ranked communication rate is the 4.63 bits/s word-entropy Shannon."
       - title: "Achieved bitrate"
         math: "16.93 bits × 0.919 correct/s = 15.6 bits/s."
 referenceCalculationId: comm

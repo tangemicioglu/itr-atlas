@@ -62,10 +62,10 @@ calculations:
     resultBitsPerSecond: 4.44
     steps:
       - title: "Achieved-bitrate credit per net-correct word"
-        math: "N = 100 → log2(N − 1) = log2(99) = 6.63 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+        math: "N = 100 → log2(N − 1) = log2(99) = 6.63 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
       - title: "Net-correct word rate"
-        math: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P and net-correct = 2P − 1 = 2(0.701) − 1 = 0.402 of words. At the assumed 100 word/min (0.6 s/word) → 0.402 × 100 / 60 = 0.67 correct/s."
-        note: "Same N (100), word accuracy (70.1%) and assumed 100 wpm rate as the entry's Wolpaw calc. At this low accuracy the 2P − 1 netting drops achieved (4.44) below the ranked Shannon figure (5.84) — an error-netting artifact. Rests on the assumed rate; notUsedForRanking."
+        math: "net-correct = 2P − 1 = 2(0.701) − 1 = 0.402 of words. At the assumed 100 word/min (0.6 s/word) → 0.402 × 100 / 60 = 0.67 correct/s."
+        note: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P. Same N (100), word accuracy (70.1%) and assumed 100 wpm rate as the entry's Wolpaw calc. At this low accuracy the 2P − 1 netting drops achieved (4.44) below the ranked Shannon figure (5.84) — an error-netting artifact. Rests on the assumed rate; notUsedForRanking."
       - title: "Achieved bitrate"
         math: "6.63 bits × 0.67 correct/s = 4.44 bits/s."
 referenceCalculationId: comm
