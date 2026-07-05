@@ -19,7 +19,7 @@ inputs:
     sourceNote: "The 16 square targets are treated as a 4x4 square grid for the same Fitts grid correction used on Webgrid and BrainGate2 grid tasks."
   - symbol: "P"
     value: "0.578"
-    sourceNote: "MN selected among 16 targets with 57.8 +/- 25.9% accuracy using a 500 ms dwell requirement."
+    sourceNote: "MN selected among 16 targets with 57.8 +/- 25.9% accuracy (500 ms dwell; control 5.56 +/- 7.26%, n=9, p<0.0001), per the Nature 2006 Supplementary Information, 'Grid task' section (not the main text). The coarser 64-square grid dropped to 16.7 +/- 13.2%."
   - symbol: "t"
     value: "5"
     unit: "s/trial"
@@ -72,5 +72,20 @@ calculations:
         note: "The public supplement reports a 5 s trial timeout, not mean acquisition time. Using the timeout for every trial makes the throughput a lower-bound style estimate."
       - title: "Information transfer rate"
         math: "1.37 bits/sel × 12 sel/min ÷ 60 s/min = 0.274 bits/s"
+  - id: achieved
+    method: "Achieved bitrate over the 16 grid targets"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the grid task, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.45
+    steps:
+      - title: "Achieved-bitrate credit per correct acquisition"
+        math: "N = 16 cued targets → log2(N − 1) = log2(15) = 3.91 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+      - title: "Net-correct acquisition rate"
+        math: "A missed target is a 5 s timeout marked incorrect, not a wrong-target selection (Supplementary Information: 'had 5 seconds to acquire the target, or the trial was marked as incorrect'), so incorrect = 0 and net-correct = 0.578 of trials at one per 5 s → 0.578 / 5 = 0.116 correct/s."
+        note: "Same timeout denominator (5 s) and 57.8% accuracy as the entry's Fitts and Wolpaw calcs. Because misses are timeouts rather than false selections, the achieved bitrate credits log2(N − 1) per successful acquisition; the Wolpaw figure instead spreads the 42.2% error mass over the 15 non-targets, so it runs lower here."
+      - title: "Achieved bitrate"
+        math: "3.91 bits × 0.116 correct/s = 0.45 bits/s."
 referenceCalculationId: fitts
 ---
