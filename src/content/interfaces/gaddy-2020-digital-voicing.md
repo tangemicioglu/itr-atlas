@@ -54,5 +54,20 @@ calculations:
       targets: 67
       accuracy: 0.964
       secondsPerSelection: 0.6
+  - id: achieved
+    method: "Achieved bitrate over N = 67 words (closed-vocabulary condition)"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the closed-vocabulary channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 9.35
+    steps:
+      - title: "Achieved-bitrate credit per net-correct word"
+        math: "N = 67 → log2(N − 1) = log2(66) = 6.04 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct word rate"
+        math: "net-correct = 2P − 1 = 2(0.964) − 1 = 0.928 of words. At the assumed 100 word/min (0.6 s/word) → 0.928 × 100 / 60 = 1.55 correct/s."
+        note: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P. Same N (67), closed-vocabulary accuracy (96.4%) and assumed 100 wpm rate as the entry's Wolpaw calc. Like every calc on this entry it rests on the assumed articulation rate, so it is notUsedForRanking; it should not be read as open-vocabulary throughput."
+      - title: "Achieved bitrate"
+        math: "6.04 bits × 1.55 correct/s = 9.35 bits/s."
 referenceCalculationId: comm
 ---

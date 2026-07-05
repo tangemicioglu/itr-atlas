@@ -75,5 +75,20 @@ calculations:
         note: "Uses the same S3 four-session average successful-run movement time as the Fitts reference calculation."
       - title: "Information transfer rate"
         math: "2.75 bits/sel × 8.33 sel/min ÷ 60 s/min = 0.382 bits/s"
+  - id: achieved
+    method: "Achieved bitrate over the 8 radial targets"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the radial task, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.38
+    steps:
+      - title: "Achieved-bitrate credit per correct acquisition"
+        math: "N = 8 cued targets → log2(N − 1) = log2(7) = 2.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct acquisition rate"
+        math: "incorrect = 0, so net-correct = 0.974 of runs at one per 7.20 s → 0.974 / 7.20 = 0.135 correct/s."
+        note: "S3 made no false target selections (all misses were timeouts), so there are no false selections to net against. Uses the same S3 four-session successful movement time (7.20 s) and 97.4% completion as the entry's Fitts and Wolpaw calcs. With no false selections, the achieved bitrate credits log2(N − 1) per successful acquisition."
+      - title: "Achieved bitrate"
+        math: "2.81 bits × 0.135 correct/s = 0.38 bits/s."
 referenceCalculationId: fitts
 ---

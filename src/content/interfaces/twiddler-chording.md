@@ -59,5 +59,20 @@ calculations:
       targets: 30
       accuracy: 1
       secondsPerSelection: 0.2553
+  - id: achieved
+    method: "Achieved bitrate over the raw character set"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the character channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 19
+    steps:
+      - title: "Achieved-bitrate credit per net-correct character"
+        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct character rate"
+        math: "Experts left most errors in, so the 47 wpm already reflects them and no separate accuracy is applied: this is a perfect-copy ceiling with net-correct = 47 wpm × 5 = 235 char/min = 3.92 correct/s."
+        note: "Same N and character interval (0.2553 s) as the entry's perfect-copy Wolpaw ceiling. With no error term the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land near 19 bits/s: the uniform-prior character channel, above the 3.92 bits/s Shannon headline."
+      - title: "Achieved bitrate"
+        math: "4.86 bits × 3.92 correct/s = 19.0 bits/s."
 referenceCalculationId: entropy
 ---

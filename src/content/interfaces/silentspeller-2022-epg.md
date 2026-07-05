@@ -55,5 +55,20 @@ calculations:
       targets: 1164
       accuracy: 0.87
       secondsPerSelection: 1.62162
+  - id: achieved
+    method: "Achieved bitrate over N = 1,164 words"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the vocabulary channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 4.65
+    steps:
+      - title: "Achieved-bitrate credit per net-correct word"
+        math: "N = 1,164 → log2(N − 1) = log2(1163) = 10.18 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct word rate"
+        math: "net-correct = 2P − 1 = 2(0.87) − 1 = 0.74 of words. At the measured 37 word/min (1.62 s/word) → 0.74 × 37 / 60 = 0.456 correct/s."
+        note: "A word error commits the wrong word rather than timing out, so incorrect = 1 − P. Same N (1,164), live word accuracy (87%) and measured rate (37 wpm) as the entry's Wolpaw calc. The dictionary is language-model-constrained, so this is a per-word capacity view over the 1,164-word set, not open-vocabulary throughput; the ranked figure is the 2.68 bits/s Shannon. Rate is measured, unlike the assumed-rate silent-speech entries."
+      - title: "Achieved bitrate"
+        math: "10.18 bits × 0.456 correct/s = 4.65 bits/s."
 referenceCalculationId: comm
 ---

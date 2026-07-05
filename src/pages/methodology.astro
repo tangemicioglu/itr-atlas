@@ -69,7 +69,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h2>What we rank on: the strictest upper bound</h2>
     <p>Every measure in the atlas is an <strong>upper bound</strong> on the information a channel
        delivers. Each one caps the rate under its own assumptions. Fitts' index of difficulty, the
-       Wolpaw bits-per-selection, log₂(N), the Nuyujukian achieved bitrate, and the Shannon entropy of
+       Wolpaw bits-per-selection, log₂(N), the achieved bitrate, and the Shannon entropy of
        the realized text all bound the same quantity from different directions. Since one entry often
        admits several measures, the headline uses the <strong>strictest (smallest)</strong> valid
        bound. The score selector on the home page can still re-rank the atlas by any single method.
@@ -90,8 +90,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <li><strong>Wolpaw / log₂(N)</strong>: bits per selection over the real action set, discounted
          by accuracy, for a closed command set with no language model to apply. (No current speller is
          such a set. Every speller here types English.)</li>
-      <li><strong>Nuyujukian achieved bitrate</strong>: log₂(N−1) per correct selection × net correct
-         rate, the sustained grid metric papers report as Webgrid BPS and the like.</li>
+      <li><strong>Achieved bitrate</strong>: log₂(N−1) × max(correct − incorrect, 0) ÷ time,
+         the field-standard grid metric reported as Webgrid BPS and the like (Pandarinath 2017,
+         Neuralink's Webgrid, Card 2026). The namesake
+         <a href="https://doi.org/10.1109/TBME.2014.2352214">Nuyujukian et al. 2015</a> (Eq. 1) used
+         log₂(N); the atlas standardizes on the now-conventional log₂(N−1) so every entry is
+         comparable.</li>
     </ul>
     <p>The strictest-bound rule handles cases that can be scored more than one way. A speller that
        emits English has both a Shannon bound (~1 bit/char) and a raw-selection bound (log₂(40) per

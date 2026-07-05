@@ -52,5 +52,20 @@ calculations:
       - title: "Authors' reported online ITR (includes the gaze-shift time)"
         math: "ITR = 4.45 bits/s  (mean across subjects; 0.5 s flicker + 0.5 s gaze shift ≈ 1 selection/s)"
         note: "Author-reported and verified: B ≈ 4.31 bits/selection at ≈1 selection/s reproduces it. This counts log2(N) per selection, the classifier metric, not the 1 bit/char the atlas-ranked text figure holds every text entry to."
+  - id: achieved
+    method: "Achieved bitrate over N = 40 targets"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the speller, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 4.21
+    steps:
+      - title: "Achieved-bitrate credit per net-correct selection"
+        math: "N = 40 → log2(N − 1) = log2(39) = 5.29 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct selection rate"
+        math: "net-correct = 2P − 1 = 2(0.8983) − 1 = 0.797 of selections. At ~1 selection/s (0.5 s flicker + 0.5 s gaze shift) → 0.797 correct/s."
+        note: "A speller error commits the wrong character rather than timing out, so incorrect = 1 − P. Same N (40), online accuracy (89.83%) and selection rate (~1/s) as the entry's Wolpaw calc. Netting each wrong selection against a correct one (2P − 1) drops the achieved figure a little below the 4.45 bits/s Wolpaw ITR; the gap widens as accuracy falls."
+      - title: "Achieved bitrate"
+        math: "5.29 bits × 0.797 correct/s = 4.21 bits/s."
 referenceCalculationId: comm
 ---

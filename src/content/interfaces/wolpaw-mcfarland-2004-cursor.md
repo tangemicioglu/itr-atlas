@@ -50,7 +50,7 @@ calculations:
         math: "× 0.82 (mean fraction of targets reached within the 10 s limit) → ≈ 1.00 bits/s"
         note: "This is a COMPLETION discount, not a Fitts effective-width adjustment: the paper publishes no endpoint scatter (SDx), so the index of difficulty uses nominal width and the 82% is targets reached in time, not a spatial-miss rate. Accuracy is therefore folded as a simple throughput multiplier (the same fallback used for the Neuralink cursor), not via the standard We = 4.133·SDx."
   - id: wolpaw
-    method: "Wolpaw / achieved-bitrate over the 8 cued targets"
+    method: "Wolpaw bitrate over the 8 cued targets"
     scoreType: wolpaw
     kind: "Discrete-selection figure, UNDER-counts the continuous cursor (only 8 targets)"
     provenance: recomputed-omitted
@@ -59,5 +59,20 @@ calculations:
       targets: 8
       accuracy: 0.82
       secondsPerSelection: 2.75
+  - id: achieved
+    method: "Achieved bitrate over the 8 cued targets"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the center-out task, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.84
+    steps:
+      - title: "Achieved-bitrate credit per correct acquisition"
+        math: "N = 8 cued targets → log2(N − 1) = log2(7) = 2.81 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct acquisition rate"
+        math: "incorrect = 0, so net-correct = 0.82 of attempts at one per 2.75 s → 0.82 / 2.75 = 0.298 correct/s."
+        note: "Misses are 10 s timeouts, not wrong-target selections, so there are no false selections to net against. Same reached-in-time basis (P = 0.82, mean movement time 2.75 s) as the entry's Fitts and Wolpaw calcs. Unlike the Wolpaw figure it credits log2(N − 1) per correct acquisition rather than the mutual information, so it runs looser."
+      - title: "Achieved bitrate"
+        math: "2.81 bits × 0.298 correct/s = 0.84 bits/s."
 referenceCalculationId: wolpaw
 ---

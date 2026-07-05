@@ -58,5 +58,20 @@ calculations:
       targets: 36
       accuracy: 1
       secondsPerSelection: 0.48
+  - id: achieved
+    method: "Achieved bitrate over the raw symbol set"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the symbol channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 10.7
+    steps:
+      - title: "Achieved-bitrate credit per net-correct symbol"
+        math: "N = 36 symbols → log2(N − 1) = log2(35) = 5.13 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct symbol rate"
+        math: "Skilled-operator copy error is not reported, so this is a perfect-copy ceiling: net-correct = 25 wpm × 5 = 125 char/min = 2.08 correct/s (0.48 s/char)."
+        note: "Same N (36) and symbol interval (0.48 s) as the entry's perfect-copy Wolpaw ceiling. With no error term the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land near 10.7 bits/s: the uniform-prior symbol channel, above the 2.08 bits/s Shannon headline."
+      - title: "Achieved bitrate"
+        math: "5.13 bits × 2.08 correct/s = 10.7 bits/s."
 referenceCalculationId: entropy
 ---

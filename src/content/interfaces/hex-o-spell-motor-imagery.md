@@ -58,5 +58,20 @@ calculations:
       - title: "Information transfer rate"
         math: "7.6 letter/min × 4.91 bits/letter ÷ 60 s/min = 0.62 bits/s"
         note: "Uses log2(N) per letter, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries."
+  - id: achieved
+    method: "Achieved bitrate over the ~30-letter alphabet"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the speller, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.62
+    steps:
+      - title: "Achieved-bitrate credit per net-correct letter"
+        math: "N = 30 → log2(N − 1) = log2(29) = 4.86 bits per net-correct letter (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct letter rate"
+        math: "The paper reports the net letter rate but no per-command accuracy, so this is a perfect-copy ceiling: net-correct = the full 7.6 letters/min = 0.127 correct/s."
+        note: "Same N and letter rate as the entry's Wolpaw comparison. With no error data the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land at 0.62 bits/s. Each letter is a two-step hexagon selection driven by the narrow 2-command channel."
+      - title: "Achieved bitrate"
+        math: "4.86 bits × 0.127 correct/s = 0.62 bits/s."
 referenceCalculationId: comm
 ---

@@ -56,6 +56,21 @@ calculations:
       targets: 28
       accuracy: 0.9263
       secondsPerSelection: 4.34468
+  - id: achieved
+    method: "Achieved bitrate over N = 28 keyboard targets"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the selection channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.93
+    steps:
+      - title: "Achieved-bitrate credit per net-correct selection"
+        math: "N = 28 → log2(N − 1) = log2(27) = 4.75 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct selection rate"
+        math: "net-correct = 2P − 1 = 2(0.9263) − 1 = 0.853 of selections. At 4.34 s/selection → 0.853 / 4.34 = 0.196 correct/s."
+        note: "A wrong click commits the wrong key rather than timing out, so incorrect = 1 − P. Same N (28), Participant 1 click accuracy (92.63%) and selection interval (4.34 s) as the entry's Wolpaw calc; netting each wrong click against a correct one (2P − 1) lands just under the ~0.94 bits/s Wolpaw figure. Like it, this measures the whole assistive stack (eye-tracker pointing + endovascular click), not the endovascular signal alone."
+      - title: "Achieved bitrate"
+        math: "4.75 bits × 0.196 correct/s = 0.93 bits/s."
 referenceCalculationId: comm
 references:
   - label: "Mitchell et al. 2023 (JAMA Neurology): SWITCH trial 4-patient safety outcomes"

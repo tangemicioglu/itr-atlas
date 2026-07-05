@@ -65,5 +65,20 @@ calculations:
       targets: 28
       accuracy: 0.914
       secondsPerSelection: 5.27
+  - id: achieved
+    method: "Achieved bitrate over the raw key set"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the key channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 0.75
+    steps:
+      - title: "Achieved-bitrate credit per net-correct key"
+        math: "N = 28 keys → log2(N − 1) = log2(27) = 4.75 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; Nuyujukian 2015, which introduced the metric, used log2(N))."
+      - title: "Net-correct key rate"
+        math: "net-correct = 2P − 1 = 2(0.914) − 1 = 0.828 of keys. At 5.27 s/key → 0.828 / 5.27 = 0.157 correct/s."
+        note: "A keyboard error commits the wrong key rather than timing out, so incorrect = 1 − P. Same N (28 keys), accuracy (91.4%) and key interval (5.27 s) as the entry's raw-key Wolpaw ceiling; netting each wrong key against a correct one (2P − 1) lands just under the ~0.75 bits/s Wolpaw figure. Both are the uniform-prior key channel, above the 0.173 bits/s Shannon headline."
+      - title: "Achieved bitrate"
+        math: "4.75 bits × 0.157 correct/s = 0.75 bits/s."
 referenceCalculationId: comm
 ---
