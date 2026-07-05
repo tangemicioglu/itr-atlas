@@ -76,8 +76,8 @@ calculations:
       - title: "Information transfer rate"
         math: "2.75 bits/sel × 8.33 sel/min ÷ 60 s/min = 0.382 bits/s"
   - id: achieved
-    method: "Nuyujukian achieved bitrate over the 8 radial targets"
-    scoreType: nuyujukian
+    method: "Achieved bitrate over the 8 radial targets"
+    scoreType: achieved
     kind: "Achieved-bitrate view of the radial task, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

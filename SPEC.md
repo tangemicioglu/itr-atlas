@@ -62,17 +62,17 @@ A text interface is the clearest illustration: free-word (open vocabulary), fixe
 bigram-grammar variants of the *same* modality have different action spaces and priors, so they
 have different information per selection. The resulting bits/s are not equivalent. The
 applicable methods (Wolpaw, confusion-matrix mutual information, character/word entropy, Fitts'-law
-throughput, Nuyujukian achieved bitrate) follow from the action space and source model, not from the
+throughput, achieved bitrate) follow from the action space and source model, not from the
 modality label.
 
 **The strictest-bound rule.** Every method is an *upper bound* on the channel: Fitts, Wolpaw,
-log₂(N), the Nuyujukian achieved bitrate, and the Shannon character/word entropy each cap the rate
+log₂(N), the achieved bitrate, and the Shannon character/word entropy each cap the rate
 under their own idealizing assumptions, and none is privileged. So no single method is "correct." The
 headline estimate is the **strictest (smallest)** of the bounds that validly apply to an entry,
 and that is the headline number. Shannon entropy is one of those bounds, not a separate "realized"
 quantity: it is usually but not always strictest for text (a small-vocabulary Wolpaw bound can be
 tighter. Moses ranks on Wolpaw). Each calculation carries a **`scoreType`** (`fitts`, `wolpaw`,
-`nuyujukian`, `shannon`, `self-reported`) so the home page can re-rank the whole atlas by any single
+`achieved`, `shannon`, `self-reported`) so the home page can re-rank the whole atlas by any single
 method via a selector. Entries lacking the selected method are greyed out.
 
 **Comparability caveat.** Because the "bit" is defined by the action space, a raw-selection bound
@@ -124,7 +124,7 @@ Entry {
 
   calculations[] {
     method                  // "Wolpaw bitrate over N = 40 targets"
-    scoreType               // "fitts" | "wolpaw" | "nuyujukian" | "shannon" | "self-reported"
+    scoreType               // "fitts" | "wolpaw" | "achieved" | "shannon" | "self-reported"
     kind                    // short descriptor: "Per-word continuous throughput"
     provenance              // one of the taxonomy values above
     steps[]                 // ordered, worked derivation (see §6), OR a `compute` block
