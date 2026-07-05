@@ -70,5 +70,20 @@ calculations:
       - title: "Reported passive ITR"
         math: "mean 701 bit/min ≈ 11.68 bits/s;  best subject 1237 bit/min ≈ 20.6 bits/s"
         note: "Equivalently, the 250 ms decoder can discriminate 500,000 distinct 2 s stimulation patterns (log2(500,000) ≈ 18.9 bits per 2 s). The authors flag a 'ceiling effect' for very large code spaces, so this is a raw-discrimination capacity kept for comparison, not the ranked communication rate."
+  - id: achieved-codespace
+    method: "Achieved bitrate over the authors' 500,000-pattern code space"
+    scoreType: achieved
+    kind: "Code-space raw-discrimination view, shown for comparison"
+    provenance: author-reported-verified
+    notUsedForRanking: true
+    resultBitsPerSecond: 9.47
+    steps:
+      - title: "Achieved-bitrate credit per discriminated pattern"
+        math: "The decoder tells apart N = 500,000 distinct 2 s stimulation patterns at ~100% → log2(N − 1) = log2(499,999) ≈ 18.93 bits per selection (the namesake Nuyujukian 2015 used log2(N); at this N the difference is negligible)."
+      - title: "Net-correct selection rate"
+        math: "One 2 s pattern per selection at ~100% discrimination → net-correct = 0.5 selections/s."
+        note: "This plugs the authors' code-space size straight into the achieved formula, matching the passive metric's own 500,000-pattern framing. N here is a code-space size, not a set of communicative choices, so like the passive Wolpaw figure this measures raw signal discrimination (the 'ceiling effect' the authors flag), not communication; at the true per-decision bit channel (N = 2) achieved would be 0. Kept for comparison only — the ranked figure is the 0.583 bits/s active-spelling text rate."
+      - title: "Achieved bitrate"
+        math: "18.93 bits × 0.5 selections/s ≈ 9.47 bits/s."
 referenceCalculationId: comm
 ---

@@ -59,5 +59,20 @@ calculations:
       targets: 28
       accuracy: 1
       secondsPerSelection: 1.531
+  - id: achieved
+    method: "Achieved bitrate over the raw key set"
+    scoreType: achieved
+    kind: "Achieved-bitrate view of the key channel, shown for comparison"
+    provenance: recomputed-omitted
+    notUsedForRanking: true
+    resultBitsPerSecond: 3.11
+    steps:
+      - title: "Achieved-bitrate credit per net-correct key"
+        math: "N = 28 keys → log2(N − 1) = log2(27) = 4.75 bits per net-correct selection (field-standard achieved bitrate, e.g. Webgrid; the namesake Nuyujukian 2015 used log2(N))."
+      - title: "Net-correct key rate"
+        math: "Accuracy is not reported separately (39.2 is already correct char/min), so this is a perfect-copy ceiling: net-correct = 39.2 char/min = 0.653 correct/s (one key per 1.531 s)."
+        note: "Same N (28 keys) and key interval (1.531 s) as the entry's perfect-copy Wolpaw ceiling. With no error term the achieved and Wolpaw ceilings differ only by log2(N − 1) vs log2(N), so both land near 3.1 bits/s: the uniform-prior key channel, above the 0.65 bits/s Shannon headline. The underlying continuous-cursor channel is the companion BrainGate2 grid entry."
+      - title: "Achieved bitrate"
+        math: "4.75 bits × 0.653 correct/s = 3.11 bits/s."
 referenceCalculationId: comm
 ---
