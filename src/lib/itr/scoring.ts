@@ -26,7 +26,7 @@ export const SCORE_TYPES: ScoreTypeDef[] = [
   { key: 'shannon', label: 'Shannon (text)', blurb: 'Information delivered as English text, under one ~1 bit/char predictor.' },
   { key: 'wolpaw', label: 'Wolpaw', blurb: 'Mutual-information bitrate over N targets, discounted by accuracy.' },
   { key: 'fitts', label: "Fitts' law", blurb: 'Index of difficulty per movement (continuous pointing).' },
-  { key: 'nuyujukian', label: 'Nuyujukian', blurb: 'Sustained achieved bitrate on a grid task: log2(N-1) bits per correct selection × net rate (e.g. Webgrid BPS).' },
+  { key: 'nuyujukian', label: 'Nuyujukian', blurb: 'Sustained achieved bitrate on a grid task: log2(N) bits per net-correct selection ÷ time (Nuyujukian 2015; downstream grid papers like Webgrid use the log2(N−1) variant).' },
 ];
 
 export const scoreTypeLabel = (k: ScoreType): string =>

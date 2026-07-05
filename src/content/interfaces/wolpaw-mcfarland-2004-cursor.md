@@ -50,7 +50,7 @@ calculations:
         math: "× 0.82 (mean fraction of targets reached within the 10 s limit) → ≈ 1.00 bits/s"
         note: "This is a COMPLETION discount, not a Fitts effective-width adjustment: the paper publishes no endpoint scatter (SDx), so the index of difficulty uses nominal width and the 82% is targets reached in time, not a spatial-miss rate. Accuracy is therefore folded as a simple throughput multiplier (the same fallback used for the Neuralink cursor), not via the standard We = 4.133·SDx."
   - id: wolpaw
-    method: "Wolpaw / achieved-bitrate over the 8 cued targets"
+    method: "Wolpaw bitrate over the 8 cued targets"
     scoreType: wolpaw
     kind: "Discrete-selection figure, UNDER-counts the continuous cursor (only 8 targets)"
     provenance: recomputed-omitted
