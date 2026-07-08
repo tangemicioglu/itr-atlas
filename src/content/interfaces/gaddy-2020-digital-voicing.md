@@ -55,8 +55,8 @@ calculations:
       accuracy: 0.964
       secondsPerSelection: 0.6
   - id: achieved
-    method: "Achieved bitrate over N = 67 words (closed-vocabulary condition)"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 67 words (closed-vocabulary condition)"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the closed-vocabulary channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

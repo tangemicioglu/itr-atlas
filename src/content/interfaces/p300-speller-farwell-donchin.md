@@ -53,8 +53,8 @@ calculations:
       accuracy: 0.95
       secondsPerSelection: 23
   - id: achieved
-    method: "Achieved bitrate over N = 36 targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 36 targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the speller, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

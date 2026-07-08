@@ -77,8 +77,8 @@ calculations:
       accuracy: 0.941
       secondsPerSelection: 0.66667
   - id: achieved
-    method: "Achieved bitrate over N = 31 characters"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 31 characters"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the character channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

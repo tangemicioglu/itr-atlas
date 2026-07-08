@@ -59,8 +59,8 @@ calculations:
       accuracy: 1
       secondsPerSelection: 0.48
   - id: achieved
-    method: "Achieved bitrate over the raw symbol set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the raw symbol set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the symbol channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

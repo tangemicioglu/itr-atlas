@@ -25,7 +25,7 @@ actionSpace:
   kind: continuous
   size: continuous
   prior: uniform
-  notes: "A 2D cursor controlled by an N1 intracortical array, measured on Webgrid (a cued target-acquisition task). The headline BPS is a Webgrid task metric, not an ISO-style Fitts throughput: it assigns log2(t²−1) ≈ 9.81 bits for each correct selection on the 30×30 board, while the atlas pointing convention uses the movement difficulty, log2(A/W+1) ≈ 4.1 bits, because the target is cued before the movement. The reference number here is therefore a Fitts-style throughput on Neuralink's own grid; the Webgrid BPS is kept as a secondary, as-reported figure. Since Webgrid's BPS = log2(t²−1)·f at the net-correct rate, it is shown as the achieved-bitrate grid score (scoreType achieved) for comparison with the other secondary task metrics."
+  notes: "A 2D cursor controlled by an N1 intracortical array, measured on Webgrid (a cued target-acquisition task). The headline BPS is a Webgrid task metric, not an ISO-style Fitts throughput: it assigns log2(t²−1) ≈ 9.81 bits for each correct selection on the 30×30 board, while the atlas pointing convention uses the movement difficulty, log2(A/W+1) ≈ 4.1 bits, because the target is cued before the movement. The reference number here is therefore a Fitts-style throughput on Neuralink's own grid; the Webgrid BPS is kept as a secondary, as-reported figure. Since Webgrid's BPS = log2(t²−1)·f at the net-correct rate, it is shown as the achieved-bitrate grid score (scoreType nuyujukian) for comparison with the other secondary task metrics."
 calculations:
   - id: fitts
     method: "Fitts' law throughput on Neuralink's own Webgrid grid"
@@ -41,8 +41,8 @@ calculations:
         math: "ITR = B × ID / log2(N − 1) = 8.01 × 4.06 / 9.81 = 3.32 bits/s"
         note: "Neuralink publishes only the achieved bitrate B = 8.01 bits/s and no independent selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of the full grid entropy. This is a unit re-crediting of the reported score, not an independent measurement. Validation: the able-bodied ~10 BPS on this board re-credits to ~4.1 bits/s, matching MacKenzie's measured mouse throughput (4.5 bits/s), so the cursor lands just below an able-bodied mouse."
   - id: reported
-    method: "Achieved bitrate over the 900-cell Webgrid (Neuralink's Webgrid BPS)"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the 900-cell Webgrid (Neuralink's Webgrid BPS)"
+    scoreType: nuyujukian
     kind: "Webgrid full-grid score, a secondary task metric, not atlas-ranked pointing throughput"
     provenance: author-reported-unverified
     notUsedForRanking: true

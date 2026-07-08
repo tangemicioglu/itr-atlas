@@ -57,8 +57,8 @@ calculations:
       accuracy: 0.9263
       secondsPerSelection: 4.34468
   - id: achieved
-    method: "Achieved bitrate over N = 28 keyboard targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 28 keyboard targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the selection channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

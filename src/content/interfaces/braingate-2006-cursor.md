@@ -73,8 +73,8 @@ calculations:
       - title: "Information transfer rate"
         math: "1.37 bits/sel × 12 sel/min ÷ 60 s/min = 0.274 bits/s"
   - id: achieved
-    method: "Achieved bitrate over the 16 grid targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the 16 grid targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the grid task, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

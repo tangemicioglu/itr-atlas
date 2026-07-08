@@ -69,7 +69,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h2>What we rank on: the strictest upper bound</h2>
     <p>Every measure in the atlas is an <strong>upper bound</strong> on the information a channel
        delivers. Each one caps the rate under its own assumptions. Fitts' index of difficulty, the
-       Wolpaw bits-per-selection, log₂(N), the achieved bitrate, and the Shannon entropy of
+       Wolpaw bits-per-selection, log₂(N), the Nuyujukian achieved bitrate, and the Shannon entropy of
        the realized text all bound the same quantity from different directions. Since one entry often
        admits several measures, the headline uses the <strong>strictest (smallest)</strong> valid
        bound. The score selector on the home page can still re-rank the atlas by any single method.
@@ -90,7 +90,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <li><strong>Wolpaw / log₂(N)</strong>: bits per selection over the real action set, discounted
          by accuracy, for a closed command set with no language model to apply. (No current speller is
          such a set. Every speller here types English.)</li>
-      <li><strong>Achieved bitrate</strong>: log₂(N−1) × max(correct − incorrect, 0) ÷ time,
+      <li><strong>Nuyujukian</strong>: log₂(N−1) × max(correct − incorrect, 0) ÷ time,
          the field-standard grid metric reported as Webgrid BPS and the like (Pandarinath 2017,
          Neuralink's Webgrid, Card 2026). The namesake
          <a href="https://doi.org/10.1109/TBME.2014.2352214">Nuyujukian et al. 2015</a> (Eq. 1) used

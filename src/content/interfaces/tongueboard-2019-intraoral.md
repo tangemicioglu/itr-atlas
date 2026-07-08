@@ -41,8 +41,8 @@ calculations:
       accuracy: 0.971
       secondsPerSelection: 1.73
   - id: achieved
-    method: "Achieved bitrate over the 17-choice calculator set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the 17-choice calculator set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the command set, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

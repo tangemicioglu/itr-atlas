@@ -65,8 +65,8 @@ calculations:
       accuracy: 0.68
       secondsPerSelection: 0.395
   - id: achieved
-    method: "Achieved bitrate over the raw key set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the raw key set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the 29-key channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

@@ -59,8 +59,8 @@ calculations:
       accuracy: 0.9964
       secondsPerSelection: 0.603
   - id: achieved
-    method: "Achieved bitrate over the raw key set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the raw key set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the dwell-key channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

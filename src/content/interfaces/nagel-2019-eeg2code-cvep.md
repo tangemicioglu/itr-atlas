@@ -71,8 +71,8 @@ calculations:
         math: "mean 701 bit/min ≈ 11.68 bits/s;  best subject 1237 bit/min ≈ 20.6 bits/s"
         note: "Equivalently, the 250 ms decoder can discriminate 500,000 distinct 2 s stimulation patterns (log2(500,000) ≈ 18.9 bits per 2 s). The authors flag a 'ceiling effect' for very large code spaces, so this is a raw-discrimination capacity kept for comparison, not the ranked communication rate."
   - id: achieved-codespace
-    method: "Achieved bitrate over the authors' 500,000-pattern code space"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the authors' 500,000-pattern code space"
+    scoreType: nuyujukian
     kind: "Code-space raw-discrimination view, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

@@ -11,7 +11,7 @@
 - [ ] The reported ITR is used only as a cross-check, never as a derivation input
 - [ ] Each calculation reaches its bits/s through a shown operation, not a restated answer
 - [ ] Standard methods use a `compute` block; non-standard ones supply authored `steps`
-- [ ] `scoreType` matches the method (wolpaw = MI formula; achieved = log2(N-1) × net-correct rate)
+- [ ] `scoreType` matches the method (wolpaw = MI formula; nuyujukian = log2(N-1) × net-correct rate)
 
 ## Verification
 
