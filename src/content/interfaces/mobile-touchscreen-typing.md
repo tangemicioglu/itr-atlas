@@ -62,8 +62,8 @@ calculations:
       accuracy: 0.9766
       secondsPerSelection: 0.3315
   - id: achieved
-    method: "Achieved bitrate over the raw key set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the raw key set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the touch-key channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

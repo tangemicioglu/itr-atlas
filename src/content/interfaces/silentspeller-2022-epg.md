@@ -56,8 +56,8 @@ calculations:
       accuracy: 0.87
       secondsPerSelection: 1.62162
   - id: achieved
-    method: "Achieved bitrate over N = 1,164 words"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 1,164 words"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the vocabulary channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

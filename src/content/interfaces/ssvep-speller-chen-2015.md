@@ -53,8 +53,8 @@ calculations:
         math: "ITR = 4.45 bits/s  (mean across subjects; 0.5 s flicker + 0.5 s gaze shift ≈ 1 selection/s)"
         note: "Author-reported and verified: B ≈ 4.31 bits/selection at ≈1 selection/s reproduces it. This counts log2(N) per selection, the classifier metric, not the 1 bit/char the atlas-ranked text figure holds every text entry to."
   - id: achieved
-    method: "Achieved bitrate over N = 40 targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 40 targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the speller, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

@@ -69,8 +69,8 @@ calculations:
         math: "ITR = 4.31 × 1.25 ≈ 5.39 bits/s"
         note: "Reproduces the authors' reported online cue-guided ITR (325.33 bit/min ≈ 5.42 bits/s, the small gap being rounding). This was the record EEG-BCI ITR at publication."
   - id: achieved
-    method: "Achieved bitrate over N = 40 targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over N = 40 targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the speller, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

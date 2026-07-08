@@ -43,8 +43,8 @@ calculations:
         math: "ITR = B * ID / log2(N-1) = 2.90 * 3.05 / 7.61 = 1.17 bits/s"
         note: "The paper reports only the achieved bitrate B = 2.90 bits/s and no independent grid selection timing, so the Fitts figure is that same measured throughput re-credited per movement at the Fitts ID instead of log2(N-1) -- a unit re-crediting of the reported score, not an independent measurement. Same correction applied to Pandarinath's ReFIT grid and Neuralink's Webgrid, placing all three intracortical cursors on the mouse's Fitts basis (mouse 4.5, stylus 4.9, trackball 3.3 bits/s)."
   - id: reported
-    method: "Achieved bitrate (log2(N−1)), as reported by the authors"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate (log2(N−1)), as reported by the authors"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate grid metric, shown for comparison"
     provenance: author-reported-verified
     notUsedForRanking: true

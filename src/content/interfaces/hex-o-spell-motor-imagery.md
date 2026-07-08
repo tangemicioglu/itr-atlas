@@ -59,8 +59,8 @@ calculations:
         math: "7.6 letter/min × 4.91 bits/letter ÷ 60 s/min = 0.62 bits/s"
         note: "Uses log2(N) per letter, while the atlas-ranked text figure uses 1 bit/char for consistency with the other English text entries."
   - id: achieved
-    method: "Achieved bitrate over the ~30-letter alphabet"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the ~30-letter alphabet"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the speller, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

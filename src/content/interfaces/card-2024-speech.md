@@ -56,8 +56,8 @@ calculations:
       accuracy: 0.9734
       secondsPerSelection: 1.875
   - id: achieved
-    method: "Achieved bitrate over the 125,000-word vocabulary"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the 125,000-word vocabulary"
+    scoreType: nuyujukian
     kind: "Large-vocabulary capacity view, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

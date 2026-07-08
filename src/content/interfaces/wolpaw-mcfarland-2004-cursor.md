@@ -60,8 +60,8 @@ calculations:
       accuracy: 0.82
       secondsPerSelection: 2.75
   - id: achieved
-    method: "Achieved bitrate over the 8 cued targets"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the 8 cued targets"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the center-out task, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

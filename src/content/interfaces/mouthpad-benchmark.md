@@ -49,7 +49,7 @@ calculations:
         note: "Unlike Neuralink's Webgrid, Augmental displays its own Fitts value, so 3.53 is taken from the benchmark and the re-credit of the headline score confirms it rather than standing in for it. ITR = 3.53 bits/s."
   - id: reported
     method: "Full-grid benchmark BPS reported by Augmental"
-    scoreType: achieved
+    scoreType: nuyujukian
     kind: "30x30 grid choice-entropy score, shown for transparency, not used for ranking"
     provenance: author-reported-unverified
     notUsedForRanking: true

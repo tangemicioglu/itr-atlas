@@ -6,7 +6,7 @@ modalities: brain–computer interfaces, eye-tracking, speech, typing, and more.
 ITR numbers are easy to quote and surprisingly easy to compare on the wrong basis. Wolpaw's
 assumptions, for example, rarely hold cleanly in real interfaces. The atlas keeps the arithmetic
 out in the open: **every number is sourced and re-derived, step by step**. Fitts, Wolpaw,
-achieved-bitrate, and Shannon-entropy scores are treated as upper bounds on the channel, so each entry is
+Nuyujukian, and Shannon-entropy scores are treated as upper bounds on the channel, so each entry is
 ranked on the **strictest** valid bound. The looser methods are still shown, and the score selector
 lets you compare any one method across entries.
 
@@ -25,7 +25,7 @@ arithmetic shown, and is ranked on the strictest valid bound.
 Each interface gets:
 - **A headline ITR = the strictest upper bound**: the smallest scoring method that fits the entry,
   since each method only caps the true rate. A score selector swaps the displayed number to any
-  single method (Fitts / Wolpaw / Achieved bitrate / Shannon) across all entries.
+  single method (Fitts / Wolpaw / Nuyujukian / Shannon) across all entries.
 - A **full derivation**: every constant traced to its source (paper section / table), every
   operation shown, for each method.
 - A **provenance badge**: whether the figure is author-reported and verified, or recomputed by us

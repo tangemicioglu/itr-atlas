@@ -64,8 +64,8 @@ calculations:
       accuracy: 0.95
       secondsPerSelection: 0.05333
   - id: achieved
-    method: "Achieved bitrate over the raw character set"
-    scoreType: achieved
+    method: "Nuyujukian achieved bitrate over the raw character set"
+    scoreType: nuyujukian
     kind: "Achieved-bitrate view of the character channel, shown for comparison"
     provenance: recomputed-omitted
     notUsedForRanking: true

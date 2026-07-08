@@ -30,11 +30,11 @@ body:
     id: scoretype
     attributes:
       label: Score type involved
-      description: "wolpaw = the Wolpaw MI formula; achieved = log2(N-1) × net-correct rate; fitts; shannon."
+      description: "wolpaw = the Wolpaw MI formula; nuyujukian = log2(N-1) × net-correct rate; fitts; shannon."
       options:
         - shannon
         - wolpaw
-        - achieved
+        - nuyujukian
         - fitts
         - Not sure
     validations:

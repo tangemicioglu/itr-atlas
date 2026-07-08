@@ -10,7 +10,7 @@
 export type ScoreType =
   | 'fitts'
   | 'wolpaw'
-  | 'achieved'
+  | 'nuyujukian'
   | 'shannon';
 
 export interface ScoreTypeDef {
@@ -26,7 +26,7 @@ export const SCORE_TYPES: ScoreTypeDef[] = [
   { key: 'shannon', label: 'Shannon (text)', blurb: 'Information delivered as English text, under one ~1 bit/char predictor.' },
   { key: 'wolpaw', label: 'Wolpaw', blurb: 'Mutual-information bitrate over N targets, discounted by accuracy.' },
   { key: 'fitts', label: "Fitts' law", blurb: 'Index of difficulty per movement (continuous pointing).' },
-  { key: 'achieved', label: 'Achieved bitrate', blurb: 'Sustained achieved bitrate on a grid task: log2(N−1) bits per net-correct selection ÷ time — the field-standard form (Webgrid BPS etc.). Introduced by Nuyujukian et al. 2015 (which used log2(N)); the atlas standardizes on the now-conventional log2(N−1).' },
+  { key: 'nuyujukian', label: 'Nuyujukian', blurb: 'Sustained achieved bitrate on a grid task: log2(N−1) bits per net-correct selection ÷ time — the field-standard form (Webgrid BPS etc.). The namesake Nuyujukian 2015 used log2(N); the atlas standardizes on the now-conventional log2(N−1).' },
 ];
 
 export const scoreTypeLabel = (k: ScoreType): string =>
